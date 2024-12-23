@@ -13,7 +13,7 @@ Color state1 = const Color(0xffE0E0E0);
 Color state2 = const Color(0xffF4F1F3);
 
 Color baseColor = const Color(0xffF3F6F9);
-Color keyBlack = const Color(0xff3C3C3C);
+Color keyBlack = const Color(0xff292929);
 Color subBlack = const Color(0xff8A8A8A);
 LinearGradient mainGradient = const LinearGradient(
   begin: Alignment.topLeft,

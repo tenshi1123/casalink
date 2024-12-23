@@ -1,8 +1,9 @@
 // ignore_for_file: constant_identifier_names
 
+import 'package:casalink/modules/bottomnavbar/bottom_nav_bar.dart';
+
 import '../login/forgot_password_screen.dart';
 import '../login/login_screen.dart';
-import '../modules/bottomnavbar/bottomnavbar.dart';
 import 'page_config.dart';
 
 enum AppPages {
