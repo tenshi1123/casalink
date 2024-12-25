@@ -69,228 +69,194 @@ class _OnbondingState extends State<Onbonding> {
         child: Stack(
           children: [
             Container(
+              height: 812.h,
+              width: double.infinity,
               decoration: const BoxDecoration(
-                color: Colors.white,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Container(
-                    color: Colors.white,
-                    height: height,
-                    child: PageView(
-                      physics: const ClampingScrollPhysics(),
-                      controller: _pageController,
-                      onPageChanged: (int page) {
-                        setState(() {
-                          _currentPage = page;
-                        });
-                      },
-                      children: [
-                        Stack(
-                          children: [
-                            Image.asset(
-                              "assets/images/onboard1.png",
-                              width: 375.w,
-                              height: 815.h,
-                              fit: BoxFit.fill,
-                            ),
-                            SingleChildScrollView(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Center(
-                                    child: Column(
-                                      children: [
-                                        SizedBox(height: 500.h),
-                                        Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 18.w),
-                                          child: Text(
-                                            'Đồng hành cùng con mọi lúc, mọi nơi',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 18.sp,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(height: height / 40),
-                                        Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 20.w),
-                                          child: Text(
-                                            VnString.itisrecommended,
-                                            textAlign: TextAlign.center,
-                                            style: defaultText16Re.copyWith(
-                                              color: Colors.white
-                                                  .withOpacity(0.59),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                        Stack(
-                          children: [
-                            Image.asset(
-                              "assets/images/onboard2.png",
-                              width: 375.w,
-                              height: 815.h,
-                              fit: BoxFit.fill,
-                            ),
-                            SingleChildScrollView(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Center(
-                                    child: Column(
-                                      children: [
-                                        SizedBox(height: 500.h),
-                                        Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 18.w),
-                                          child: Text(
-                                            'Đồng hành cùng con mọi lúc, mọi nơi',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 18.sp,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(height: height / 40),
-                                        Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 20.w),
-                                          child: Text(
-                                            VnString.itisrecommended,
-                                            textAlign: TextAlign.center,
-                                            style: defaultText16Re.copyWith(
-                                              color: Colors.white
-                                                  .withOpacity(0.59),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                        Stack(
-                          children: [
-                            Image.asset(
-                              "assets/images/onboard3.png",
-                              width: 375.w,
-                              height: 815.h,
-                              fit: BoxFit.fill,
-                            ),
-                            SingleChildScrollView(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Center(
-                                    child: Column(
-                                      children: [
-                                        SizedBox(height: 500.h),
-                                        Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 18.w),
-                                          child: Text(
-                                            'Đồng hành cùng con mọi lúc, mọi nơi',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 18.sp,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(height: height / 40),
-                                        Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal: 20.w),
-                                          child: Text(
-                                            VnString.itisrecommended,
-                                            textAlign: TextAlign.center,
-                                            style: defaultText16Re.copyWith(
-                                              color: Colors.white
-                                                  .withOpacity(0.59),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+                image: DecorationImage(
+                  image: AssetImage("assets/images/background.png"),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-            // _currentPage != _numPages - 1
-            //     ? Column(
-            //         children: [
-            //           SizedBox(height: height / 1.12),
-            //           Container(
-            //             color: Colors.transparent,
-            //             height: height / 11,
-            //             child: Align(
-            //               child: Padding(
-            //                 padding: EdgeInsets.symmetric(horizontal: 22.w),
-            //                 child: Row(
-            //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //                   children: <Widget>[
-
-            //                     Container(
-            //                       color: Colors.transparent,
-            //                       child: Row(
-            //                         mainAxisAlignment: MainAxisAlignment.center,
-            //                         children: _buildPageIndicator(),
-            //                       ),
-            //                     ),
-            //                     GestureDetector(
-            //                       onTap: () {
-            //                         _pageController.nextPage(
-            //                             duration:
-            //                                 const Duration(microseconds: 300),
-            //                             curve: Curves.easeIn);
-            //                       },
-            //                       child: Container(
-            //                           height: 42.h,
-            //                           width: 42.w,
-            //                           decoration: BoxDecoration(
-            //                               color: sub1Color,
-            //                               borderRadius: BorderRadius.all(
-            //                                   Radius.circular(16.r))),
-            //                           child: Center(
-            //                             child: Icon(
-            //                               Icons.keyboard_arrow_right,
-            //                               size: 30.h,
-            //                               color: wihitecolor,
-            //                             ),
-            //                           )),
-            //                     ),
-            //                   ],
-            //                 ),
-            //               ),
-            //             ),
-            //           ),
-            //         ],
-            //       )
-            //     :
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Container(
+                  color: Colors.transparent,
+                  height: height,
+                  child: PageView(
+                    physics: const ClampingScrollPhysics(),
+                    controller: _pageController,
+                    onPageChanged: (int page) {
+                      setState(() {
+                        _currentPage = page;
+                      });
+                    },
+                    children: [
+                      Stack(
+                        children: [
+                          Positioned(
+                            top: 196.h,
+                            left: 56.w,
+                            child: Image.asset(
+                              "assets/images/onboard1.png",
+                              width: 263.w,
+                              height: 240.h,
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                          SingleChildScrollView(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Center(
+                                  child: Column(
+                                    children: [
+                                      SizedBox(height: 500.h),
+                                      Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 18.w),
+                                        child: Text(
+                                          'Đồng hành cùng con mọi lúc, mọi nơi',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 18.sp,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(height: height / 40),
+                                      Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 20.w),
+                                        child: Text(
+                                          VnString.itisrecommended,
+                                          textAlign: TextAlign.center,
+                                          style: defaultText16Re.copyWith(
+                                            color:
+                                                Colors.white.withOpacity(0.59),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      Stack(
+                        children: [
+                          Positioned(
+                            top: 196.h,
+                            left: 18.w,
+                            child: Image.asset(
+                              "assets/images/onboard2.png",
+                              width: 340.w,
+                              height: 240.h,
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                          SingleChildScrollView(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Center(
+                                  child: Column(
+                                    children: [
+                                      SizedBox(height: 500.h),
+                                      Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 18.w),
+                                        child: Text(
+                                          'Đồng hành cùng con mọi lúc, mọi nơi',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 18.sp,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(height: height / 40),
+                                      Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 20.w),
+                                        child: Text(
+                                          VnString.itisrecommended,
+                                          textAlign: TextAlign.center,
+                                          style: defaultText16Re.copyWith(
+                                            color:
+                                                Colors.white.withOpacity(0.59),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      Stack(
+                        children: [
+                          Positioned(
+                            top: 196.h,
+                            left: 31.w,
+                            child: Image.asset(
+                              "assets/images/onboard3.png",
+                              width: 313.w,
+                              height: 240.h,
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                          SingleChildScrollView(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Center(
+                                  child: Column(
+                                    children: [
+                                      SizedBox(height: 500.h),
+                                      Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 18.w),
+                                        child: Text(
+                                          'Đồng hành cùng con mọi lúc, mọi nơi',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 18.sp,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(height: height / 40),
+                                      Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 20.w),
+                                        child: Text(
+                                          VnString.itisrecommended,
+                                          textAlign: TextAlign.center,
+                                          style: defaultText16Re.copyWith(
+                                            color:
+                                                Colors.white.withOpacity(0.59),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
             Column(
               children: [
                 SizedBox(

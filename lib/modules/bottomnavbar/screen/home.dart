@@ -194,7 +194,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ]),
             ),
             Padding(
-              padding: EdgeInsets.only(left: 16.w, top: 20.h),
+              padding: EdgeInsets.only(left: 16.w, top: 20.h, bottom: 10.h),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -205,36 +205,51 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-            SizedBox(
-              width: 359.w,
-              height: 304.h,
-              child: GridView.count(
-                  physics: const NeverScrollableScrollPhysics(),
-                  crossAxisCount: 2,
-                  childAspectRatio: 163.w / 144.h,
-                  padding: EdgeInsets.zero,
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.w),
+              child: SizedBox(
+                width: 343.w,
+                height: 300.h,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Image.asset(
-                      'assets/images/lich_hoc.png',
-                      height: 144.h,
-                      width: 163.w,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Image.asset(
+                          'assets/images/lich_hoc.png',
+                          height: 144.h,
+                          width: 163.w,
+                          fit: BoxFit.fill,
+                        ),
+                        Image.asset(
+                          'assets/images/bai_tap.png',
+                          height: 144.h,
+                          width: 163.w,
+                          fit: BoxFit.fill,
+                        ),
+                      ],
                     ),
-                    Image.asset(
-                      'assets/images/bai_tap.png',
-                      height: 144.h,
-                      width: 163.w,
-                    ),
-                    Image.asset(
-                      'assets/images/test_feedback.png',
-                      height: 144.h,
-                      width: 163.w,
-                    ),
-                    Image.asset(
-                      'assets/images/diem_danh.png',
-                      height: 144.h,
-                      width: 163.w,
-                    ),
-                  ]),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Image.asset(
+                          'assets/images/test_feedback.png',
+                          height: 144.h,
+                          width: 163.w,
+                          fit: BoxFit.fill,
+                        ),
+                        Image.asset(
+                          'assets/images/diem_danh.png',
+                          height: 144.h,
+                          width: 163.w,
+                          fit: BoxFit.fill,
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ),
             ),
             SizedBox(
               height: 20.h,
@@ -682,10 +697,13 @@ class UpcomingSchedule extends StatelessWidget {
                       'Lớp NC',
                       style: defaultText18B,
                     ),
+                    SizedBox(
+                      height: 8.h,
+                    ),
                     Text(
                       'Thứ 6 (08:30 - 10:30)',
                       style: defaultText14M,
-                    )
+                    ),
                   ],
                 )
               ],

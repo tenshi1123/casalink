@@ -11,13 +11,13 @@ class ClassScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: const Color(0xff273D8C),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white),
-          onPressed: () {},
-        ),
+        // leading: IconButton(
+        //   icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white),
+        //   onPressed: () {},
+        // ),
         title: Center(
           child: Text(
-            'Lớp học              ',
+            'Lớp học',
             style: defaultText18B.copyWith(
               color: Colors.white,
             ),

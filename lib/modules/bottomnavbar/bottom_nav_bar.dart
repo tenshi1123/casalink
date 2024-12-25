@@ -26,29 +26,6 @@ class _BottomNavBarState extends State<BottomNavBar> {
     //setupOneSignal();
   }
 
-  // Future<void> setupOneSignal() async {
-  //   await initOneSignal();
-  //   if (Platform.isAndroid) {
-  //     OneSignal.Notifications.addClickListener((event) {
-  //       print('NOTIFICATION CLICK LISTENER CALLED WITH EVENT: $event');
-  //     });
-  //   } else {
-  //     //do nothing :v tự báo chính mình
-  //     OneSignal.Notifications.addClickListener((event) {});
-  //   }
-  //   promptPolicyPrivacy();
-  // }
-
-  // Future<void> promptPolicyPrivacy() async {
-  //   if (Platform.isAndroid) {
-  //     OneSignal.consentRequired(true);
-  //     OneSignal.consentGiven(true);
-  //   } else {
-  //     //do nothing :v
-  //   }
-  //   // sendUserTag(userId);
-  // }
-
   List<PersistentTabConfig> _tabs() => [
         PersistentTabConfig(
           screen: const HomeScreen(),
@@ -57,8 +34,6 @@ class _BottomNavBarState extends State<BottomNavBar> {
               'assets/icons/home.svg',
             ),
             title: "Trang chủ",
-            // activeForegroundColor: const Color(0xff273D8C),
-            // inactiveForegroundColor: const Color(0xff273D8C),
             inactiveIcon: SvgPicture.asset(
               'assets/icons/inactive_home.svg',
             ),
@@ -118,67 +93,43 @@ class _BottomNavBarState extends State<BottomNavBar> {
   @override
   Widget build(BuildContext context) {
     return PersistentTabView(
-        controller: _controller,
-        tabs: _tabs(),
-        navBarBuilder: (navBarConfig) => SizedBox(
-              width: 375.w,
-              height: 81.h,
-              child: Stack(
-                children: [
-                  // Positioned(
-                  //   bottom: 0,
-                  //   child: Container(
-                  //     height: 50.h,
-                  //     width: 375.w,
-                  //     color: const Color(0xffF2FDFF),
-                  //   ),
-                  // ),
-                  Positioned(
-                    left: 16.w,
-                    top: 6.h,
-                    child: SizedBox(
-                      width: 343.w,
-                      height: 81.h,
-                      child: Style6BottomNavBar(
-                        //itemPadding: EdgeInsets.all(5.h),
-                        navBarConfig: navBarConfig,
-                        navBarDecoration: NavBarDecoration(
-                          padding: const EdgeInsets.all(5),
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(25.r),
-                          boxShadow: const [
-                            BoxShadow(
-                              color: Colors.grey,
-                              blurRadius: 4,
-                              offset: Offset(3, 4), // Shadow position
-                            ),
-                          ],
-                        ),
-                        //itemAnimationProperties: const ItemAnimation(),
+      controller: _controller,
+      tabs: _tabs(),
+      navBarBuilder: (navBarConfig) => SizedBox(
+        width: 375.w,
+        height: 81.h,
+        child: Stack(
+          children: [
+            Positioned(
+              left: 16.w,
+              top: 6.h,
+              child: SizedBox(
+                width: 343.w,
+                height: 81.h,
+                child: Style6BottomNavBar(
+                  //itemPadding: EdgeInsets.all(5.h),
+                  navBarConfig: navBarConfig,
+                  navBarDecoration: NavBarDecoration(
+                    padding: const EdgeInsets.all(5),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(25.r),
+                    boxShadow: const [
+                      BoxShadow(
+                        color: Colors.grey,
+                        blurRadius: 4,
+                        offset: Offset(3, 4), // Shadow position
                       ),
-                    ),
+                    ],
                   ),
-                ],
+                  //itemAnimationProperties: const ItemAnimation(),
+                ),
               ),
             ),
-        backgroundColor: Colors.white,
-        navBarHeight: 50.h
-        // onWillPop: (context) async {
-        //   await showDialog(
-        //     context: context,
-        //     builder: (context) => Dialog(
-        //       child: Center(
-        //         child: ElevatedButton(
-        //           child: const Text("Close"),
-        //           onPressed: () {
-        //             Navigator.pop(context);
-        //           },
-        //         ),
-        //       ),
-        //     ),
-        //   );
-        //   return false;
-        // },
-        );
+          ],
+        ),
+      ),
+      backgroundColor: Colors.white,
+      navBarHeight: 50.h,
+    );
   }
 }

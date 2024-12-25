@@ -12,13 +12,13 @@ class VideoCourse extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: const Color(0xff273D8C),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white),
-          onPressed: () {},
-        ),
+        // leading: IconButton(
+        //   icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white),
+        //   onPressed: () {},
+        // ),
         title: Center(
           child: Text(
-            'Lớp học              ',
+            'Khoá học video',
             style: defaultText18B.copyWith(
               color: Colors.white,
             ),
@@ -44,13 +44,14 @@ class VideoCourse extends StatelessWidget {
             ),
             Container(
               height: 32.h,
-              width: 142.w,
+              //width: 142.w,
               margin: EdgeInsets.only(top: 16.h, left: 16.w),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8.r),
                 color: const Color(0xff28B4E9),
               ),
-              child: Center(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
                 child: Text(
                   'Khoá học video',
                   style: defaultText16M.copyWith(

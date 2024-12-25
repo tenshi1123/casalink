@@ -385,14 +385,14 @@ Widget feedbackItem(bool value, String title) {
     width: 98.w,
     decoration: BoxDecoration(
       border: Border.all(
-        color: value ? Colors.white : Colors.grey,
+        color: value ? Colors.white : const Color(0xffF2F2F2),
         width: value ? 2.w : 1.w,
       ),
       boxShadow: [
         BoxShadow(
-          color: Colors.grey.shade400,
+          color: const Color(0xff000000).withAlpha(20),
           blurRadius: 4,
-          offset: const Offset(3, 3), // Shadow position
+          offset: const Offset(0, 4), // Shadow position
         ),
       ],
       borderRadius: BorderRadius.all(

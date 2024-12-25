@@ -1,3 +1,4 @@
+import 'package:casalink/modules/splash/onboarding.dart';
 import 'package:casalink/utils/constants/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -56,7 +57,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          Navigator.of(context).pop();
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: ((context) => const Onbonding()),
+                            ),
+                          );
                         },
                         child: Image(
                           image:
