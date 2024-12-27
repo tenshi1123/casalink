@@ -89,7 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     'Chào mừng đã trở lại, hãy đăng nhập',
                     textAlign: TextAlign.right,
                     style: TextStyle(
-                      color: Colors.white.withOpacity(0.6),
+                      color: Colors.white.withAlpha(60),
                       fontSize: 16.sp,
                       fontWeight: FontWeight.normal,
                     ),
@@ -103,8 +103,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 48.h,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(40.r)),
-                      border: Border.all(color: Colors.white.withOpacity(0.4)),
-                      color: Colors.white.withOpacity(0.2),
+                      border: Border.all(color: Colors.white.withAlpha(40)),
+                      color: Colors.white.withAlpha(20),
                     ),
                     child: Center(
                       child: TextField(
@@ -125,7 +125,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               borderSide: BorderSide.none),
                           hintStyle: TextStyle(
                             fontSize: 16.sp,
-                            color: Colors.white.withOpacity(0.4),
+                            color: Colors.white.withAlpha(40),
                           ),
                         ),
                       ),
@@ -139,8 +139,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 48.h,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(40.r)),
-                      border: Border.all(color: Colors.white.withOpacity(0.4)),
-                      color: Colors.white.withOpacity(0.2),
+                      border: Border.all(color: Colors.white.withAlpha(40)),
+                      color: Colors.white.withAlpha(20),
                     ),
                     child: Center(
                       child: TextField(
@@ -164,7 +164,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               borderSide: BorderSide.none),
                           hintStyle: TextStyle(
                             fontSize: 16.sp,
-                            color: Colors.white.withOpacity(0.4),
+                            color: Colors.white.withAlpha(40),
                           ),
                           suffixIcon: IconButton(
                             padding: const EdgeInsets.only(top: 0),

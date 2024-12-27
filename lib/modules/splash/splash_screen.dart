@@ -3,7 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'onboarding.dart';
+import '../bottomnavbar/bottom_nav_bar.dart';
+//import 'onboarding.dart';
 
 class Splshscreen extends StatefulWidget {
   const Splshscreen({super.key});
@@ -21,7 +22,8 @@ class _SplshscreenState extends State<Splshscreen> {
       () => Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => const Onbonding(),
+          //builder: (context) => const Onbonding(),
+          builder: (context) => const BottomNavBar(),
         ),
       ),
     );

@@ -42,10 +42,10 @@ extension AppPagesExtension on AppPages {
         return PageConfig()..pageBuilder = () => const ForgotPassScreen();
       case AppPages.BottomNavBarPage:
         return PageConfig()..pageBuilder = () => const BottomNavBar();
-      default:
-        throw StateError(
-          "Missing page: ${page.toString()} in AppPagesExtension.getPageConfig()",
-        );
+      // default:
+      //   throw StateError(
+      //     "Missing page: ${page.toString()} in AppPagesExtension.getPageConfig()",
+      //   );
     }
   }
 

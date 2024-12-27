@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'package:url_launcher/url_launcher.dart';
+//import 'package:url_launcher/url_launcher.dart';
 
 import '../utils/constants/color.dart';
 import 'otp_screen.dart';
@@ -17,13 +17,13 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
   final _focusNode1 = FocusNode();
   TextEditingController? passController = TextEditingController();
   TextEditingController? studenIdController = TextEditingController();
-  Future<void> _makePhoneCall(String phoneNumber) async {
-    final Uri launchUri = Uri(
-      scheme: 'tel',
-      path: phoneNumber,
-    );
-    await launchUrl(launchUri);
-  }
+  // Future<void> _makePhoneCall(String phoneNumber) async {
+  //   final Uri launchUri = Uri(
+  //     scheme: 'tel',
+  //     path: phoneNumber,
+  //   );
+  //   await launchUrl(launchUri);
+  // }
 
   @override
   Widget build(BuildContext context) {

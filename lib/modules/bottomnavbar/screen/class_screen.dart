@@ -117,7 +117,7 @@ class ClassScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(16.r),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
+                            color: Colors.grey.withAlpha(50),
                             spreadRadius: 1,
                             blurRadius: 5,
                             offset: const Offset(

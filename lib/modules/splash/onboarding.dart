@@ -133,8 +133,7 @@ class _OnbondingState extends State<Onbonding> {
                                           VnString.itisrecommended,
                                           textAlign: TextAlign.center,
                                           style: defaultText16Re.copyWith(
-                                            color:
-                                                Colors.white.withOpacity(0.59),
+                                            color: Colors.white.withAlpha(59),
                                           ),
                                         ),
                                       ),
@@ -186,8 +185,7 @@ class _OnbondingState extends State<Onbonding> {
                                           VnString.itisrecommended,
                                           textAlign: TextAlign.center,
                                           style: defaultText16Re.copyWith(
-                                            color:
-                                                Colors.white.withOpacity(0.59),
+                                            color: Colors.white.withAlpha(59),
                                           ),
                                         ),
                                       ),
@@ -239,8 +237,7 @@ class _OnbondingState extends State<Onbonding> {
                                           VnString.itisrecommended,
                                           textAlign: TextAlign.center,
                                           style: defaultText16Re.copyWith(
-                                            color:
-                                                Colors.white.withOpacity(0.59),
+                                            color: Colors.white.withAlpha(59),
                                           ),
                                         ),
                                       ),

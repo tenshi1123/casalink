@@ -52,7 +52,7 @@ LinearGradient mainGradient4 = LinearGradient(
   begin: Alignment.topLeft,
   end: const Alignment(0.8, 1),
   colors: [
-    key1Color.withOpacity(0.3),
-    key1Color.withOpacity(0.3),
+    key1Color.withAlpha(30),
+    key1Color.withAlpha(30),
   ],
 );

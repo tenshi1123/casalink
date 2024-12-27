@@ -14,7 +14,6 @@ class LeaveAbsencePopUp extends StatefulWidget {
 class _LeaveAbsencePopUpState extends State<LeaveAbsencePopUp> {
   final _formKey = GlobalKey<FormState>();
   String? _category;
-  TimeOfDay? _reminderTime;
   String? _newCategory;
   final List<String> _categories = ['Personal', 'Work', 'Other'];
   final TextEditingController _dateController = TextEditingController();
@@ -213,10 +212,8 @@ class FeedbackPopUp extends StatefulWidget {
 class _FeedbackPopUpState extends State<FeedbackPopUp> {
   final _formKey = GlobalKey<FormState>();
   String? _category;
-  TimeOfDay? _reminderTime;
   String? _newCategory;
   final List<String> _categories = ['Personal', 'Work', 'Other'];
-  final TextEditingController _dateController = TextEditingController();
   final ValueNotifier<int> _counter = ValueNotifier<int>(0);
   @override
   Widget build(BuildContext context) {
@@ -262,6 +259,7 @@ class _FeedbackPopUpState extends State<FeedbackPopUp> {
               Padding(
                 padding: EdgeInsets.only(
                   top: 20.h,
+                  right: 16.w,
                 ),
                 child: ValueListenableBuilder<int>(
                   valueListenable: _counter,
@@ -364,18 +362,6 @@ class _FeedbackPopUpState extends State<FeedbackPopUp> {
         ),
       ),
     );
-  }
-
-  Future<void> _selectDate() async {
-    DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2024),
-      lastDate: DateTime(2025),
-    );
-    if (picked != null) {
-      _dateController.text = picked.toString().split(" ")[0];
-    }
   }
 }
 
