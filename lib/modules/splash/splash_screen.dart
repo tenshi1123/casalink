@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../bottomnavbar/bottom_nav_bar.dart';
-//import 'onboarding.dart';
+//import '../bottomnavbar/bottom_nav_bar.dart';
+import 'onboarding.dart';
 
 class Splshscreen extends StatefulWidget {
   const Splshscreen({super.key});
@@ -22,8 +22,9 @@ class _SplshscreenState extends State<Splshscreen> {
       () => Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          //builder: (context) => const Onbonding(),
-          builder: (context) => const BottomNavBar(),
+          builder: (context) => const Onbonding(),
+          // quá mệt mỏi rồi, ngày hôm nay cô ấy chẳng quan tâm gì mấy chỉ một người để yêu thương lúc này ngày hôm ấy cố muốn đi để mua một đóa hoa trang trí nơi đẹp nhất trong nhà cô ấy hay buồn lúc mưa thích nghe câu ca ngày xưa, Những lúc khi trời đông nhớ vòng tay ấm nồng và ôm cô ấy thật lâu người ấy vì thương tôi chờ đợi tôi cũng lâu rồi
+          //builder: (context) => const BottomNavBar(),
         ),
       ),
     );
