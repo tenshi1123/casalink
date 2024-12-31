@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import 'package:flutter_svg/flutter_svg.dart';
 import '../../../utils/constants/styles.dart';
 
 class VideoCourse extends StatelessWidget {
@@ -108,7 +108,7 @@ class VideoCourse extends StatelessWidget {
               thickness: 8.h,
             ),
             Padding(
-              padding: EdgeInsets.only(top: 10.h, left: 16.w, bottom: 10.h),
+              padding: EdgeInsets.only(top: 10.h, left: 16.w),
               child: Text(
                 'Nội dung',
                 style: defaultText16B,
@@ -133,75 +133,177 @@ class VideoCourse extends StatelessWidget {
   }
 }
 
-class LessonItem extends StatelessWidget {
+class LessonItem extends StatefulWidget {
   const LessonItem({super.key, required this.title});
   final int title;
+
+  @override
+  State<LessonItem> createState() => _LessonItemState();
+}
+
+class _LessonItemState extends State<LessonItem> {
+  bool isExpanded = false;
+  List<String> title = [
+    'Bài 1: Cấu trúc câu',
+    'Bài 2: Tính từ và trạng từ',
+    'Bài 3: Câu bị động',
+    'Bài 4: Câu điều kiện',
+  ];
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
-      child: SizedBox(
-        width: 375.w,
-        height: 60.h,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                SizedBox(
-                  width: 16.w,
+      onTap: () {
+        setState(() {
+          isExpanded = !isExpanded;
+        });
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          SizedBox(
+            height: 12.h,
+          ),
+          Row(
+            children: [
+              SizedBox(
+                width: 16.w,
+              ),
+              Container(
+                height: 34.h,
+                width: 34.w,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: const Color(0xff2F9CD3),
+                  ),
+                  color: Colors.white,
                 ),
-                Container(
-                  height: 34.h,
-                  width: 34.w,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(
+                child: Center(
+                  child: Text(
+                    '${widget.title + 1}',
+                    style: defaultText14M.copyWith(
                       color: const Color(0xff2F9CD3),
-                    ),
-                    color: Colors.white,
-                  ),
-                  child: Center(
-                    child: Text(
-                      '${title + 1}',
-                      style: defaultText14M.copyWith(
-                        color: const Color(0xff2F9CD3),
-                        fontWeight: FontWeight.w600,
-                      ),
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 ),
-                SizedBox(
-                  width: 16.w,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'There are many variations',
-                      style: defaultText16M.copyWith(
-                        fontWeight: FontWeight.w600,
-                      ),
+              ),
+              SizedBox(
+                width: 16.w,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'There are many variations ${widget.title + 1}',
+                    style: defaultText16M.copyWith(
+                      fontWeight: FontWeight.w600,
                     ),
-                    Text(
-                      '5 bài giảng / 6 bài tập',
-                      style: defaultText12M.copyWith(
-                        fontWeight: FontWeight.w500,
-                        color: const Color(0xff3C3C3C).withValues(alpha: 0.6),
-                      ),
+                  ),
+                  Text(
+                    '5 bài giảng / 6 bài tập',
+                    style: defaultText12M.copyWith(
+                      fontWeight: FontWeight.w500,
+                      color: const Color(0xff3C3C3C).withValues(alpha: 0.6),
                     ),
-                  ],
-                ),
-                SizedBox(
-                  width: 60.w,
-                ),
-                const Icon(Icons.keyboard_arrow_right_outlined),
-              ],
+                  ),
+                ],
+              ),
+              SizedBox(
+                width: 60.w,
+              ),
+              const Icon(Icons.keyboard_arrow_right_outlined),
+            ],
+          ),
+          const Divider(),
+          if (isExpanded)
+            Column(
+              children: title
+                  .map((e) => DetailItem(
+                        title: e,
+                      ))
+                  .toList(),
             ),
-            const Divider(),
+        ],
+      ),
+    );
+  }
+}
+
+class DetailItem extends StatelessWidget {
+  const DetailItem({super.key, required this.title});
+  final String title;
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          width: 16.w,
+        ),
+        Column(
+          children: [
+            SvgPicture.asset(
+              'assets/icons/green_tick.svg',
+              height: 12.h,
+              width: 12.w,
+            ),
+            Container(
+              height: 32.h,
+              width: 1.w,
+              margin: EdgeInsets.symmetric(vertical: 8.h),
+              decoration: const BoxDecoration(
+                color: Colors.green,
+              ),
+            ),
           ],
         ),
-      ),
+        SizedBox(
+          width: 16.w,
+        ),
+        Image.asset(
+          'assets/images/video.png',
+          height: 24.h,
+          width: 24.w,
+          fit: BoxFit.fill,
+        ),
+        SizedBox(
+          width: 16.w,
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: defaultText14M,
+            ),
+            SizedBox(
+              width: 267.w,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Bài giảng',
+                    style: defaultText12M.copyWith(
+                      fontWeight: FontWeight.w500,
+                      color: const Color(0xff3C3C3C).withValues(alpha: 0.6),
+                    ),
+                  ),
+                  Text(
+                    '10 Phút',
+                    style: defaultText12M.copyWith(
+                      fontWeight: FontWeight.w500,
+                      color: const Color(0xff3C3C3C).withValues(alpha: 0.6),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
