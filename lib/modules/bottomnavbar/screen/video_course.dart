@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 import '../../../utils/constants/styles.dart';
+import '../../videoplayer/animation_player.dart';
+import '../../videoplayer/default_player.dart';
 
 class VideoCourse extends StatelessWidget {
   const VideoCourse({super.key});
@@ -151,20 +154,20 @@ class _LessonItemState extends State<LessonItem> {
   ];
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        setState(() {
-          isExpanded = !isExpanded;
-        });
-      },
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          SizedBox(
-            height: 12.h,
-          ),
-          Row(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        SizedBox(
+          height: 12.h,
+        ),
+        InkWell(
+          onTap: () {
+            setState(() {
+              isExpanded = !isExpanded;
+            });
+          },
+          child: Row(
             children: [
               SizedBox(
                 width: 16.w,
@@ -216,17 +219,17 @@ class _LessonItemState extends State<LessonItem> {
               const Icon(Icons.keyboard_arrow_right_outlined),
             ],
           ),
-          const Divider(),
-          if (isExpanded)
-            Column(
-              children: title
-                  .map((e) => DetailItem(
-                        title: e,
-                      ))
-                  .toList(),
-            ),
-        ],
-      ),
+        ),
+        const Divider(),
+        if (isExpanded)
+          Column(
+            children: title
+                .map((e) => DetailItem(
+                      title: e,
+                    ))
+                .toList(),
+          ),
+      ],
     );
   }
 }
@@ -236,74 +239,84 @@ class DetailItem extends StatelessWidget {
   final String title;
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(
-          width: 16.w,
-        ),
-        Column(
-          children: [
-            SvgPicture.asset(
-              'assets/icons/green_tick.svg',
-              height: 12.h,
-              width: 12.w,
-            ),
-            Container(
-              height: 32.h,
-              width: 1.w,
-              margin: EdgeInsets.symmetric(vertical: 8.h),
-              decoration: const BoxDecoration(
-                color: Colors.green,
+    return GestureDetector(
+      onTap: () {
+        pushWithoutNavBar(
+          context,
+          MaterialPageRoute(
+            builder: ((context) => const AnimationPlayer()),
+          ),
+        );
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(
+            width: 16.w,
+          ),
+          Column(
+            children: [
+              SvgPicture.asset(
+                'assets/icons/green_tick.svg',
+                height: 12.h,
+                width: 12.w,
               ),
-            ),
-          ],
-        ),
-        SizedBox(
-          width: 16.w,
-        ),
-        Image.asset(
-          'assets/images/video.png',
-          height: 24.h,
-          width: 24.w,
-          fit: BoxFit.fill,
-        ),
-        SizedBox(
-          width: 16.w,
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              title,
-              style: defaultText14M,
-            ),
-            SizedBox(
-              width: 267.w,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Bài giảng',
-                    style: defaultText12M.copyWith(
-                      fontWeight: FontWeight.w500,
-                      color: const Color(0xff3C3C3C).withValues(alpha: 0.6),
-                    ),
-                  ),
-                  Text(
-                    '10 Phút',
-                    style: defaultText12M.copyWith(
-                      fontWeight: FontWeight.w500,
-                      color: const Color(0xff3C3C3C).withValues(alpha: 0.6),
-                    ),
-                  ),
-                ],
+              Container(
+                height: 32.h,
+                width: 1.w,
+                margin: EdgeInsets.symmetric(vertical: 8.h),
+                decoration: const BoxDecoration(
+                  color: Colors.green,
+                ),
               ),
-            ),
-          ],
-        ),
-      ],
+            ],
+          ),
+          SizedBox(
+            width: 16.w,
+          ),
+          Image.asset(
+            'assets/images/video.png',
+            height: 24.h,
+            width: 24.w,
+            fit: BoxFit.fill,
+          ),
+          SizedBox(
+            width: 16.w,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: defaultText14M,
+              ),
+              SizedBox(
+                width: 267.w,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Bài giảng',
+                      style: defaultText12M.copyWith(
+                        fontWeight: FontWeight.w500,
+                        color: const Color(0xff3C3C3C).withValues(alpha: 0.6),
+                      ),
+                    ),
+                    Text(
+                      '10 Phút',
+                      style: defaultText12M.copyWith(
+                        fontWeight: FontWeight.w500,
+                        color: const Color(0xff3C3C3C).withValues(alpha: 0.6),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

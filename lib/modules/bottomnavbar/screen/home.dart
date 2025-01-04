@@ -144,7 +144,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Text(
                               'Lớp',
                               style: defaultText14M.copyWith(
-                                color: const Color(0xff292929).withAlpha(60),
+                                color: const Color(0xff292929).withAlpha(70),
                               ),
                             ),
                             Text(
@@ -167,7 +167,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Text(
                               'Chi nhánh',
                               style: defaultText14M.copyWith(
-                                color: const Color(0xff292929).withAlpha(60),
+                                color: const Color(0xff292929).withAlpha(70),
                               ),
                             ),
                             Text(
@@ -190,7 +190,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Text(
                               'Số buổi còn lại',
                               style: defaultText14M.copyWith(
-                                color: const Color(0xff292929).withAlpha(60),
+                                color: const Color(0xff292929).withAlpha(70),
                               ),
                             ),
                             Text(
@@ -316,7 +316,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.shade400,
+                    color: Colors.grey.shade200,
                     blurRadius: 4,
                     offset: const Offset(0, -2), // Shadow position
                   ),
@@ -514,7 +514,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(top: 20.h, bottom: 16.h),
+                      padding: EdgeInsets.only(bottom: 16.h),
                       child: Text(
                         'Thư viện tài liệu',
                         style: defaultText16B,
