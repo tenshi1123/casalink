@@ -115,25 +115,28 @@ class ClassScreen extends StatelessWidget {
                       pushWithoutNavBar(
                         context,
                         MaterialPageRoute(
-                          builder: ((context) => const DetailScreen()),
+                          builder: ((context) => DetailScreen(
+                                title1: time[index],
+                                title2: title[index],
+                                title3: content[index],
+                              )),
                         ),
                       );
                     },
                     child: Container(
-                        height: 158.h,
                         width: 343.w,
-                        margin: EdgeInsets.only(top: 20.h),
+                        margin: EdgeInsets.only(top: 16.h),
                         padding: EdgeInsets.symmetric(
                             vertical: 16.h, horizontal: 16.w),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(16.r),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.grey.withAlpha(50),
-                              spreadRadius: 1,
-                              blurRadius: 5,
+                              color: const Color(0xff273D8C).withAlpha(80),
+                              spreadRadius: 0,
+                              blurRadius: 8,
                               offset: const Offset(
-                                  0, 3), // changes position of shadow
+                                  0, 4), // changes position of shadow
                             ),
                           ],
                           color: Colors.white,
@@ -143,17 +146,23 @@ class ClassScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'P.101 - Mỹ Đình (26/06/2024)',
+                              time[index],
                               style: defaultText14M.copyWith(
                                   color: const Color(0xff273D8C)),
                             ),
+                            SizedBox(
+                              height: 10.h,
+                            ),
                             Text(
-                              'Buổi ${1 + index} - Week 1 Reading practice ',
+                              title[index],
                               style: defaultText16B.copyWith(
                                   color: const Color(0xff273D8C)),
                             ),
+                            SizedBox(
+                              height: 10.h,
+                            ),
                             Text(
-                              'Nội dung buổi học: Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+                              'Nội dung buổi học: ${content[index]}',
                               style: defaultText14M.copyWith(
                                   color: const Color(0xff273D8C)),
                             ),
@@ -170,3 +179,25 @@ class ClassScreen extends StatelessWidget {
     );
   }
 }
+
+List<String> title = [
+  'Bài 1: Cấu trúc câu',
+  'Bài 2: Tính từ và trạng từ',
+  'Bài 3: Câu bị động',
+  'Bài 4: Câu điều kiện',
+  'Bài 5: Ôn tập',
+];
+List<String> time = [
+  'P.101 - Mỹ Đình (26/06/2024)',
+  'P.102 - Mỹ Đình (28/06/2024)',
+  'P.101 - Mỹ Đình (1/07/2024)',
+  'P.103 - Mỹ Đình (5/07/2024)',
+  'P.102 - Mỹ Đình (12/07/2024)'
+];
+List<String> content = [
+  'Nắm vững các cấu trúc câu trong tiếng Anh (sentence structure) sẽ giúp bạn cải thiện kỹ năng Writing và Speaking ngày càng linh hoạt, tự tin.',
+  'Phân biệt Tính từ và Trạng từ chi tiết trong tiếng Anh',
+  'Câu bị động (passive voice): công thức, cách dùng',
+  '"Conditional Sentences" (Câu điều kiện) dùng để diễn đạt, giải thích một sự việc có thể xảy ra khi điều kiện nói đến xảy ra',
+  'Ôn tập'
+];

@@ -2,6 +2,7 @@ import 'package:casalink/utils/constants/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../screen/class_screen.dart';
 import 'detail_screen.dart';
 
 class ListLessonScreen extends StatefulWidget {
@@ -55,12 +56,16 @@ class _ListLessonScreenState extends State<ListLessonScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: ((context) => const DetailScreen()),
+                          builder: ((context) => const DetailScreen(
+                                title1: 'P.101 - Mỹ Đình (26/06/2024)',
+                                title2: 'Bài 1: Cấu trúc câu',
+                                title3:
+                                    'Nắm vững các cấu trúc câu trong tiếng Anh (sentence structure) sẽ giúp bạn cải thiện kỹ năng Writing và Speaking ngày càng linh hoạt, tự tin.',
+                              )),
                         ),
                       );
                     },
                     child: Container(
-                        height: 158.h,
                         width: 343.w,
                         margin: EdgeInsets.only(top: 20.h),
                         padding: EdgeInsets.symmetric(
@@ -83,17 +88,23 @@ class _ListLessonScreenState extends State<ListLessonScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'P.101 - Mỹ Đình (26/06/2024)',
+                              time[index],
                               style: defaultText14M.copyWith(
                                   color: const Color(0xff273D8C)),
                             ),
+                            SizedBox(
+                              height: 12.h,
+                            ),
                             Text(
-                              'Buổi ${1 + index} - Week 1 Reading practice ',
+                              title[index],
                               style: defaultText16B.copyWith(
                                   color: const Color(0xff273D8C)),
                             ),
+                            SizedBox(
+                              height: 12.h,
+                            ),
                             Text(
-                              'Nội dung buổi học: Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+                              'Nội dung buổi học : ${content[index]}',
                               style: defaultText14M.copyWith(
                                   color: const Color(0xff273D8C)),
                             ),

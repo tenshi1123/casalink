@@ -1,3 +1,4 @@
+import 'package:casalink/modules/bottomnavbar/screen/class_screen.dart';
 import 'package:casalink/utils/constants/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,8 +6,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 //import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DetailScreen extends StatefulWidget {
-  const DetailScreen({super.key});
-
+  const DetailScreen(
+      {super.key,
+      required this.title1,
+      required this.title2,
+      required this.title3});
+  final String title1;
+  final String title2;
+  final String title3;
   @override
   State<DetailScreen> createState() => _DetailScreenState();
 }
@@ -48,17 +55,17 @@ class _DetailScreenState extends State<DetailScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'P.101 - Mỹ Đình (26/06/2024)',
+                widget.title1,
                 style: defaultText14M.copyWith(color: const Color(0xff273D8C)),
               ),
               SizedBox(height: 12.h),
               Text(
-                'Buổi 1 - Week 1 Reading practice ',
+                widget.title2,
                 style: defaultText16B.copyWith(color: const Color(0xff273D8C)),
               ),
               SizedBox(height: 12.h),
               Text(
-                'Nội dung buổi học: Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+                'Nội dung buổi học: ${widget.title1}',
                 style: defaultText14M.copyWith(color: const Color(0xff273D8C)),
               ),
               SizedBox(height: 12.h),

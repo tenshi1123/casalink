@@ -7,7 +7,7 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../../utils/widget/custom_dialog.dart';
 import '../home/diemdanh/detail_screen.dart';
 import '../home/excercise_screen.dart';
-import '../home/feedback_screen.dart';
+import '../home/feedback/feedback_screen.dart';
 import '../home/schedule_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -770,7 +770,12 @@ class UpcomingSchedule extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: ((context) => const DetailScreen()),
+            builder: ((context) => const DetailScreen(
+                  title1: 'P.101 - Mỹ Đình (26/06/2024)',
+                  title2: 'Bài 1: Cấu trúc câu',
+                  title3:
+                      'Nắm vững các cấu trúc câu trong tiếng Anh (sentence structure) sẽ giúp bạn cải thiện kỹ năng Writing và Speaking ngày càng linh hoạt, tự tin.',
+                )),
           ),
         );
       },

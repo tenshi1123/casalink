@@ -69,47 +69,47 @@ class PersonalScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ListTile(
-                    onTap: () {
-                      Navigator.of(context, rootNavigator: true).push(
-                        MaterialPageRoute(
-                          builder: (BuildContext context) {
-                            return const InfoScreen();
-                          },
-                        ),
-                        // (_) => false,
-                      );
-                    },
-                    leading: Image(
-                      image: const AssetImage('assets/images/icon_info.png'),
-                      height: 28.h,
-                      width: 28.w,
-                    ),
-                    title: Text(
-                      'Thông tin tài khoản',
-                      style: defaultText16M,
-                    ),
-                    trailing: const Icon(Icons.arrow_forward_ios),
-                  ),
+                  // ListTile(
+                  //   onTap: () {
+                  //     Navigator.of(context, rootNavigator: true).push(
+                  //       MaterialPageRoute(
+                  //         builder: (BuildContext context) {
+                  //           return const InfoScreen();
+                  //         },
+                  //       ),
+                  //       // (_) => false,
+                  //     );
+                  //   },
+                  //   leading: Image(
+                  //     image: const AssetImage('assets/images/icon_info.png'),
+                  //     height: 28.h,
+                  //     width: 28.w,
+                  //   ),
+                  //   title: Text(
+                  //     'Thông tin tài khoản',
+                  //     style: defaultText16M,
+                  //   ),
+                  //   trailing: const Icon(Icons.arrow_forward_ios),
+                  // ),
                   Container(
                     height: 1.h,
                     width: 303.w,
                     margin: EdgeInsets.only(left: 56.w, right: 16.w),
                     color: const Color(0xff292929).withAlpha(16),
                   ),
-                  ListTile(
-                    leading: Image(
-                      image:
-                          const AssetImage('assets/images/icon_changepass.png'),
-                      height: 28.h,
-                      width: 28.w,
-                    ),
-                    title: Text(
-                      'Đổi mật khẩu',
-                      style: defaultText16M,
-                    ),
-                    trailing: const Icon(Icons.arrow_forward_ios),
-                  ),
+                  // ListTile(
+                  //   leading: Image(
+                  //     image:
+                  //         const AssetImage('assets/images/icon_changepass.png'),
+                  //     height: 28.h,
+                  //     width: 28.w,
+                  //   ),
+                  //   title: Text(
+                  //     'Đổi mật khẩu',
+                  //     style: defaultText16M,
+                  //   ),
+                  //   trailing: const Icon(Icons.arrow_forward_ios),
+                  // ),
                   Container(
                     height: 1.h,
                     width: 303.w,

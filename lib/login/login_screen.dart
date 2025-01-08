@@ -196,30 +196,30 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(
                     height: 25.h,
                   ),
-                  Row(
-                    children: [
-                      const Spacer(),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: ((context) => const ForgotPassScreen()),
-                            ),
-                          );
-                        },
-                        child: Text(
-                          'Quên mật khẩu',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 14.sp,
-                            //decoration: TextDecoration.underline,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                  // Row(
+                  //   children: [
+                  //     const Spacer(),
+                  //     GestureDetector(
+                  //       onTap: () {
+                  //         Navigator.push(
+                  //           context,
+                  //           MaterialPageRoute(
+                  //             builder: ((context) => const ForgotPassScreen()),
+                  //           ),
+                  //         );
+                  //       },
+                  //       child: Text(
+                  //         'Quên mật khẩu',
+                  //         style: TextStyle(
+                  //           color: Colors.white,
+                  //           fontSize: 14.sp,
+                  //           //decoration: TextDecoration.underline,
+                  //           fontWeight: FontWeight.w500,
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
                   SizedBox(
                     height: 60.h,
                   ),

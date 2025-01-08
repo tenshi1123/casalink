@@ -4,7 +4,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 import '../../../utils/constants/styles.dart';
 import '../../videoplayer/animation_player.dart';
-import '../../videoplayer/default_player.dart';
 
 class VideoCourse extends StatelessWidget {
   const VideoCourse({super.key});
@@ -123,7 +122,7 @@ class VideoCourse extends StatelessWidget {
                 itemCount: 4,
                 itemBuilder: (BuildContext context, int index) {
                   return LessonItem(
-                    title: index,
+                    index: index,
                   );
                 }),
             SizedBox(
@@ -137,8 +136,8 @@ class VideoCourse extends StatelessWidget {
 }
 
 class LessonItem extends StatefulWidget {
-  const LessonItem({super.key, required this.title});
-  final int title;
+  const LessonItem({super.key, required this.index});
+  final int index;
 
   @override
   State<LessonItem> createState() => _LessonItemState();
@@ -184,7 +183,7 @@ class _LessonItemState extends State<LessonItem> {
                 ),
                 child: Center(
                   child: Text(
-                    '${widget.title + 1}',
+                    '${widget.index + 1}',
                     style: defaultText14M.copyWith(
                       color: const Color(0xff2F9CD3),
                       fontWeight: FontWeight.w600,
@@ -199,7 +198,7 @@ class _LessonItemState extends State<LessonItem> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'There are many variations ${widget.title + 1}',
+                    title[widget.index],
                     style: defaultText16M.copyWith(
                       fontWeight: FontWeight.w600,
                     ),
@@ -213,10 +212,11 @@ class _LessonItemState extends State<LessonItem> {
                   ),
                 ],
               ),
-              SizedBox(
-                width: 60.w,
-              ),
+              const Spacer(),
               const Icon(Icons.keyboard_arrow_right_outlined),
+              SizedBox(
+                width: 16.w,
+              ),
             ],
           ),
         ),
