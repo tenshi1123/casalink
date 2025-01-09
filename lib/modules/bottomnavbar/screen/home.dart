@@ -8,6 +8,7 @@ import '../../../utils/widget/custom_dialog.dart';
 import '../home/diemdanh/detail_screen.dart';
 import '../home/excercise_screen.dart';
 import '../home/feedback/feedback_screen.dart';
+import '../home/notification_screen.dart';
 import '../home/schedule_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -85,13 +86,24 @@ class _HomeScreenState extends State<HomeScreen> {
                               width: 44.w,
                             ),
                             const Spacer(),
-                            const Image(
-                                image: AssetImage('assets/images/mess.png')),
-                            SizedBox(
-                              width: 16.w,
-                            ),
-                            const Image(
-                                image: AssetImage('assets/images/bell.png')),
+                            // const Image(
+                            //     image: AssetImage('assets/images/mess.png')),
+                            // SizedBox(
+                            //   width: 16.w,
+                            // ),
+                            // InkWell(
+                            //   onTap: () {
+                            //     pushWithoutNavBar(
+                            //       context,
+                            //       MaterialPageRoute(
+                            //         builder: ((context) =>
+                            //             const NotificationScreen()),
+                            //       ),
+                            //     );
+                            //   },
+                            //   child: const Image(
+                            //       image: AssetImage('assets/images/bell.png')),
+                            // ),
                           ],
                         ),
                         SizedBox(
