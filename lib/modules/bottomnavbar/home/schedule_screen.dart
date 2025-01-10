@@ -122,7 +122,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withAlpha(20),
+                          color: Colors.black.withValues(alpha: 0.2),
                           spreadRadius: 0,
                           blurRadius: 16,
                           offset: const Offset(0, 4),

@@ -1,9 +1,11 @@
 import 'package:casalink/modules/bottomnavbar/info/info_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 
 import '../../../login/login_screen.dart';
 import '../../../utils/constants/styles.dart';
+import 'change_pass.dart';
 
 class PersonalScreen extends StatelessWidget {
   const PersonalScreen({super.key});
@@ -69,28 +71,28 @@ class PersonalScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // ListTile(
-                  //   onTap: () {
-                  //     Navigator.of(context, rootNavigator: true).push(
-                  //       MaterialPageRoute(
-                  //         builder: (BuildContext context) {
-                  //           return const InfoScreen();
-                  //         },
-                  //       ),
-                  //       // (_) => false,
-                  //     );
-                  //   },
-                  //   leading: Image(
-                  //     image: const AssetImage('assets/images/icon_info.png'),
-                  //     height: 28.h,
-                  //     width: 28.w,
-                  //   ),
-                  //   title: Text(
-                  //     'Thông tin tài khoản',
-                  //     style: defaultText16M,
-                  //   ),
-                  //   trailing: const Icon(Icons.arrow_forward_ios),
-                  // ),
+                  ListTile(
+                    onTap: () {
+                      Navigator.of(context, rootNavigator: true).push(
+                        MaterialPageRoute(
+                          builder: (BuildContext context) {
+                            return const InfoScreen();
+                          },
+                        ),
+                        // (_) => false,
+                      );
+                    },
+                    leading: Image(
+                      image: const AssetImage('assets/images/icon_info.png'),
+                      height: 28.h,
+                      width: 28.w,
+                    ),
+                    title: Text(
+                      'Thông tin tài khoản',
+                      style: defaultText16M,
+                    ),
+                    trailing: const Icon(Icons.arrow_forward_ios),
+                  ),
                   Container(
                     height: 1.h,
                     width: 303.w,
@@ -98,6 +100,14 @@ class PersonalScreen extends StatelessWidget {
                     color: const Color(0xff292929).withAlpha(16),
                   ),
                   // ListTile(
+                  //   onTap: () {
+                  //     pushWithoutNavBar(
+                  //       context,
+                  //       MaterialPageRoute(
+                  //         builder: ((context) => const ChangePassScreen()),
+                  //       ),
+                  //     );
+                  //   },
                   //   leading: Image(
                   //     image:
                   //         const AssetImage('assets/images/icon_changepass.png'),

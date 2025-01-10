@@ -1,4 +1,4 @@
-package casalink.hvg.casalink
+package edu.hvg.casalink
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -121,7 +121,7 @@ class _MyTextFormFieldState extends State<MyTextFormField> {
                   height: 8.h,
                 ),
                 Text(
-                  'Số điện thoại',
+                  widget.labelText,
                   style: defaultText14M.copyWith(
                     color: const Color(0xff292929).withAlpha(80),
                   ),
@@ -139,17 +139,17 @@ class _MyTextFormFieldState extends State<MyTextFormField> {
                     focusNode: _focusNode,
                     //initialValue: initialValue,
                     onChanged: widget.onChanged,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       border: InputBorder.none,
                       //hintText: labelText,
-                      hintStyle: const TextStyle(color: Colors.grey),
-                      contentPadding: const EdgeInsets.symmetric(vertical: 1),
-                      suffixIcon: _focusNode.hasFocus
-                          ? IconButton(
-                              icon: const Icon(Icons.close),
-                              onPressed: _focusNode.unfocus,
-                            )
-                          : const Icon(Icons.edit),
+                      hintStyle: TextStyle(color: Colors.grey),
+                      contentPadding: EdgeInsets.symmetric(vertical: 1),
+                      // suffixIcon: _focusNode.hasFocus
+                      //     ? IconButton(
+                      //         icon: const Icon(Icons.close),
+                      //         onPressed: _focusNode.unfocus,
+                      //       )
+                      //     : const Icon(Icons.edit),
                     ),
                   ),
                 ),

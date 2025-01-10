@@ -77,7 +77,7 @@ class _ExcerciseScreenState extends State<ExcerciseScreen> {
                   borderRadius: BorderRadius.circular(16.r),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withAlpha(20),
+                      color: Colors.black.withValues(alpha: 0.2),
                       spreadRadius: 0,
                       blurRadius: 12,
                       offset: const Offset(0, 2),
@@ -194,7 +194,7 @@ class _ExcerciseScreenState extends State<ExcerciseScreen> {
                   borderRadius: BorderRadius.circular(16.r),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withAlpha(20),
+                      color: Colors.black.withValues(alpha: 0.2),
                       spreadRadius: 0,
                       blurRadius: 12,
                       offset: const Offset(0, 2),

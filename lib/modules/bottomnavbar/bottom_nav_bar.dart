@@ -1,11 +1,11 @@
-import "package:casalink/modules/bottomnavbar/screen/home.dart";
+import "package:casalink/modules/bottomnavbar/home/home.dart";
 import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart";
 import 'package:flutter_svg/flutter_svg.dart';
 
 import "screen/class_screen.dart";
-import "screen/personal_screen.dart";
+import "info/personal_screen.dart";
 import "screen/video_course.dart";
 
 class BottomNavBar extends StatefulWidget {

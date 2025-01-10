@@ -5,11 +5,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../../utils/widget/custom_dialog.dart';
-import '../home/diemdanh/detail_screen.dart';
-import '../home/excercise_screen.dart';
-import '../home/feedback/feedback_screen.dart';
-import '../home/notification_screen.dart';
-import '../home/schedule_screen.dart';
+import 'diemdanh/detail_screen.dart';
+import 'excercise_screen.dart';
+import 'feedback/feedback_screen.dart';
+import 'notification/notification_screen.dart';
+import 'schedule_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -84,6 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   const AssetImage('assets/images/avatar.png'),
                               height: 44.h,
                               width: 44.w,
+                              fit: BoxFit.fill,
                             ),
                             const Spacer(),
                             // const Image(
@@ -91,23 +92,28 @@ class _HomeScreenState extends State<HomeScreen> {
                             // SizedBox(
                             //   width: 16.w,
                             // ),
-                            // InkWell(
-                            //   onTap: () {
-                            //     pushWithoutNavBar(
-                            //       context,
-                            //       MaterialPageRoute(
-                            //         builder: ((context) =>
-                            //             const NotificationScreen()),
-                            //       ),
-                            //     );
-                            //   },
-                            //   child: const Image(
-                            //       image: AssetImage('assets/images/bell.png')),
-                            // ),
+                            InkWell(
+                              onTap: () {
+                                pushWithoutNavBar(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: ((context) =>
+                                        const NotificationScreen()),
+                                  ),
+                                );
+                              },
+                              child: Image(
+                                image:
+                                    const AssetImage('assets/images/bell.png'),
+                                height: 40.h,
+                                width: 40.w,
+                                fit: BoxFit.fill,
+                              ),
+                            ),
                           ],
                         ),
                         SizedBox(
-                          height: 20.h,
+                          height: 16.h,
                         ),
                         Text(
                           'Xin chào,',
@@ -116,7 +122,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         SizedBox(
-                          height: 5.h,
+                          height: 4.h,
                         ),
                         Text(
                           'Nguyễn Thế Hoàng',
