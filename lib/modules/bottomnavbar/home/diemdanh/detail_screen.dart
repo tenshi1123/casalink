@@ -66,7 +66,7 @@ class _DetailScreenState extends State<DetailScreen> {
               ),
               SizedBox(height: 12.h),
               Text(
-                'Nội dung buổi học: ${widget.title1}',
+                'Nội dung buổi học: ${widget.title3}',
                 style: defaultText14M.copyWith(color: const Color(0xff273D8C)),
               ),
               SizedBox(height: 12.h),
