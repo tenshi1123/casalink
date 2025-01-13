@@ -51,7 +51,7 @@ class AnimationPlayerPortraitVideoControls extends StatelessWidget {
             willVideoPlayerControllerChange: false,
             playerLoadingFallback: Positioned.fill(
               child: Image.asset(
-                "assets/images/video.png",
+                "assets/images/loading.gif",
                 fit: BoxFit.cover,
               ),
             ),

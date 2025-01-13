@@ -99,27 +99,27 @@ class PersonalScreen extends StatelessWidget {
                     margin: EdgeInsets.only(left: 56.w, right: 16.w),
                     color: const Color(0xff292929).withAlpha(16),
                   ),
-                  // ListTile(
-                  //   onTap: () {
-                  //     pushWithoutNavBar(
-                  //       context,
-                  //       MaterialPageRoute(
-                  //         builder: ((context) => const ChangePassScreen()),
-                  //       ),
-                  //     );
-                  //   },
-                  //   leading: Image(
-                  //     image:
-                  //         const AssetImage('assets/images/icon_changepass.png'),
-                  //     height: 28.h,
-                  //     width: 28.w,
-                  //   ),
-                  //   title: Text(
-                  //     'Đổi mật khẩu',
-                  //     style: defaultText16M,
-                  //   ),
-                  //   trailing: const Icon(Icons.arrow_forward_ios),
-                  // ),
+                  ListTile(
+                    onTap: () {
+                      pushWithoutNavBar(
+                        context,
+                        MaterialPageRoute(
+                          builder: ((context) => const ChangePassScreen()),
+                        ),
+                      );
+                    },
+                    leading: Image(
+                      image:
+                          const AssetImage('assets/images/icon_changepass.png'),
+                      height: 28.h,
+                      width: 28.w,
+                    ),
+                    title: Text(
+                      'Đổi mật khẩu',
+                      style: defaultText16M,
+                    ),
+                    trailing: const Icon(Icons.arrow_forward_ios),
+                  ),
                   Container(
                     height: 1.h,
                     width: 303.w,

@@ -11,7 +11,8 @@ import 'portrait_video_controls.dart';
 
 class AnimationPlayer extends StatefulWidget {
   final Map? link;
-  const AnimationPlayer({super.key, this.link});
+  final int index;
+  const AnimationPlayer({super.key, this.link, required this.index});
 
   @override
   _AnimationPlayerState createState() => _AnimationPlayerState();
@@ -28,8 +29,8 @@ class _AnimationPlayerState extends State<AnimationPlayer> {
     super.initState();
     // String url = items[0]['trailer_url'];
     flickManager = FlickManager(
-      videoPlayerController:
-          VideoPlayerController.networkUrl(Uri.parse(items[0]['trailer_url'])),
+      videoPlayerController: VideoPlayerController.networkUrl(
+          Uri.parse(items[widget.index]['trailer_url'])),
       onVideoEnd: () => dataManager.playNextVideo(
         const Duration(seconds: 5),
       ),

@@ -37,6 +37,7 @@ class _InfoScreenState extends State<InfoScreen> {
               image: const AssetImage('assets/images/avatar2.png'),
               height: 120.h,
               width: 120.w,
+              fit: BoxFit.fill,
             ),
             MyTextFormField(
               labelText: 'Họ và tên',

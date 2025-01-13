@@ -2,6 +2,7 @@ import 'package:casalink/modules/bottomnavbar/screen/class_screen.dart';
 import 'package:casalink/utils/constants/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 //import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -91,14 +92,14 @@ class NestedTabBar extends StatefulWidget {
 class _NestedTabBarState extends State<NestedTabBar>
     with TickerProviderStateMixin {
   late TabController _tabController;
-  int activeTabIndex = 1;
+  int activeTabIndex = 0;
   @override
   void initState() {
     super.initState();
     _tabController = TabController(
       length: 3,
       vsync: this,
-      initialIndex: 1,
+      initialIndex: 0,
     );
     _tabController.addListener(() {
       setState(() {
@@ -269,49 +270,57 @@ class _NestedTabBarState extends State<NestedTabBar>
                     SizedBox(
                       height: 10.h,
                     ),
-                    Stack(
-                      children: [
-                        Container(
-                          width: 120.w,
-                          height: 80.h,
-                          decoration: BoxDecoration(
-                            color: Colors.blue.shade100,
-                            image: const DecorationImage(
-                              fit: BoxFit.cover,
-                              image: AssetImage('assets/images/image.png')
-                                  as ImageProvider,
+                    GestureDetector(
+                      onTap: () async {
+                        if (!await launchUrl(Uri.parse(
+                            'https://vietjack.com/ngu-phap-tieng-anh/trac-nghiem-bai-kiem-tra-trinh-do-tieng-anh-online.jsp'))) {
+                          throw Exception('Could not launch ');
+                        }
+                      },
+                      child: Stack(
+                        children: [
+                          Container(
+                            width: 120.w,
+                            height: 80.h,
+                            decoration: BoxDecoration(
+                              color: Colors.blue.shade100,
+                              image: const DecorationImage(
+                                fit: BoxFit.cover,
+                                image: AssetImage('assets/images/image.png')
+                                    as ImageProvider,
+                              ),
+                              gradient: LinearGradient(
+                                  begin: FractionalOffset.topCenter,
+                                  end: FractionalOffset.bottomCenter,
+                                  colors: [
+                                    Colors.grey.withOpacity(0.0),
+                                    Colors.black,
+                                  ],
+                                  stops: const [
+                                    0.0,
+                                    1.0,
+                                  ]),
                             ),
-                            gradient: LinearGradient(
-                                begin: FractionalOffset.topCenter,
-                                end: FractionalOffset.bottomCenter,
-                                colors: [
-                                  Colors.grey.withOpacity(0.0),
-                                  Colors.black,
-                                ],
-                                stops: const [
-                                  0.0,
-                                  1.0,
-                                ]),
                           ),
-                        ),
-                        Container(
-                          width: 120.w,
-                          height: 80.h,
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                                begin: FractionalOffset.topCenter,
-                                end: FractionalOffset.bottomCenter,
-                                colors: [
-                                  Colors.white,
-                                  Colors.black.withAlpha(40),
-                                ],
-                                stops: const [
-                                  0.0,
-                                  1.0,
-                                ]),
+                          Container(
+                            width: 120.w,
+                            height: 80.h,
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                  begin: FractionalOffset.topCenter,
+                                  end: FractionalOffset.bottomCenter,
+                                  colors: [
+                                    Colors.white,
+                                    Colors.black.withAlpha(40),
+                                  ],
+                                  stops: const [
+                                    0.0,
+                                    1.0,
+                                  ]),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ],
                 ),

@@ -11,7 +11,7 @@ Color key2Color = const Color(0xff0091FF);
 
 Color state1 = const Color(0xffE0E0E0);
 Color state2 = const Color(0xffF4F1F3);
-
+Color pri500 = const Color(0xff273D8C);
 Color baseColor = const Color(0xffF3F6F9);
 Color keyBlack = const Color(0xff292929);
 Color subBlack = const Color(0xff8A8A8A);

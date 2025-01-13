@@ -226,6 +226,7 @@ class _LessonItemState extends State<LessonItem> {
             children: title
                 .map((e) => DetailItem(
                       title: e,
+                      index: title.indexOf(e),
                     ))
                 .toList(),
           ),
@@ -235,8 +236,9 @@ class _LessonItemState extends State<LessonItem> {
 }
 
 class DetailItem extends StatelessWidget {
-  const DetailItem({super.key, required this.title});
+  const DetailItem({super.key, required this.title, required this.index});
   final String title;
+  final int index;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -244,7 +246,9 @@ class DetailItem extends StatelessWidget {
         pushWithoutNavBar(
           context,
           MaterialPageRoute(
-            builder: ((context) => const AnimationPlayer()),
+            builder: ((context) => AnimationPlayer(
+                  index: index,
+                )),
           ),
         );
       },
