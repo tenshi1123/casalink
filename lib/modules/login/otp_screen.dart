@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:otp_pin_field/otp_pin_field.dart';
 
-import '../utils/constants/color.dart';
+import '../../utils/constants/color.dart';
 
 // ignore: must_be_immutable
 class OtpScreen extends StatefulWidget {

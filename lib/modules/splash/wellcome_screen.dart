@@ -3,7 +3,7 @@ import 'package:casalink/utils/constants/mediaqury.dart';
 import 'package:casalink/utils/constants/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../login/login_screen.dart';
+import '../login/login_screen.dart';
 
 class WellcomeScreen extends StatelessWidget {
   const WellcomeScreen({super.key});

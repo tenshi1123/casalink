@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 
-import '../home/diemdanh/detail_screen.dart';
+import '../../diemdanh/detail_screen.dart';
 
 class ClassScreen extends StatelessWidget {
   const ClassScreen({super.key});

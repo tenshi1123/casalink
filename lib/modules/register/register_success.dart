@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../login/login_screen.dart';
-import '../utils/constants/color.dart';
-import '../utils/constants/styles.dart';
+import '../../utils/constants/color.dart';
+import '../../utils/constants/styles.dart';
 
 class RegisterSuccess extends StatelessWidget {
   const RegisterSuccess({super.key});

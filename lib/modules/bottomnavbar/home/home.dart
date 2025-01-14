@@ -1,14 +1,15 @@
-import 'package:casalink/modules/bottomnavbar/home/diemdanh/diemdanh_screen.dart';
+import 'package:casalink/modules/chat/screen/list_conversation_screen.dart';
+import 'package:casalink/modules/diemdanh/diemdanh_screen.dart';
 import 'package:casalink/utils/constants/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../../utils/widget/custom_dialog.dart';
-import 'diemdanh/detail_screen.dart';
+import '../../diemdanh/detail_screen.dart';
 import 'excercise_screen.dart';
-import 'feedback/feedback_screen.dart';
-import 'notification/notification_screen.dart';
+import '../../feedback/feedback_screen.dart';
+import '../../notification/notification_screen.dart';
 import 'schedule_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -87,11 +88,22 @@ class _HomeScreenState extends State<HomeScreen> {
                               fit: BoxFit.fill,
                             ),
                             const Spacer(),
-                            // const Image(
-                            //     image: AssetImage('assets/images/mess.png')),
-                            // SizedBox(
-                            //   width: 16.w,
-                            // ),
+                            GestureDetector(
+                              onTap: () {
+                                pushWithoutNavBar(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: ((context) =>
+                                        const ListConversationScreen()),
+                                  ),
+                                );
+                              },
+                              child: const Image(
+                                  image: AssetImage('assets/images/mess.png')),
+                            ),
+                            SizedBox(
+                              width: 16.w,
+                            ),
                             InkWell(
                               onTap: () {
                                 pushWithoutNavBar(

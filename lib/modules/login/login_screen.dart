@@ -2,8 +2,8 @@ import 'package:casalink/modules/splash/onboarding.dart';
 import 'package:casalink/utils/constants/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../router/app_pages.dart';
-import '../router/app_router.dart';
+import '../../router/app_pages.dart';
+import '../../router/app_router.dart';
 import 'forgot_password_screen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -198,30 +198,30 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(
                     height: 25.h,
                   ),
-                  // Row(
-                  //   children: [
-                  //     const Spacer(),
-                  //     GestureDetector(
-                  //       onTap: () {
-                  //         Navigator.push(
-                  //           context,
-                  //           MaterialPageRoute(
-                  //             builder: ((context) => const ForgotPassScreen()),
-                  //           ),
-                  //         );
-                  //       },
-                  //       child: Text(
-                  //         'Quên mật khẩu',
-                  //         style: TextStyle(
-                  //           color: Colors.white,
-                  //           fontSize: 14.sp,
-                  //           //decoration: TextDecoration.underline,
-                  //           fontWeight: FontWeight.w500,
-                  //         ),
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),
+                  Row(
+                    children: [
+                      const Spacer(),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: ((context) => const ForgotPassScreen()),
+                            ),
+                          );
+                        },
+                        child: Text(
+                          'Quên mật khẩu',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14.sp,
+                            //decoration: TextDecoration.underline,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                   SizedBox(
                     height: 60.h,
                   ),

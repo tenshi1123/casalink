@@ -1,7 +1,9 @@
 import 'package:casalink/utils/constants/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import 'package:flutter_svg/svg.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+import '../../modules/chat/screen/chat_screen.dart';
 import '../constants/color.dart';
 
 Widget homeTab(
@@ -60,4 +62,71 @@ Widget homeTab(
       ),
     ),
   );
+}
+
+class ConversationItem extends StatelessWidget {
+  const ConversationItem({super.key, required this.index});
+  final int index;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const ChatScreen(),
+          ),
+        );
+      },
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Image(
+            image: const AssetImage('assets/images/avatar2.png'),
+            height: 48.h,
+            width: 48.w,
+          ),
+          SizedBox(
+            width: 220.w,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'PMP English - hỗ trợ $index',
+                  style: defaultText16B,
+                ),
+                Text(
+                  'Đây là tin nhắn cuối cùng $index',
+                  style: defaultText14M.copyWith(
+                    color: const Color(0xff292929).withValues(alpha: 0.6),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                '09:03',
+                style: defaultText12Re,
+              ),
+              SizedBox(
+                height: 8.h,
+              ),
+              SvgPicture.asset(
+                'assets/icons/seen.svg',
+                height: 17.h,
+                width: 14.w,
+                fit: BoxFit.scaleDown,
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
 }

@@ -2,8 +2,8 @@
 
 import 'package:casalink/modules/bottomnavbar/bottom_nav_bar.dart';
 
-import '../login/forgot_password_screen.dart';
-import '../login/login_screen.dart';
+import '../modules/login/forgot_password_screen.dart';
+import '../modules/login/login_screen.dart';
 import 'page_config.dart';
 
 enum AppPages {

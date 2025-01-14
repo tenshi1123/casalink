@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 
-import '../../../login/login_screen.dart';
+import '../../login/login_screen.dart';
 import '../../../utils/constants/styles.dart';
 import 'change_pass.dart';
 

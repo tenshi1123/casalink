@@ -2,7 +2,7 @@ import 'package:casalink/utils/constants/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../screen/class_screen.dart';
+import '../bottomnavbar/screen/class_screen.dart';
 import 'detail_screen.dart';
 
 class ListLessonScreen extends StatefulWidget {
