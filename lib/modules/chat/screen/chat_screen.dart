@@ -88,43 +88,32 @@ class _ChatScreenState extends State<ChatScreen> {
         appBar: AppBar(
           title: Row(
             children: [
-              CircleAvatar(
-                radius: 21.r,
-                backgroundColor: Colors.blue.shade800,
-                child: const Text('AH'),
+              Image(
+                image: const AssetImage('assets/images/avatar2.png'),
+                height: 40.h,
+                width: 40.w,
+                fit: BoxFit.fill,
               ),
               SizedBox(
                 width: 10.w,
               ),
               Text(
                 'Giáo viên 01',
-                style: defaultText18B.copyWith(
-                  color: Colors.white,
-                ),
+                style: defaultText18B,
               ),
             ],
           ),
           toolbarHeight: 60.h,
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white),
+            icon: const Icon(Icons.arrow_back_ios_new, color: Colors.black),
             onPressed: () => Navigator.of(context).pop(),
           ),
           flexibleSpace: Container(
-            decoration: BoxDecoration(
-              gradient: mainGradient,
+            decoration: const BoxDecoration(
+              //gradient: mainGradient,
+              color: Colors.white,
             ),
           ),
-          actions: [
-            IconButton(
-              icon: const Icon(
-                Icons.phone,
-                color: Colors.white,
-              ),
-              onPressed: () {
-                _makePhoneCall('19008978');
-              },
-            ),
-          ],
         ),
         body: Stack(
           children: [
@@ -141,7 +130,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   child: Align(
                     alignment: Alignment.topLeft,
                     child: Container(
-                        constraints: const BoxConstraints(maxWidth: 300),
+                        constraints: BoxConstraints(maxWidth: 300.w),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
                           color: main2Color.withOpacity(0.5),
@@ -186,6 +175,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     ),
                     Expanded(
                       child: Container(
+                        constraints: BoxConstraints(maxHeight: 120.h),
                         decoration: BoxDecoration(
                           color: state2,
                           borderRadius:

@@ -55,13 +55,20 @@ class ListConversationScreen extends StatelessWidget {
               ),
             ),
             const ConversationItem(
-              index: 1,
+              title1: 'Lê Thanh Hải',
+              title2: 'Xin chào! Mình là Lê Thanh Hải',
+              title3: 'assets/images/avatar2.png',
+              title4: '',
             ),
             SizedBox(
               height: 16.h,
             ),
             const ConversationItem(
-              index: 1,
+              title1: 'Nguyễn Thanh Huyền',
+              title2:
+                  'Xin chào! Mình là Nguyễn Thanh Huyền, rất vui khi được...',
+              title3: 'assets/images/avatar3.png',
+              title4: '',
             ),
             Padding(
               padding: const EdgeInsets.all(20.0),

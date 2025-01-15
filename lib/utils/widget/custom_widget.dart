@@ -65,9 +65,17 @@ Widget homeTab(
 }
 
 class ConversationItem extends StatelessWidget {
-  const ConversationItem({super.key, required this.index});
-  final int index;
+  const ConversationItem(
+      {super.key,
+      required this.title1,
+      required this.title2,
+      required this.title3,
+      required this.title4});
 
+  final String title1;
+  final String title2;
+  final String title3;
+  final String title4;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -84,7 +92,7 @@ class ConversationItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Image(
-            image: const AssetImage('assets/images/avatar2.png'),
+            image: AssetImage(title3),
             height: 48.h,
             width: 48.w,
           ),
@@ -95,11 +103,11 @@ class ConversationItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'PMP English - hỗ trợ $index',
+                  title1,
                   style: defaultText16B,
                 ),
                 Text(
-                  'Đây là tin nhắn cuối cùng $index',
+                  title2,
                   style: defaultText14M.copyWith(
                     color: const Color(0xff292929).withValues(alpha: 0.6),
                   ),

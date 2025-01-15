@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:casalink/utils/constants/styles.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -165,15 +168,30 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                           },
                         );
                       } else {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: ((context) => OtpScreen(
-                                  contact: phoneController.text,
-                                  verificationId: '',
-                                )),
-                          ),
-                        );
+                        //Lưu ý nhớ copy verificationId
+                        FirebaseAuth.instance.verifyPhoneNumber(
+                            // phoneNumber: '+84974225054',
+                            phoneNumber:
+                                '+84${phoneController.text.replaceFirst(RegExp(r'0'), '')}',
+                            verificationCompleted: (PhoneAuthCredential) {},
+                            verificationFailed: (error) {
+                              log(error.toString());
+                            },
+                            codeSent: (verificationId, forceResendingToken) {
+                              //Lưu ý nhớ copy verificationId
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: ((context) => OtpScreen(
+                                        contact: phoneController.text,
+                                        verificationId: verificationId,
+                                      )),
+                                ),
+                              );
+                            },
+                            codeAutoRetrievalTimeout: (verificationId) {
+                              log("Auto Retiveral timeout");
+                            });
                       }
                     },
                     child: Container(
