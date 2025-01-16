@@ -40,33 +40,20 @@ class ConversationModel {
 
 class MessageModel {
   var content;
-  final String messageType;
-  final String senderId;
+
   final String senderType;
   final DateTime createdAt;
-  final String? teacherName;
-  final String? studentName;
-  final String? teacherAvatar;
+
   MessageModel({
     required this.content,
-    required this.messageType,
-    required this.senderId,
     required this.senderType,
     required this.createdAt,
-    required this.teacherName,
-    required this.studentName,
-    required this.teacherAvatar,
   });
   factory MessageModel.fromJson(Map<String, dynamic> json) {
     return MessageModel(
       content: json['content'],
-      messageType: json['message_type'] ?? '',
-      senderId: json['sender_id'],
       senderType: json['sender_type'],
       createdAt: DateFormat("yyyy-MM-dd hh:mm:ss").parse(json['created_at']),
-      teacherName: json['teachers_full_name'],
-      studentName: json['students_full_name'],
-      teacherAvatar: json['teachers_avatar'],
     );
   }
 }

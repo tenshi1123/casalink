@@ -83,7 +83,10 @@ class ConversationItem extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const ChatScreen(),
+            builder: (context) => ChatScreen(
+              title: title1,
+              avatar: title3,
+            ),
           ),
         );
       },

@@ -4,15 +4,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:camera_camera/camera_camera.dart';
 import '../../../utils/constants/color.dart';
 import '../../../utils/constants/styles.dart';
 import 'package:image_picker/image_picker.dart';
 
-class ChatScreen extends StatefulWidget {
-  const ChatScreen({super.key});
+import '../model/chat_model.dart';
 
+class ChatScreen extends StatefulWidget {
+  const ChatScreen({super.key, required this.title, required this.avatar});
+  final String title;
+  final String avatar;
   @override
   State<ChatScreen> createState() => _ChatScreenState();
 }
@@ -89,7 +93,7 @@ class _ChatScreenState extends State<ChatScreen> {
           title: Row(
             children: [
               Image(
-                image: const AssetImage('assets/images/avatar2.png'),
+                image: AssetImage(widget.avatar),
                 height: 40.h,
                 width: 40.w,
                 fit: BoxFit.fill,
@@ -98,7 +102,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 width: 10.w,
               ),
               Text(
-                'Giáo viên 01',
+                widget.title,
                 style: defaultText18B,
               ),
             ],
@@ -118,7 +122,7 @@ class _ChatScreenState extends State<ChatScreen> {
         body: Stack(
           children: [
             ListView.builder(
-              itemCount: 1,
+              itemCount: listMessages.length,
               shrinkWrap: true,
               padding: EdgeInsets.only(bottom: 50.h),
               reverse: true,
@@ -128,17 +132,25 @@ class _ChatScreenState extends State<ChatScreen> {
                   padding: const EdgeInsets.only(
                       left: 14, right: 14, top: 10, bottom: 10),
                   child: Align(
-                    alignment: Alignment.topLeft,
+                    alignment: ((listMessages[index].senderType == "1")
+                        ? Alignment.topRight
+                        : Alignment.topLeft),
                     child: Container(
                         constraints: BoxConstraints(maxWidth: 300.w),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
-                          color: main2Color.withOpacity(0.5),
+                          color: (listMessages[index].senderType == "1")
+                              ? pri500
+                              : const Color(0xffF5F5F5),
                         ),
                         padding: const EdgeInsets.all(16),
                         child: Text(
-                          'hello thay',
-                          style: defaultText14Re,
+                          listMessages[index].content,
+                          style: defaultText14Re.copyWith(
+                            color: (listMessages[index].senderType == "1")
+                                ? Colors.white
+                                : Colors.black,
+                          ),
                         )),
                   ),
                 );
@@ -238,3 +250,29 @@ class _ChatScreenState extends State<ChatScreen> {
         ));
   }
 }
+
+List<MessageModel> listMessages = [
+  MessageModel(
+    content:
+        'Đã đi qua giới hạn duyên trời tự vỡ nát Nếu như ngay ban đầu đã không trân trọng nhau',
+    senderType: '0',
+    createdAt: DateFormat("yyyy-MM-dd HH:mm:ss").parse("2025-01-09 13:40:23"),
+  ),
+  MessageModel(
+    content:
+        'Hạnh phúc cớ sao càng giữ càng mong manh Có những nỗi đau ùa đến chẳng thể lành',
+    senderType: '1',
+    createdAt: DateFormat("yyyy-MM-dd HH:mm:ss").parse("2025-01-09 12:40:23"),
+  ),
+  MessageModel(
+    content:
+        'Tình đẹp như phép màu ta gặp nhau Ngập trong bao đắm say mà không biết kết thúc này Một ngày em đổi thay quên hết mối tình đã từng vô giá Chỉ có anh là người được biết sau cùng',
+    senderType: '0',
+    createdAt: DateFormat("yyyy-MM-dd HH:mm:ss").parse("2025-01-09 9:40:23"),
+  ),
+  MessageModel(
+    content: 'Nếu em giữ anh lại câu chuyện cũng thế thôi',
+    senderType: '1',
+    createdAt: DateFormat("yyyy-MM-dd HH:mm:ss").parse("2025-01-09 8:45:23"),
+  ),
+];

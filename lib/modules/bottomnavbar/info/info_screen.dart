@@ -95,79 +95,74 @@ class _MyTextFormFieldState extends State<MyTextFormField> {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        setState(() {});
-      },
-      child: Container(
-        width: 343.w,
-        height: 70.h,
-        margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-        padding: EdgeInsets.symmetric(horizontal: 16.w),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16.r),
-          color: Colors.white,
-          border: Border.all(
-            color: const Color(0xff292929).withAlpha(16),
-            width: 1,
+    return Container(
+      width: 343.w,
+      height: 70.h,
+      margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+      padding: EdgeInsets.symmetric(horizontal: 16.w),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16.r),
+        color: Colors.white,
+        border: Border.all(
+          color: const Color(0xff292929).withAlpha(16),
+          width: 1,
+        ),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: 8.h,
+              ),
+              Text(
+                widget.labelText,
+                style: defaultText14M.copyWith(
+                  color: const Color(0xff292929).withAlpha(80),
+                ),
+              ),
+              SizedBox(
+                height: 30.h,
+                width: 300.w,
+                child: TextFormField(
+                  onTap: () {
+                    setState(() {});
+                  },
+                  controller: widget.controller,
+                  keyboardType: widget.keyboardType,
+                  style: defaultText16M,
+                  focusNode: _focusNode,
+                  //initialValue: initialValue,
+                  onChanged: widget.onChanged,
+                  decoration: const InputDecoration(
+                    border: InputBorder.none,
+                    //hintText: labelText,
+                    hintStyle: TextStyle(color: Colors.grey),
+                    contentPadding: EdgeInsets.symmetric(vertical: 1),
+                    // suffixIcon: _focusNode.hasFocus
+                    //     ? IconButton(
+                    //         icon: const Icon(Icons.close),
+                    //         onPressed: _focusNode.unfocus,
+                    //       )
+                    //     : const Icon(Icons.edit),
+                  ),
+                ),
+              ),
+            ],
           ),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 8.h,
-                ),
-                Text(
-                  widget.labelText,
-                  style: defaultText14M.copyWith(
-                    color: const Color(0xff292929).withAlpha(80),
-                  ),
-                ),
-                SizedBox(
-                  height: 30.h,
-                  width: 300.w,
-                  child: TextFormField(
-                    onTap: () {
-                      setState(() {});
-                    },
-                    controller: widget.controller,
-                    keyboardType: widget.keyboardType,
-                    style: defaultText16M,
-                    focusNode: _focusNode,
-                    //initialValue: initialValue,
-                    onChanged: widget.onChanged,
-                    decoration: const InputDecoration(
-                      border: InputBorder.none,
-                      //hintText: labelText,
-                      hintStyle: TextStyle(color: Colors.grey),
-                      contentPadding: EdgeInsets.symmetric(vertical: 1),
-                      // suffixIcon: _focusNode.hasFocus
-                      //     ? IconButton(
-                      //         icon: const Icon(Icons.close),
-                      //         onPressed: _focusNode.unfocus,
-                      //       )
-                      //     : const Icon(Icons.edit),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            // IconButton(
-            //   icon: const Icon(Icons.close),
-            //   onPressed: () {
-            //     // Xử lý khi người dùng nhấn nút xóa
-            //     if (controller != null) {
-            //       controller?.clear();
-            //     }
-            //     // Thực hiện các hành động khác nếu cần
-            //   },
-            // ),
-          ],
-        ),
+          // IconButton(
+          //   icon: const Icon(Icons.close),
+          //   onPressed: () {
+          //     // Xử lý khi người dùng nhấn nút xóa
+          //     if (controller != null) {
+          //       controller?.clear();
+          //     }
+          //     // Thực hiện các hành động khác nếu cần
+          //   },
+          // ),
+        ],
       ),
     );
   }
