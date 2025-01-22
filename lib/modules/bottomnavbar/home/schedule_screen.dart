@@ -1,9 +1,15 @@
+import 'package:casalink/models/schedule_model.dart';
+import 'package:casalink/repo/schedule_repo.dart';
 import 'package:casalink/utils/constants/color.dart';
 import 'package:casalink/utils/constants/styles.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
+import '../../diemdanh/detail_screen.dart';
 import 'utils.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ScheduleScreen extends StatefulWidget {
   const ScheduleScreen({super.key});
@@ -13,7 +19,7 @@ class ScheduleScreen extends StatefulWidget {
 }
 
 class _ScheduleScreenState extends State<ScheduleScreen> {
-  late final ValueNotifier<List<Event>> _selectedEvents;
+  late final ValueNotifier<List<ScheduleModel>> _selectedEvents;
   CalendarFormat _calendarFormat = CalendarFormat.month;
   RangeSelectionMode _rangeSelectionMode = RangeSelectionMode
       .toggledOn; // Can be toggled on/off by longpressing a date
@@ -21,12 +27,18 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   DateTime? _selectedDay;
   DateTime? _rangeStart;
   DateTime? _rangeEnd;
-
+  late List<ScheduleModel> _listLichHoc;
+  late List<ScheduleModel> _listFullLich = [];
   @override
   void initState() {
     super.initState();
-
     _selectedDay = _focusedDay;
+    _listLichHoc = [];
+    getFullLich(
+        dayStart: DateFormat('dd-MM-yyyy')
+            .format(DateTime(_focusedDay.year, _focusedDay.month, 1)),
+        dayEnd: DateFormat('dd-MM-yyyy')
+            .format(DateTime(_focusedDay.year, _focusedDay.month + 1, 0)));
     _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!));
   }
 
@@ -36,18 +48,38 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
     super.dispose();
   }
 
-  List<Event> _getEventsForDay(DateTime day) {
-    // Implementation example
-    return kEvents[day] ?? [];
+  Future<void> getSchedule(
+      {required String dayStart, required String dayEnd}) async {
+    _listLichHoc = await ScheduleRepo().getScheduleList(dayStart, dayEnd);
   }
 
-  List<Event> _getEventsForRange(DateTime start, DateTime end) {
-    // Implementation example
-    final days = daysInRange(start, end);
+  Future<void> getFullLich(
+      {required String dayStart, required String dayEnd}) async {
+    _listFullLich = await ScheduleRepo().getScheduleList(dayStart, dayEnd);
+  }
 
-    return [
-      for (final d in days) ..._getEventsForDay(d),
-    ];
+  List<ScheduleModel> _getEventsForDay(DateTime day) {
+    // Implementation example
+    getSchedule(
+        dayStart: DateFormat('dd-MM-yyyy').format(day),
+        dayEnd:
+            DateFormat('dd-MM-yyyy').format(day.add(const Duration(days: 1))));
+    return _listLichHoc;
+  }
+
+  // List<ScheduleModel> _getEventLoad(DateTime day) {
+  //   List<ScheduleModel> test = [
+  //     ..._listFullLich.where((e) => e.createdDate.day == day.day)
+  //   ];
+  //   return test;
+  // }
+
+  List<ScheduleModel> _getEventsForRange(DateTime start, DateTime end) {
+    getSchedule(
+      dayStart: DateFormat('dd-MM-yyyy').format(start),
+      dayEnd: DateFormat('dd-MM-yyyy').format(end),
+    );
+    return _listLichHoc;
   }
 
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
@@ -128,7 +160,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                           offset: const Offset(0, 4),
                         ),
                       ]),
-                  child: TableCalendar<Event>(
+                  child: TableCalendar<ScheduleModel>(
                     locale: 'vi_VI',
                     firstDay: kFirstDay,
                     lastDay: kLastDay,
@@ -142,14 +174,12 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                     headerStyle: HeaderStyle(titleTextStyle: defaultText16M),
                     daysOfWeekStyle: DaysOfWeekStyle(
                       weekdayStyle: defaultText14M,
-                      weekendStyle: defaultText14M.copyWith(
-                        color: Colors.red,
-                      ),
+                      weekendStyle: defaultText14M,
                     ),
                     daysOfWeekHeight: 36.h,
                     calendarFormat: _calendarFormat,
                     rangeSelectionMode: _rangeSelectionMode,
-                    eventLoader: _getEventsForDay,
+                    // eventLoader: _getEventLoad,
                     startingDayOfWeek: StartingDayOfWeek.monday,
                     calendarBuilders: CalendarBuilders(
                       markerBuilder: (context, date, events) {
@@ -162,8 +192,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                       // Use `CalendarStyle` to customize the UI
                       outsideDaysVisible: true,
                       defaultTextStyle: defaultText14M,
-                      weekendTextStyle:
-                          defaultText14M.copyWith(color: Colors.red),
+                      weekendTextStyle: defaultText14M,
                       todayTextStyle:
                           defaultText14M.copyWith(color: Colors.white),
                     ),
@@ -189,151 +218,53 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                   'Lịch học của bạn',
                   style: defaultText16B,
                 ),
-                ValueListenableBuilder<List<Event>>(
+                ValueListenableBuilder<List<ScheduleModel>>(
                   valueListenable: _selectedEvents,
                   builder: (context, value, _) {
-                    return Stack(
-                      children: [
-                        ValueListenableBuilder<List<Event>>(
-                          valueListenable: _selectedEvents,
-                          builder: (context, value, _) {
-                            return ListView.builder(
-                              shrinkWrap: true,
-                              physics: const ScrollPhysics(),
-                              itemCount: value.length,
-                              itemBuilder: (context, index) {
-                                return Container(
-                                  margin: EdgeInsets.only(top: 16.h),
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: 16.w,
-                                    vertical: 16.h,
-                                  ),
-                                  width: 343.w,
-                                  height: 136.h,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(12.r)),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: const Color(0xff273D8C)
-                                            .withValues(alpha: 0.12),
-                                        blurRadius: 16,
-                                        spreadRadius: 0,
-                                        offset: const Offset(
-                                            0, 4), // Shadow position
-                                      ),
-                                    ],
-                                  ),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Container(
-                                            width: 90.w,
-                                            height: 80.h,
-                                            decoration: BoxDecoration(
-                                              color: const Color(0xff273D8C),
-                                              borderRadius: BorderRadius.all(
-                                                Radius.circular(12.r),
-                                              ),
-                                            ),
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceEvenly,
-                                              children: [
-                                                Text(
-                                                  '01',
-                                                  style:
-                                                      defaultText16B.copyWith(
-                                                          color: Colors.white,
-                                                          fontSize: 24.sp),
-                                                ),
-                                                Text(
-                                                  'Tháng 12',
-                                                  style:
-                                                      defaultText16M.copyWith(
-                                                          color: Colors.white),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: 10.w,
-                                          ),
-                                          Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                'Lớp NC',
-                                                style: defaultText18B,
-                                              ),
-                                              SizedBox(
-                                                height: 8.h,
-                                              ),
-                                              Text(
-                                                'Thứ 6 (08:30 - 10:30)',
-                                                style: defaultText14M,
-                                              ),
-                                            ],
-                                          )
-                                        ],
-                                      ),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          RichText(
-                                            text: TextSpan(
-                                              text: 'Phòng học: ',
-                                              style: defaultText16M,
-                                              children: [
-                                                TextSpan(
-                                                    text: '101',
-                                                    style:
-                                                        defaultText16B.copyWith(
-                                                            color: const Color(
-                                                                0xff273D8C))),
-                                              ],
-                                            ),
-                                          ),
-                                          Container(
-                                            width: 1.w,
-                                            height: 20.h,
-                                            color: const Color(0xff273D8C),
-                                          ),
-                                          RichText(
-                                            text: TextSpan(
-                                              text: 'Chi nhánh: ',
-                                              style: defaultText16M,
-                                              children: [
-                                                TextSpan(
-                                                    text: 'Mỹ Đình',
-                                                    style:
-                                                        defaultText16B.copyWith(
-                                                            color: const Color(
-                                                                0xff273D8C))),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              },
-                            );
-                          },
-                        ),
-                      ],
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      physics: const ScrollPhysics(),
+                      itemCount: value.length,
+                      itemBuilder: (context, index) {
+                        return ItemTableCalender(
+                          model: value[index],
+                        );
+                      },
                     );
                   },
                 ),
+                // FutureBuilder(
+                //   future: ScheduleRepo().getScheduleList(
+                //       DateFormat('dd-MM-yyyy')
+                //           .format(_rangeStart ?? DateTime.now()),
+                //       DateFormat('dd-MM-yyyy')
+                //           .format(_rangeEnd ?? DateTime.now())), // Hàm gọi API
+                //   //               if (start != null && end != null) {
+                //   //   _selectedEvents.value = ScheduleRepo().getScheduleList(dayStart, dayEnd),
+                //   // } else if (start != null) {
+                //   //   _selectedEvents.value = ScheduleRepo().getScheduleList(dayStart, dayEnd),
+                //   // } else if (end != null) {
+                //   //   _selectedEvents.value = ScheduleRepo().getScheduleList(dayStart, dayEnd),
+                //   // }
+                //   builder: (context, snapshot) {
+                //     if (snapshot.connectionState == ConnectionState.waiting) {
+                //       return const CircularProgressIndicator();
+                //     } else if (snapshot.hasError) {
+                //       return Text(
+                //         'Something went wrong',
+                //         style: defaultText14M,
+                //       );
+                //     } else if (snapshot.hasData) {
+                //       _listLichHoc = snapshot.data as List<ScheduleModel>;
+                //       return
+                //     } else {
+                //       return Text(
+                //         'Something went wrong2',
+                //         style: defaultText14M,
+                //       );
+                //     }
+                //   },
+                // ),
               ],
             ),
           ),
@@ -361,4 +292,193 @@ AnimatedContainer buildCalendarDayMarker({
     width: 5.w,
     height: 5.h,
   );
+}
+
+class ItemTableCalender extends StatefulWidget {
+  final ScheduleModel model;
+  const ItemTableCalender({super.key, required this.model});
+
+  @override
+  State<ItemTableCalender> createState() => _ItemTableCalenderState();
+}
+
+class _ItemTableCalenderState extends State<ItemTableCalender> {
+  bool _isLoading = false;
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () async {
+        setState(() {
+          _isLoading = true;
+        });
+        DetaiLessonModel listExcercise = await ScheduleRepo().getDetailSchedule(
+          checkinOffId: widget.model.checkinOffId,
+          typeLearn: widget.model.typeLearn,
+          meetingId: widget.model.meetingId,
+        );
+        //dm nhìn cái lol
+        setState(() {
+          _isLoading = false;
+        });
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: ((context) => DetailScreen(
+                  title1: 'P.101 - Mỹ Đình (26/06/2024)',
+                  title2: 'Bài 1: Cấu trúc câu',
+                  title3:
+                      'Nắm vững các cấu trúc câu trong tiếng Anh (sentence structure) sẽ giúp bạn cải thiện kỹ năng Writing và Speaking ngày càng linh hoạt, tự tin.',
+                  listExcercise: listExcercise,
+                )),
+          ),
+        );
+      },
+      child: _isLoading
+          ? SizedBox(
+              height: 136.h,
+              width: 343.w,
+              child: Center(
+                child: SizedBox(
+                  width: 40.w,
+                  height: 40.h,
+                  child: const CircularProgressIndicator(),
+                ),
+              ),
+            )
+          : Container(
+              margin: EdgeInsets.only(top: 16.h),
+              padding: EdgeInsets.symmetric(
+                horizontal: 16.w,
+                vertical: 16.h,
+              ),
+              width: 343.w,
+              height: 136.h,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(12.r)),
+                boxShadow: [
+                  BoxShadow(
+                    color: const Color(0xff273D8C).withValues(alpha: 0.12),
+                    blurRadius: 16,
+                    spreadRadius: 0,
+                    offset: const Offset(0, 4), // Shadow position
+                  ),
+                ],
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        width: 90.w,
+                        height: 80.h,
+                        decoration: BoxDecoration(
+                          color: const Color(0xff273D8C),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(12.r),
+                          ),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Text(
+                              widget.model.createdDate.day.toString(),
+                              style: defaultText16B.copyWith(
+                                  color: Colors.white, fontSize: 24.sp),
+                            ),
+                            Text(
+                              'Tháng ${widget.model.createdDate.month}',
+                              style:
+                                  defaultText16M.copyWith(color: Colors.white),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        width: 10.w,
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.model.courseName,
+                            style: defaultText18B,
+                          ),
+                          SizedBox(
+                            height: 8.h,
+                          ),
+                          Text(
+                            widget.model.timeStart,
+                            style: defaultText14M,
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                  (widget.model.typeLearn == 'off')
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            RichText(
+                              text: TextSpan(
+                                text: 'Phòng học: ',
+                                style: defaultText16M,
+                                children: [
+                                  TextSpan(
+                                      text: widget.model.phongHocName ??
+                                          'Không xác định',
+                                      style: defaultText16B.copyWith(
+                                          color: const Color(0xff273D8C))),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              width: 1.w,
+                              height: 20.h,
+                              color: const Color(0xff273D8C),
+                            ),
+                            RichText(
+                              text: TextSpan(
+                                text: 'Chi nhánh: ',
+                                style: defaultText16M,
+                                children: [
+                                  TextSpan(
+                                      text: widget.model.cosoName ??
+                                          'Không xác định',
+                                      style: defaultText16B.copyWith(
+                                          color: const Color(0xff273D8C))),
+                                ],
+                              ),
+                            ),
+                          ],
+                        )
+                      : (widget.model.typeLearn == 'zoom')
+                          ? RichText(
+                              text: TextSpan(
+                                text: 'Phòng học: ',
+                                style: defaultText16M,
+                                children: [
+                                  TextSpan(
+                                      text: 'zoom',
+                                      recognizer: TapGestureRecognizer()
+                                        ..onTap = () async {
+                                          if (!await launchUrl(Uri.parse(
+                                              widget.model.linkZoom ?? ''))) {
+                                            throw Exception(
+                                                'Could not launch ');
+                                          }
+                                        },
+                                      style: defaultText16B.copyWith(
+                                          color: const Color(0xff273D8C))),
+                                ],
+                              ),
+                            )
+                          : const SizedBox(),
+                ],
+              ),
+            ),
+    );
+  }
 }

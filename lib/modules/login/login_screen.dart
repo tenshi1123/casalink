@@ -1,7 +1,12 @@
 import 'package:casalink/modules/splash/onboarding.dart';
+import 'package:casalink/utils/constants/color.dart';
 import 'package:casalink/utils/constants/styles.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../models/info_model.dart';
+import '../../repo/info_repo.dart';
+import '../../repo/login_repo.dart';
 import '../../router/app_pages.dart';
 import '../../router/app_router.dart';
 import 'forgot_password_screen.dart';
@@ -256,9 +261,47 @@ class _LoginScreenState extends State<LoginScreen> {
                           },
                         );
                       } else {
-                        AppRouter.toPage(context, AppPages.BottomNavBarPage,
-                            // blocValue: _authBloc,
-                            arguments: {});
+                        bool loged = await LoginRepo().login(
+                          studenIdController?.text ?? '',
+                          passController?.text ?? '',
+                        );
+                        if (loged == true) {
+                          InfoModel infoModel = await InfoRepo().getInfo();
+                          AppRouter.toPage(context, AppPages.BottomNavBarPage,
+                              // blocValue: _authBloc,
+                              arguments: {
+                                'infoModel': infoModel,
+                              });
+                        } else {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return CupertinoAlertDialog(
+                                title: const Text('Vui lòng thử lại'),
+                                content: const Text(
+                                    'Vui lòng kiểm tra lại mã học sinh và mật khẩu của bạn'),
+                                actions: <Widget>[
+                                  CupertinoDialogAction(
+                                    isDefaultAction: true,
+                                    child: Text(
+                                      'Yes',
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        color: pri500,
+                                      ),
+                                    ),
+                                    onPressed: () {
+                                      Navigator.of(context, rootNavigator: true)
+                                          .pop(
+                                        (_) => false,
+                                      );
+                                    },
+                                  )
+                                ],
+                              );
+                            },
+                          );
+                        }
                       }
                     },
                     child: Container(

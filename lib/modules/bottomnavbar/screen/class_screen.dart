@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 
+import '../../../models/schedule_model.dart';
+import '../../../repo/schedule_repo.dart';
 import '../../diemdanh/detail_screen.dart';
 
 class ClassScreen extends StatelessWidget {
@@ -111,7 +113,13 @@ class ClassScreen extends StatelessWidget {
                 itemCount: 5,
                 itemBuilder: (BuildContext context, int index) {
                   return InkWell(
-                    onTap: () {
+                    onTap: () async {
+                      DetaiLessonModel listExcercise =
+                          await ScheduleRepo().getDetailSchedule(
+                        checkinOffId: '',
+                        typeLearn: '',
+                        meetingId: '',
+                      );
                       pushWithoutNavBar(
                         context,
                         MaterialPageRoute(
@@ -119,6 +127,7 @@ class ClassScreen extends StatelessWidget {
                                 title1: time[index],
                                 title2: title[index],
                                 title3: content[index],
+                                listExcercise: listExcercise,
                               )),
                         ),
                       );

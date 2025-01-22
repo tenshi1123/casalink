@@ -1,9 +1,14 @@
+import "dart:io";
+
 import "package:casalink/modules/bottomnavbar/home/home.dart";
 import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
+import "package:onesignal_flutter/onesignal_flutter.dart";
 import "package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart";
 import 'package:flutter_svg/flutter_svg.dart';
 
+import "../../models/info_model.dart";
+import "../../utils/onesignal.dart";
 import "screen/class_screen.dart";
 import "info/personal_screen.dart";
 import "screen/video_course.dart";
@@ -11,8 +16,9 @@ import "screen/video_course.dart";
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({
     super.key,
+    required this.infoModel,
   });
-
+  final InfoModel infoModel;
   @override
   State<BottomNavBar> createState() => _BottomNavBarState();
 }
@@ -22,12 +28,36 @@ class _BottomNavBarState extends State<BottomNavBar> {
   @override
   void initState() {
     super.initState();
-    //setupOneSignal();
+    setupOneSignal();
+  }
+
+  Future<void> setupOneSignal() async {
+    await initOneSignal();
+    if (Platform.isAndroid) {
+      OneSignal.Notifications.addClickListener((event) {});
+    } else {
+      //do nothing :v tự báo chính mình
+      OneSignal.Notifications.addClickListener((event) {});
+    }
+
+    promptPolicyPrivacy();
+  }
+
+  Future<void> promptPolicyPrivacy() async {
+    if (Platform.isAndroid) {
+      OneSignal.consentRequired(true);
+      OneSignal.consentGiven(true);
+    } else {
+      //do nothing :v
+    }
+    // sendUserTag(userId);
   }
 
   List<PersistentTabConfig> _tabs() => [
         PersistentTabConfig(
-          screen: const HomeScreen(),
+          screen: HomeScreen(
+            infoModel: widget.infoModel,
+          ),
           item: ItemConfig(
             icon: SvgPicture.asset(
               'assets/icons/home.svg',

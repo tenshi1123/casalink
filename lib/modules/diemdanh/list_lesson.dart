@@ -1,3 +1,5 @@
+import 'package:casalink/models/schedule_model.dart';
+import 'package:casalink/repo/schedule_repo.dart';
 import 'package:casalink/utils/constants/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -52,15 +54,22 @@ class _ListLessonScreenState extends State<ListLessonScreen> {
                 itemCount: 5,
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(
-                    onTap: () {
+                    onTap: () async {
+                      DetaiLessonModel listExcercise =
+                          await ScheduleRepo().getDetailSchedule(
+                        checkinOffId: '',
+                        typeLearn: '',
+                        meetingId: '',
+                      );
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: ((context) => const DetailScreen(
+                          builder: ((context) => DetailScreen(
                                 title1: 'P.101 - Mỹ Đình (26/06/2024)',
                                 title2: 'Bài 1: Cấu trúc câu',
                                 title3:
                                     'Nắm vững các cấu trúc câu trong tiếng Anh (sentence structure) sẽ giúp bạn cải thiện kỹ năng Writing và Speaking ngày càng linh hoạt, tự tin.',
+                                listExcercise: listExcercise,
                               )),
                         ),
                       );

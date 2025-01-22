@@ -1,0 +1,86 @@
+import 'package:casalink/repo/login_repo.dart';
+import 'package:dio/dio.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../../utils/constants/api_path.dart';
+import '../models/info_model.dart';
+
+class InfoRepo {
+  Dio dio = Dio();
+  Future<InfoModel> getInfo() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? token = prefs.getString('token');
+    dio.options.headers['Authorization'] = 'Bearer $token';
+    Response response;
+    try {
+      response = await dio.get(
+        ApiPath.user,
+      );
+    } on DioException {
+      String newToken = await LoginRepo().refreshToken();
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('token', newToken);
+      dio.options.headers['Authorization'] = 'Bearer $newToken';
+      response = await dio.get(
+        ApiPath.user,
+      );
+      return InfoModel.fromJson(response.data['data']);
+    }
+    return InfoModel.fromJson(response.data['data']);
+  }
+
+  Future deleteInfo() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? token = prefs.getString('token');
+    dio.options.headers['Authorization'] = 'Bearer $token';
+    await dio.post(
+      ApiPath.deleteUser,
+    );
+  }
+
+  Future<String> changePassword(
+      String oldPass, String password, String newPass) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? token = prefs.getString('token');
+    dio.options.headers['Authorization'] = 'Bearer $token';
+    Response response;
+    Response response2;
+    response = await dio.get(
+      ApiPath.checkPassword,
+      queryParameters: {
+        'password': oldPass,
+      },
+    );
+    if (response.data['message'] == "Mật khẩu đúng") {
+      response2 = await dio.post(ApiPath.changePassword, data: {
+        'password': password,
+        're_password': newPass,
+      });
+      return response2.data['message'];
+    } else {
+      return response.data['message'];
+    }
+  }
+
+  Future forgotPassword(String phone, String pass, String rePass) async {
+    await saveOtp(phone);
+    await dio.post(ApiPath.forgotPassword, data: {
+      'phone': phone,
+      'password': pass,
+      're_password': rePass,
+    });
+  }
+
+  Future<bool> checkPhone(String phone) async {
+    Response response = await dio.post(ApiPath.checkPhone, data: {
+      'phone': phone,
+    });
+    return response.data['status'];
+  }
+
+  Future saveOtp(String phone) async {
+    await dio.post(
+      ApiPath.saveOtp,
+      data: {'phone': phone, 'otp': '123456123456'},
+    );
+  }
+}

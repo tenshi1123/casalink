@@ -5,6 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import '../../../models/info_model.dart';
+import '../../../models/schedule_model.dart';
+import '../../../repo/excercise_repo.dart';
+import '../../../repo/schedule_repo.dart';
 import '../../../utils/widget/custom_dialog.dart';
 import '../../diemdanh/detail_screen.dart';
 import 'excercise_screen.dart';
@@ -14,8 +18,8 @@ import 'schedule_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
-
+  const HomeScreen({super.key, required this.infoModel});
+  final InfoModel infoModel;
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -26,6 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final controller1 = PageController(viewportFraction: 1, keepPage: true);
   final controller2 = PageController(viewportFraction: 0.75, keepPage: true);
   final controller3 = PageController(viewportFraction: 0.75, keepPage: true);
+  bool _isLoading = false;
   @override
   Widget build(BuildContext context) {
     final page1 = List.generate(
@@ -137,7 +142,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           height: 4.h,
                         ),
                         Text(
-                          'Nguyễn Thế Hoàng',
+                          widget.infoModel.fullName,
                           style: defaultText20B.copyWith(color: Colors.white),
                         ),
                       ],
@@ -275,20 +280,42 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         GestureDetector(
-                          onTap: () {
+                          onTap: () async {
+                            setState(() {
+                              _isLoading = true;
+                            });
+                            List<HomeWorkModel> listExcercise =
+                                await ExcerciseRepo().getExcercises();
+                            setState(() {
+                              _isLoading = false;
+                            });
                             pushWithoutNavBar(
                               context,
                               MaterialPageRoute(
-                                builder: ((context) => const ExcerciseScreen()),
+                                builder: ((context) => ExcerciseScreen(
+                                      listExcercise: listExcercise,
+                                    )),
                               ),
                             );
                           },
-                          child: Image.asset(
-                            'assets/images/bai_tap.png',
-                            height: 144.h,
-                            width: 163.w,
-                            fit: BoxFit.fill,
-                          ),
+                          child: _isLoading
+                              ? SizedBox(
+                                  height: 144.h,
+                                  width: 163.w,
+                                  child: Center(
+                                    child: SizedBox(
+                                      width: 40.w,
+                                      height: 40.h,
+                                      child: const CircularProgressIndicator(),
+                                    ),
+                                  ),
+                                )
+                              : Image.asset(
+                                  'assets/images/bai_tap.png',
+                                  height: 144.h,
+                                  width: 163.w,
+                                  fit: BoxFit.fill,
+                                ),
                         ),
                       ],
                     ),
@@ -796,15 +823,21 @@ class UpcomingSchedule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
+      onTap: () async {
+        DetaiLessonModel listExcercise = await ScheduleRepo().getDetailSchedule(
+          checkinOffId: '',
+          typeLearn: '',
+          meetingId: '',
+        );
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: ((context) => const DetailScreen(
+            builder: ((context) => DetailScreen(
                   title1: 'P.101 - Mỹ Đình (26/06/2024)',
                   title2: 'Bài 1: Cấu trúc câu',
                   title3:
                       'Nắm vững các cấu trúc câu trong tiếng Anh (sentence structure) sẽ giúp bạn cải thiện kỹ năng Writing và Speaking ngày càng linh hoạt, tự tin.',
+                  listExcercise: listExcercise,
                 )),
           ),
         );

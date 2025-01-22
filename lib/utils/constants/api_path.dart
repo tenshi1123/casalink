@@ -3,32 +3,22 @@ class ApiPath {
   static const String baseUrl = 'https://casalink.edu.vn/api';
   //api về đăng nhập, các thông tin của học sinh
   static const String login = '$baseUrl/login';
-  static const String loginParent = '$baseUrl/login/parents';
-  static const String getlistChildren = '$baseUrl/parents/children';
+
   static const String register = '$baseUrl/register';
   static const String forgotPassword = '$baseUrl/forgot-password';
   static const String checkPhone = '$baseUrl/check-phone';
   static const String saveOtp = '$baseUrl/save-opt';
   static const String refreshToken = '$baseUrl/refresh-token';
-  // đăng ký tư vấn
-  static const String learned = '$baseUrl/contact/learned/add';
-  static const String contact = '$baseUrl/contact/add';
-  // danh sách danh mục
-  static const String category = '$baseUrl/category';
-  // danh sách khóa học
-  static const String course = '$baseUrl/course';
 
-  // lịch học sắp tới
-  static const String schedule = '$baseUrl/schedule';
-
-  // danh sách lịch học
-  static const String listSchedule = '$baseUrl/schedule/list';
-
-  // theo dõi lớp học điểm danh
-  static const String lopHoc = '$baseUrl/class';
+  // lịch học
+  static const String listSchedule = '$baseUrl/schedule';
 
   // chi tiết lớp học
-  static const String detailClass = '$baseUrl/detail/class';
+  static const String detailSchedule = '$baseUrl/homework';
+
+  // danh sách bài tập về nhà
+  static const String listExercise = '$baseUrl/exercise';
+
   // danh sách bài tập đã nộp
   static const String homeworkSubmited = '$baseUrl/homework/submit';
   // chi tiết buổi điểm danh
@@ -66,6 +56,7 @@ class ApiPath {
 
   //Gửi thông tin onesignal id
   static const String pushOnsignalId = '$baseUrl/notify/onesignal_id';
+
   //Xóa thông tin onesignal id
   static const String deleteOnsignalId = '$baseUrl/notify/remove/onesignal_id';
   //Lấy danh sách banner

@@ -56,6 +56,11 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>sms</string>
+		<string>tel</string>
+	</array>
 	<key>NSCameraUsageDescription</key>
     <string>The app requires access to camera to take pictures and send them to the teacher.</string>
 	<key>NSPhotoLibraryUsageDescription</key>

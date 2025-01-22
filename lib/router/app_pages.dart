@@ -2,6 +2,7 @@
 
 import 'package:casalink/modules/bottomnavbar/bottom_nav_bar.dart';
 
+import '../models/info_model.dart';
 import '../modules/login/forgot_password_screen.dart';
 import '../modules/login/login_screen.dart';
 import 'page_config.dart';
@@ -41,7 +42,11 @@ extension AppPagesExtension on AppPages {
       case AppPages.ForgotPassScreen:
         return PageConfig()..pageBuilder = () => const ForgotPassScreen();
       case AppPages.BottomNavBarPage:
-        return PageConfig()..pageBuilder = () => const BottomNavBar();
+        final InfoModel infoModel = arguments!['infoModel'];
+        return PageConfig()
+          ..pageBuilder = () => BottomNavBar(
+                infoModel: infoModel,
+              );
       // default:
       //   throw StateError(
       //     "Missing page: ${page.toString()} in AppPagesExtension.getPageConfig()",
