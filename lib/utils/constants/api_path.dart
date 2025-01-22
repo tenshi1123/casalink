@@ -19,6 +19,12 @@ class ApiPath {
   // danh sách bài tập về nhà
   static const String listExercise = '$baseUrl/exercise';
 
+  // danh sách feedback
+  static const String listFeedback = '$baseUrl/feedback';
+
+  // Chi tiết feedback
+  static const String detailFeedback = '$baseUrl/feedback/detail';
+
   // danh sách bài tập đã nộp
   static const String homeworkSubmited = '$baseUrl/homework/submit';
   // chi tiết buổi điểm danh

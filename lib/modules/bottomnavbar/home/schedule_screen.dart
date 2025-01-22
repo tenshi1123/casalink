@@ -28,17 +28,13 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   DateTime? _rangeStart;
   DateTime? _rangeEnd;
   late List<ScheduleModel> _listLichHoc;
-  late List<ScheduleModel> _listFullLich = [];
+
   @override
   void initState() {
     super.initState();
     _selectedDay = _focusedDay;
     _listLichHoc = [];
-    getFullLich(
-        dayStart: DateFormat('dd-MM-yyyy')
-            .format(DateTime(_focusedDay.year, _focusedDay.month, 1)),
-        dayEnd: DateFormat('dd-MM-yyyy')
-            .format(DateTime(_focusedDay.year, _focusedDay.month + 1, 0)));
+
     _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!));
   }
 
@@ -51,11 +47,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   Future<void> getSchedule(
       {required String dayStart, required String dayEnd}) async {
     _listLichHoc = await ScheduleRepo().getScheduleList(dayStart, dayEnd);
-  }
-
-  Future<void> getFullLich(
-      {required String dayStart, required String dayEnd}) async {
-    _listFullLich = await ScheduleRepo().getScheduleList(dayStart, dayEnd);
+    _selectedEvents.value = _listLichHoc;
   }
 
   List<ScheduleModel> _getEventsForDay(DateTime day) {
@@ -221,16 +213,23 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                 ValueListenableBuilder<List<ScheduleModel>>(
                   valueListenable: _selectedEvents,
                   builder: (context, value, _) {
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      physics: const ScrollPhysics(),
-                      itemCount: value.length,
-                      itemBuilder: (context, index) {
-                        return ItemTableCalender(
-                          model: value[index],
-                        );
-                      },
-                    );
+                    return value.isEmpty
+                        ? Center(
+                            child: Text(
+                              'Không có lịch học',
+                              style: defaultText16B,
+                            ),
+                          )
+                        : ListView.builder(
+                            shrinkWrap: true,
+                            physics: const ScrollPhysics(),
+                            itemCount: value.length,
+                            itemBuilder: (context, index) {
+                              return ItemTableCalender(
+                                model: value[index],
+                              );
+                            },
+                          );
                   },
                 ),
                 // FutureBuilder(
