@@ -68,15 +68,7 @@ class ListConversationScreen extends StatelessWidget {
               title3: 'assets/images/avatar3.png',
               title4: '',
             ),
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: HtmlWidget(
-                '''
 
-              ''',
-                textStyle: defaultText14B,
-              ),
-            ),
             // ListView.builder(
             //     shrinkWrap: true,
             //     padding: EdgeInsets.only(left: 20.w, right: 20.w, bottom: 20.w),

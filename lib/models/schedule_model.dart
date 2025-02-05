@@ -140,15 +140,91 @@ class HomeWorkModel {
 // thông tin tài liệu
 class DocumentModel {
   final String point;
-  final List<String> linkHomework;
+  final String name;
   DocumentModel({
     required this.point,
-    required this.linkHomework,
+    required this.name,
   });
   factory DocumentModel.fromJson(Map<String, dynamic> json) {
     return DocumentModel(
       point: json['course_schedule_img'],
-      linkHomework: json['name'],
+      name: json['name'],
+    );
+  }
+}
+
+class ListFeedBackModel {
+  final List<FeedbackHangNgayModel> listFbDaily;
+  final List<FeedbackDinhKyModel> listFbDinhKy;
+  ListFeedBackModel({
+    required this.listFbDaily,
+    required this.listFbDinhKy,
+  });
+  factory ListFeedBackModel.fromJson(Map<String, dynamic> json) {
+    return ListFeedBackModel(
+      listFbDaily: (json['hang_ngay'] as List)
+          .map((e) => FeedbackHangNgayModel.fromJson(e))
+          .toList(),
+      listFbDinhKy: (json['dinh_ky'] as List)
+          .map((e) => FeedbackDinhKyModel.fromJson(e))
+          .toList(),
+    );
+  }
+}
+
+class FeedbackHangNgayModel {
+  final String name;
+  final List<FeedbackModel> listFeedback;
+
+  FeedbackHangNgayModel({
+    required this.name,
+    required this.listFeedback,
+  });
+  factory FeedbackHangNgayModel.fromJson(Map<String, dynamic> json) {
+    return FeedbackHangNgayModel(
+      name: json['name'] ?? '',
+      listFeedback:
+          (json["list"] as List).map((e) => FeedbackModel.fromJson(e)).toList(),
+    );
+  }
+}
+
+class FeedbackDinhKyModel {
+  final String name;
+  final List<FeedbackModel> listFeedback;
+  FeedbackDinhKyModel({
+    required this.name,
+    required this.listFeedback,
+  });
+  factory FeedbackDinhKyModel.fromJson(Map<String, dynamic> json) {
+    return FeedbackDinhKyModel(
+      name: json['name'],
+      listFeedback:
+          (json["list"] as List).map((e) => FeedbackModel.fromJson(e)).toList(),
+    );
+  }
+}
+
+class FeedbackModel {
+  final String id;
+  final String typelearn;
+  final String createdAt;
+  final String tenBuoi;
+  final String? meetingId;
+  FeedbackModel({
+    required this.id,
+    required this.typelearn,
+    required this.createdAt,
+    required this.tenBuoi,
+    this.meetingId,
+  });
+  factory FeedbackModel.fromJson(Map<String, dynamic> json) {
+    return FeedbackModel(
+      id: json['event_checkin_off_id'] ?? '',
+      typelearn: json['type_learn'] ?? '',
+      createdAt: json['created_at'] ?? '',
+      tenBuoi: json['ten_buoi'] ?? '',
+      meetingId: json['meeting_id'] ?? '',
     );
   }
 }

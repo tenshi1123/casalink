@@ -116,18 +116,15 @@ class ClassScreen extends StatelessWidget {
                     onTap: () async {
                       DetaiLessonModel listExcercise =
                           await ScheduleRepo().getDetailSchedule(
-                        checkinOffId: '',
-                        typeLearn: '',
-                        meetingId: '',
+                        checkinOffId: '6874',
+                        typeLearn: 'zoom',
+                        meetingId: '59',
                       );
                       pushWithoutNavBar(
                         context,
                         MaterialPageRoute(
                           builder: ((context) => DetailScreen(
-                                title1: time[index],
-                                title2: title[index],
-                                title3: content[index],
-                                listExcercise: listExcercise,
+                                detailLesson: listExcercise,
                               )),
                         ),
                       );

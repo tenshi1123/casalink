@@ -1,10 +1,15 @@
 import 'package:casalink/utils/constants/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+
+import '../../models/schedule_model.dart';
 
 class DailyFeedback extends StatefulWidget {
-  const DailyFeedback({super.key});
-
+  const DailyFeedback(
+      {super.key, required this.feedback, required this.feedbackModel});
+  final String feedback;
+  final FeedbackModel feedbackModel;
   @override
   State<DailyFeedback> createState() => _DailyFeedbackState();
 }
@@ -54,84 +59,91 @@ class _DailyFeedbackState extends State<DailyFeedback> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Buổi 1: làm quen với từ vựng giao tiếp căn bản',
+                      widget.feedbackModel.tenBuoi,
                       style: defaultText16B.copyWith(color: Colors.white),
                     ),
                     SizedBox(
                       height: 4.h,
                     ),
                     Text(
-                      'Ngày: 26/12/2024',
+                      'Ngày: ${widget.feedbackModel.createdAt}',
                       style: defaultText16M.copyWith(color: Colors.white),
                     ),
                   ],
                 )),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '1. Tổng quan',
-                    style: defaultText16B.copyWith(
-                      color: const Color(0xff273D8C),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 6.h,
-                  ),
-                  Text('・ Học viên bắt nhịp và làm quen rất tốt với tiết học',
-                      style: defaultText14Re),
-                  Divider(
-                    color: const Color(0xff292929).withAlpha(80),
-                    height: 40.h,
-                  ),
-                  Text(
-                    '2. Góc nhắc nhở',
-                    style: defaultText16B.copyWith(
-                      color: const Color(0xff273D8C),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 6.h,
-                  ),
-                  Text('・ Nội dung nhắc nhở', style: defaultText14Re),
-                  Divider(
-                    color: const Color(0xff292929).withAlpha(80),
-                    height: 40.h,
-                  ),
-                  Text(
-                    '3. Nhận xét buổi học',
-                    style: defaultText16B.copyWith(
-                      color: const Color(0xff273D8C),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 6.h,
-                  ),
-                  Text('・ Con tương tác tốt, học hiệu quả say mê',
-                      style: defaultText14Re),
-                  Divider(
-                    color: const Color(0xff292929).withAlpha(80),
-                    height: 40.h,
-                  ),
-                  Text(
-                    '4. Đánh giá bổ sung',
-                    style: defaultText16B.copyWith(
-                      color: const Color(0xff273D8C),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 6.h,
-                  ),
-                  Text('・ Thái độ học tập', style: defaultText14Re),
-                  Divider(
-                    color: const Color(0xff292929).withAlpha(80),
-                    height: 40.h,
-                  ),
-                ],
+              padding: const EdgeInsets.all(20.0),
+              child: HtmlWidget(
+                widget.feedback,
+                textStyle: defaultText14B,
               ),
             ),
+            // Padding(
+            //   padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+            //   child: Column(
+            //     crossAxisAlignment: CrossAxisAlignment.start,
+            //     children: [
+            //       Text(
+            //         '1. Tổng quan',
+            //         style: defaultText16B.copyWith(
+            //           color: const Color(0xff273D8C),
+            //         ),
+            //       ),
+            //       SizedBox(
+            //         height: 6.h,
+            //       ),
+            //       Text('・ Học viên bắt nhịp và làm quen rất tốt với tiết học',
+            //           style: defaultText14Re),
+            //       Divider(
+            //         color: const Color(0xff292929).withAlpha(80),
+            //         height: 40.h,
+            //       ),
+            //       Text(
+            //         '2. Góc nhắc nhở',
+            //         style: defaultText16B.copyWith(
+            //           color: const Color(0xff273D8C),
+            //         ),
+            //       ),
+            //       SizedBox(
+            //         height: 6.h,
+            //       ),
+            //       Text('・ Nội dung nhắc nhở', style: defaultText14Re),
+            //       Divider(
+            //         color: const Color(0xff292929).withAlpha(80),
+            //         height: 40.h,
+            //       ),
+            //       Text(
+            //         '3. Nhận xét buổi học',
+            //         style: defaultText16B.copyWith(
+            //           color: const Color(0xff273D8C),
+            //         ),
+            //       ),
+            //       SizedBox(
+            //         height: 6.h,
+            //       ),
+            //       Text('・ Con tương tác tốt, học hiệu quả say mê',
+            //           style: defaultText14Re),
+            //       Divider(
+            //         color: const Color(0xff292929).withAlpha(80),
+            //         height: 40.h,
+            //       ),
+            //       Text(
+            //         '4. Đánh giá bổ sung',
+            //         style: defaultText16B.copyWith(
+            //           color: const Color(0xff273D8C),
+            //         ),
+            //       ),
+            //       SizedBox(
+            //         height: 6.h,
+            //       ),
+            //       Text('・ Thái độ học tập', style: defaultText14Re),
+            //       Divider(
+            //         color: const Color(0xff292929).withAlpha(80),
+            //         height: 40.h,
+            //       ),
+            //     ],
+            //   ),
+            // ),
           ],
         ),
       ),

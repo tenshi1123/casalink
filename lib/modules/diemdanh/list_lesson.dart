@@ -57,19 +57,15 @@ class _ListLessonScreenState extends State<ListLessonScreen> {
                     onTap: () async {
                       DetaiLessonModel listExcercise =
                           await ScheduleRepo().getDetailSchedule(
-                        checkinOffId: '',
-                        typeLearn: '',
-                        meetingId: '',
+                        checkinOffId: '6874',
+                        typeLearn: 'zoom',
+                        meetingId: '59',
                       );
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: ((context) => DetailScreen(
-                                title1: 'P.101 - Mỹ Đình (26/06/2024)',
-                                title2: 'Bài 1: Cấu trúc câu',
-                                title3:
-                                    'Nắm vững các cấu trúc câu trong tiếng Anh (sentence structure) sẽ giúp bạn cải thiện kỹ năng Writing và Speaking ngày càng linh hoạt, tự tin.',
-                                listExcercise: listExcercise,
+                                detailLesson: listExcercise,
                               )),
                         ),
                       );

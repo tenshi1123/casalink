@@ -194,7 +194,7 @@ class _LeaveAbsencePopUpState extends State<LeaveAbsencePopUp> {
       context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime(2024),
-      lastDate: DateTime(2025),
+      lastDate: DateTime(2026),
     );
     if (picked != null) {
       _dateController.text = picked.toString().split(" ")[0];

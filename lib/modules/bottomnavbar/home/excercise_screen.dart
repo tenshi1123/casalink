@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../models/schedule_model.dart';
+import '../../../utils/widget/fullscreen_image.dart';
 
 class ExcerciseScreen extends StatefulWidget {
   const ExcerciseScreen({super.key, required this.listExcercise});
@@ -91,142 +92,163 @@ class ExcerciseItem extends StatelessWidget {
   final HomeWorkModel excercise;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(top: 16.h),
-      height: 358.h,
-      width: 343.w,
-      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-      decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(16.r),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.2),
-              spreadRadius: 0,
-              blurRadius: 12,
-              offset: const Offset(0, 2),
-            ),
-          ]),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            excercise.name,
-            style: defaultText16B.copyWith(
-              color: const Color(0xff273D8C),
-            ),
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          PageRouteBuilder(
+            opaque: false,
+            barrierColor: Colors.black,
+            pageBuilder: (BuildContext context, _, __) {
+              return FullScreenPage(
+                dark: true,
+                child: Image.network(
+                  excercise.image,
+                  width: 100.w,
+                  height: 90.h,
+                ),
+              );
+            },
           ),
-          SizedBox(
-            height: 168.h,
-            width: 311.w,
-            child: Row(
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Ngày giao:',
-                      style: defaultText14M,
-                    ),
-                    Text(
-                      'Hạn nộp:',
-                      style: defaultText14M,
-                    ),
-                    Text(
-                      'Trạng thái:',
-                      style: defaultText14M,
-                    ),
-                    Text(
-                      'Điểm:',
-                      style: defaultText14M,
-                    ),
-                    Text(
-                      'Loại lớp học',
-                      style: defaultText14M,
-                    ),
-                    Text(
-                      'Nhận xét:',
-                      style: defaultText14M,
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  width: 16.w,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      '03/01/2025',
-                      style: defaultText14B,
-                    ),
-                    Text(
-                      '--/--/----',
-                      style: defaultText14B,
-                    ),
-                    (excercise.isSubmit == '0')
-                        ? Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 8.w, vertical: 4.h),
-                            decoration: BoxDecoration(
-                              color: const Color(0xffED1C24),
-                              borderRadius: BorderRadius.circular(8.r),
-                            ),
-                            child: Text(
-                              'Chưa hoàn thành',
-                              style:
-                                  defaultText12B.copyWith(color: Colors.white),
-                            ),
-                          )
-                        : Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 8.w, vertical: 4.h),
-                            decoration: BoxDecoration(
-                              color: const Color(0xff28B4E9),
-                              borderRadius: BorderRadius.circular(8.r),
-                            ),
-                            child: Text(
-                              'Đã hoàn thành',
-                              style:
-                                  defaultText12B.copyWith(color: Colors.white),
-                            ),
-                          ),
-                    Text(
-                      '--',
-                      style: defaultText14B,
-                    ),
-                    Text(
-                      excercise.typeLearn,
-                      style: defaultText14B,
-                    ),
-                    Text(
-                      '',
-                      style: defaultText14B,
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          Container(
-            height: 100.h,
-            width: 310.w,
-            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
-            decoration: BoxDecoration(
-              color: const Color(0xffF6F6F6),
-              borderRadius: BorderRadius.circular(12.r),
-            ),
-            child: Text(
-              excercise.note,
-              style: defaultText14M.copyWith(
+        );
+      },
+      child: Container(
+        margin: EdgeInsets.only(top: 16.h),
+        height: 358.h,
+        width: 343.w,
+        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(16.r),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.2),
+                spreadRadius: 0,
+                blurRadius: 12,
+                offset: const Offset(0, 2),
+              ),
+            ]),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              excercise.name,
+              style: defaultText16B.copyWith(
                 color: const Color(0xff273D8C),
               ),
             ),
-          ),
-        ],
+            SizedBox(
+              height: 168.h,
+              width: 311.w,
+              child: Row(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Giáo viên:',
+                        style: defaultText14M,
+                      ),
+                      Text(
+                        'Hạn nộp:',
+                        style: defaultText14M,
+                      ),
+                      Text(
+                        'Trạng thái:',
+                        style: defaultText14M,
+                      ),
+                      Text(
+                        'Điểm:',
+                        style: defaultText14M,
+                      ),
+                      Text(
+                        'Loại lớp học',
+                        style: defaultText14M,
+                      ),
+                      Text(
+                        'Nhận xét:',
+                        style: defaultText14M,
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    width: 16.w,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        excercise.nameTeacher,
+                        style: defaultText14B,
+                      ),
+                      Text(
+                        excercise.timeDeadline,
+                        style: defaultText14B,
+                      ),
+                      (excercise.isSubmit == '0')
+                          ? Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 8.w, vertical: 4.h),
+                              decoration: BoxDecoration(
+                                color: const Color(0xffED1C24),
+                                borderRadius: BorderRadius.circular(8.r),
+                              ),
+                              child: Text(
+                                'Chưa hoàn thành',
+                                style: defaultText12B.copyWith(
+                                    color: Colors.white),
+                              ),
+                            )
+                          : Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 8.w, vertical: 4.h),
+                              decoration: BoxDecoration(
+                                color: const Color(0xff28B4E9),
+                                borderRadius: BorderRadius.circular(8.r),
+                              ),
+                              child: Text(
+                                'Đã hoàn thành',
+                                style: defaultText12B.copyWith(
+                                    color: Colors.white),
+                              ),
+                            ),
+                      Text(
+                        '--',
+                        style: defaultText14B,
+                      ),
+                      Text(
+                        excercise.typeLearn,
+                        style: defaultText14B,
+                      ),
+                      Text(
+                        '',
+                        style: defaultText14B,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              height: 100.h,
+              width: 310.w,
+              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+              decoration: BoxDecoration(
+                color: const Color(0xffF6F6F6),
+                borderRadius: BorderRadius.circular(12.r),
+              ),
+              child: Text(
+                excercise.note,
+                style: defaultText14M.copyWith(
+                  color: const Color(0xff273D8C),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -310,12 +310,12 @@ class _ItemTableCalenderState extends State<ItemTableCalender> {
         setState(() {
           _isLoading = true;
         });
-        DetaiLessonModel listExcercise = await ScheduleRepo().getDetailSchedule(
+        DetaiLessonModel detailLesson = await ScheduleRepo().getDetailSchedule(
           checkinOffId: widget.model.checkinOffId,
           typeLearn: widget.model.typeLearn,
           meetingId: widget.model.meetingId,
         );
-        //dm nhìn cái lol
+
         setState(() {
           _isLoading = false;
         });
@@ -323,11 +323,7 @@ class _ItemTableCalenderState extends State<ItemTableCalender> {
           context,
           MaterialPageRoute(
             builder: ((context) => DetailScreen(
-                  title1: 'P.101 - Mỹ Đình (26/06/2024)',
-                  title2: 'Bài 1: Cấu trúc câu',
-                  title3:
-                      'Nắm vững các cấu trúc câu trong tiếng Anh (sentence structure) sẽ giúp bạn cải thiện kỹ năng Writing và Speaking ngày càng linh hoạt, tự tin.',
-                  listExcercise: listExcercise,
+                  detailLesson: detailLesson,
                 )),
           ),
         );

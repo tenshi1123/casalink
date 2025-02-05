@@ -3,11 +3,14 @@ import 'package:casalink/utils/constants/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../../models/schedule_model.dart';
+import '../../repo/excercise_repo.dart';
 import 'detail_daily_feedback.dart';
 import 'detail_periodic_feedback.dart';
 
 class FeedBackScreen extends StatefulWidget {
-  const FeedBackScreen({super.key});
+  final ListFeedBackModel listFeedBack;
+  const FeedBackScreen({super.key, required this.listFeedBack});
 
   @override
   State<FeedBackScreen> createState() => _FeedBackScreenState();
@@ -191,19 +194,33 @@ class _FeedBackScreenState extends State<FeedBackScreen>
                     child: ListView.builder(
                         shrinkWrap: true,
                         physics: const ClampingScrollPhysics(),
-                        itemCount: 4,
+                        itemCount: widget.listFeedBack.listFbDaily.length,
                         itemBuilder: (BuildContext context, int index) {
                           return InkWell(
-                            onTap: () {
+                            onTap: () async {
+                              String detailFeedBack =
+                                  await ExcerciseRepo().getDetailFeedback(
+                                widget.listFeedBack.listFbDaily[0]
+                                    .listFeedback[index].id,
+                                widget.listFeedBack.listFbDaily[0]
+                                    .listFeedback[index].typelearn,
+                                widget.listFeedBack.listFbDaily[0]
+                                    .listFeedback[index].meetingId,
+                              );
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: ((context) => const DailyFeedback()),
+                                  builder: ((context) => DailyFeedback(
+                                        feedback: detailFeedBack,
+                                        feedbackModel: widget.listFeedBack
+                                            .listFbDaily[0].listFeedback[index],
+                                      )),
                                 ),
                               );
                             },
                             child: LessonItem(
                               title: title[index],
+                              model: widget.listFeedBack.listFbDaily[index],
                             ),
                           );
                         }),
@@ -237,7 +254,7 @@ class _FeedBackScreenState extends State<FeedBackScreen>
                         ListView.builder(
                             shrinkWrap: true,
                             physics: const ClampingScrollPhysics(),
-                            itemCount: 5,
+                            itemCount: widget.listFeedBack.listFbDaily.length,
                             itemBuilder: (BuildContext context, int index) {
                               return InkWell(
                                 onTap: () {
@@ -251,6 +268,7 @@ class _FeedBackScreenState extends State<FeedBackScreen>
                                 },
                                 child: LessonItem(
                                   title: _title123[index],
+                                  model: widget.listFeedBack.listFbDaily[index],
                                 ),
                               );
                             }),
@@ -269,9 +287,9 @@ class _FeedBackScreenState extends State<FeedBackScreen>
 }
 
 class LessonItem extends StatefulWidget {
-  const LessonItem({super.key, required this.title});
+  const LessonItem({super.key, required this.title, required this.model});
   final String title;
-
+  final FeedbackHangNgayModel model;
   @override
   State<LessonItem> createState() => _LessonItemState();
 }
@@ -292,14 +310,14 @@ class _LessonItemState extends State<LessonItem> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '26/12/2024',
+                  widget.model.listFeedback[0].createdAt,
                   style: defaultText14M.copyWith(
                     fontWeight: FontWeight.w500,
                     color: const Color(0xff3C3C3C).withValues(alpha: 0.6),
                   ),
                 ),
                 Text(
-                  widget.title,
+                  widget.model.listFeedback[0].tenBuoi,
                   style: defaultText16M.copyWith(
                     fontWeight: FontWeight.w600,
                   ),

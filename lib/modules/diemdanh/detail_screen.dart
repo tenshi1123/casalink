@@ -1,24 +1,18 @@
 import 'package:casalink/utils/constants/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:url_launcher/url_launcher.dart';
-
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import '../../models/schedule_model.dart';
+import '../../utils/widget/fullscreen_image.dart';
 
 //import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DetailScreen extends StatefulWidget {
   const DetailScreen({
     super.key,
-    required this.title1,
-    required this.title2,
-    required this.title3,
-    this.listExcercise,
+    required this.detailLesson,
   });
-  final String title1;
-  final String title2;
-  final String title3;
-  final DetaiLessonModel? listExcercise;
+  final DetaiLessonModel detailLesson;
   @override
   State<DetailScreen> createState() => _DetailScreenState();
 }
@@ -60,24 +54,31 @@ class _DetailScreenState extends State<DetailScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                widget.listExcercise?.infoLesson.nameLesson ?? widget.title1,
+                widget.detailLesson.infoLesson.nameLesson,
                 style: defaultText14M.copyWith(color: const Color(0xff273D8C)),
               ),
               SizedBox(height: 12.h),
               Text(
-                widget.listExcercise?.infoLesson.topic ?? widget.title2,
+                widget.detailLesson.infoLesson.topic,
                 style: defaultText16B.copyWith(color: const Color(0xff273D8C)),
               ),
               SizedBox(height: 12.h),
               Text(
-                'Nội dung buổi học: ${widget.listExcercise?.infoLesson.lessonContent ?? widget.title3}',
+                'Nội dung buổi học: ${widget.detailLesson.infoLesson.lessonContent}',
                 style: defaultText14M.copyWith(color: const Color(0xff273D8C)),
               ),
               SizedBox(height: 12.h),
+              // Expanded(
+              //   child: NestedTabBar(
+              //     detailLesson: widget.detailLesson,
+              //   ),
+              // )
               SizedBox(
-                height: 420.h,
+                height: 600.h,
                 width: 343.w,
-                child: const NestedTabBar(),
+                child: NestedTabBar(
+                  detailLesson: widget.detailLesson,
+                ),
               ),
             ],
           ),
@@ -88,7 +89,8 @@ class _DetailScreenState extends State<DetailScreen> {
 }
 
 class NestedTabBar extends StatefulWidget {
-  const NestedTabBar({super.key});
+  const NestedTabBar({super.key, required this.detailLesson});
+  final DetaiLessonModel detailLesson;
   @override
   State<NestedTabBar> createState() => _NestedTabBarState();
 }
@@ -96,10 +98,12 @@ class NestedTabBar extends StatefulWidget {
 class _NestedTabBarState extends State<NestedTabBar>
     with TickerProviderStateMixin {
   late TabController _tabController;
+  late DetaiLessonModel _detailLesson;
   int activeTabIndex = 0;
   @override
   void initState() {
     super.initState();
+    _detailLesson = widget.detailLesson;
     _tabController = TabController(
       length: 3,
       vsync: this,
@@ -212,150 +216,251 @@ class _NestedTabBarState extends State<NestedTabBar>
           child: TabBarView(
             controller: _tabController,
             children: <Widget>[
-              Container(
-                height: 367.h,
-                width: 343.w,
-                margin: EdgeInsets.symmetric(
-                  horizontal: 16.w,
-                  vertical: 16.h,
-                ),
-                padding: EdgeInsets.symmetric(
-                  vertical: 16.h,
-                  horizontal: 16.w,
-                ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16.r),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withAlpha(50),
-                      spreadRadius: 0,
-                      blurRadius: 10,
-                      offset: const Offset(0, 6),
+              ListView.builder(
+                shrinkWrap: true,
+                physics: const ScrollPhysics(),
+                itemCount: _detailLesson.listHomeWorks.length,
+                itemBuilder: (context, index) {
+                  return Container(
+                    height: 367.h,
+                    width: 343.w,
+                    margin: EdgeInsets.symmetric(
+                      horizontal: 16.w,
+                      vertical: 16.h,
                     ),
-                  ],
-                  color: Colors.white,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
+                    padding: EdgeInsets.symmetric(
+                      vertical: 16.h,
+                      horizontal: 16.w,
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16.r),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withAlpha(50),
+                          spreadRadius: 0,
+                          blurRadius: 10,
+                          offset: const Offset(0, 6),
+                        ),
+                      ],
+                      color: Colors.white,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Image(
-                          image:
-                              const AssetImage('assets/images/icon_file.png'),
-                          height: 48.h,
-                          width: 48.w,
+                        Row(
+                          children: [
+                            Image(
+                              image: const AssetImage(
+                                  'assets/images/icon_file.png'),
+                              height: 48.h,
+                              width: 48.w,
+                            ),
+                            SizedBox(
+                              width: 16.w,
+                            ),
+                            Expanded(
+                              child: Text(
+                                _detailLesson.listHomeWorks[index].name,
+                                style: defaultText16B,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 3,
+                              ),
+                            ),
+                            // Text(
+                            //   'chọn bài tập bạn muốn xem',
+                            //   style: defaultText14Re.copyWith(
+                            //     color: Colors.black.withAlpha(60),
+                            //   ),
+                            // ),
+                          ],
+                        ),
+                        const Divider(thickness: 1),
+                        Text(
+                          'Hạn nộp bài: ${_detailLesson.listHomeWorks[index].timeDeadline}',
+                          style: defaultText14B,
                         ),
                         SizedBox(
-                          width: 16.w,
+                          height: 10.h,
                         ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Tenbaitap.PDF',
-                              style: defaultText16B,
-                            ),
-                            Text(
-                              'chọn bài tập bạn muốn xem',
-                              style: defaultText14Re.copyWith(
-                                color: Colors.black.withAlpha(60),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              PageRouteBuilder(
+                                opaque: false,
+                                barrierColor: Colors.black,
+                                pageBuilder: (BuildContext context, _, __) {
+                                  return FullScreenPage(
+                                    dark: true,
+                                    child: Image.network(
+                                      _detailLesson.listHomeWorks[index].image,
+                                      width: 100.w,
+                                      height: 90.h,
+                                    ),
+                                  );
+                                },
                               ),
-                            ),
-                          ],
-                        )
+                            );
+                          },
+                          child: Stack(
+                            children: [
+                              Container(
+                                width: 120.w,
+                                height: 80.h,
+                                decoration: BoxDecoration(
+                                  color: Colors.blue.shade100,
+                                  gradient: LinearGradient(
+                                      begin: FractionalOffset.topCenter,
+                                      end: FractionalOffset.bottomCenter,
+                                      colors: [
+                                        Colors.grey.withOpacity(0.0),
+                                        Colors.black,
+                                      ],
+                                      stops: const [
+                                        0.0,
+                                        1.0,
+                                      ]),
+                                ),
+                                child: Image.network(
+                                    _detailLesson.listHomeWorks[index].image),
+                              ),
+                              Container(
+                                width: 120.w,
+                                height: 80.h,
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                      begin: FractionalOffset.topCenter,
+                                      end: FractionalOffset.bottomCenter,
+                                      colors: [
+                                        Colors.white,
+                                        Colors.black.withAlpha(40),
+                                      ],
+                                      stops: const [
+                                        0.0,
+                                        1.0,
+                                      ]),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        Expanded(
+                          child: Text(
+                            _detailLesson.listHomeWorks[index].note,
+                            style: defaultText16M,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 3,
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            'Giáo viên : ${_detailLesson.listHomeWorks[index].nameTeacher}',
+                            style: defaultText16M,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 3,
+                          ),
+                        ),
                       ],
                     ),
-                    const Divider(thickness: 1),
-                    Text(
-                      'Hạn nộp bài: 26 tháng 1,2025',
-                      style: defaultText14B,
-                    ),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    GestureDetector(
-                      onTap: () async {
-                        if (!await launchUrl(Uri.parse(
-                            'https://vietjack.com/ngu-phap-tieng-anh/trac-nghiem-bai-kiem-tra-trinh-do-tieng-anh-online.jsp'))) {
-                          throw Exception('Could not launch ');
-                        }
+                  );
+                },
+              ),
+
+              //Tai lieu
+              ListView.builder(
+                  shrinkWrap: true,
+                  physics: const ScrollPhysics(),
+                  itemCount: _detailLesson.listDocument.length,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          PageRouteBuilder(
+                            opaque: false,
+                            barrierColor: Colors.black,
+                            pageBuilder: (BuildContext context, _, __) {
+                              return FullScreenPage(
+                                dark: true,
+                                child: Image.network(
+                                  _detailLesson.listDocument[index].point,
+                                  width: 100.w,
+                                  height: 90.h,
+                                ),
+                              );
+                            },
+                          ),
+                        );
                       },
-                      child: Stack(
+                      child: Row(
                         children: [
-                          Container(
-                            width: 120.w,
-                            height: 80.h,
-                            decoration: BoxDecoration(
-                              color: Colors.blue.shade100,
-                              image: const DecorationImage(
-                                fit: BoxFit.cover,
-                                image: AssetImage('assets/images/image.png')
-                                    as ImageProvider,
-                              ),
-                              gradient: LinearGradient(
-                                  begin: FractionalOffset.topCenter,
-                                  end: FractionalOffset.bottomCenter,
-                                  colors: [
-                                    Colors.grey.withOpacity(0.0),
-                                    Colors.black,
-                                  ],
-                                  stops: const [
-                                    0.0,
-                                    1.0,
-                                  ]),
+                          Image(
+                            image:
+                                const AssetImage('assets/images/icon_file.png'),
+                            height: 48.h,
+                            width: 48.w,
+                          ),
+                          SizedBox(
+                            width: 16.w,
+                          ),
+                          Expanded(
+                            child: Text(
+                              _detailLesson.listDocument[index].name,
+                              style: defaultText16B,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 3,
                             ),
                           ),
-                          Container(
-                            width: 120.w,
-                            height: 80.h,
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                  begin: FractionalOffset.topCenter,
-                                  end: FractionalOffset.bottomCenter,
-                                  colors: [
-                                    Colors.white,
-                                    Colors.black.withAlpha(40),
-                                  ],
-                                  stops: const [
-                                    0.0,
-                                    1.0,
-                                  ]),
-                            ),
-                          ),
+                          // Text(
+                          //   'chọn bài tập bạn muốn xem',
+                          //   style: defaultText14Re.copyWith(
+                          //     color: Colors.black.withAlpha(60),
+                          //   ),
+                          // ),
                         ],
                       ),
-                    ),
-                  ],
-                ),
-              ),
-              //Tai lieu
+                    );
+                  }),
+              // Column(
+              //   children: [
+              //     SizedBox(
+              //       width: 343.w,
+              //       height: 80.h,
+              //       child: Row(
+              //         children: [
+              //           Text('Không có tài liệu', style: defaultText16M)
+              //         ],
+              //       ),
+              //     )
+              //   ],
+              // ),
               Column(
                 children: [
                   SizedBox(
-                    width: 343.w,
-                    height: 80.h,
-                    child: Row(
-                      children: [
-                        Text('Không có tài liệu', style: defaultText16M)
-                      ],
-                    ),
-                  )
+                    height: 10.h,
+                  ),
+                  HtmlWidget(
+                    _detailLesson.feedback,
+                    textStyle: defaultText14B,
+                  ),
                 ],
               ),
-              Column(
-                children: [
-                  SizedBox(
-                    width: 343.w,
-                    height: 80.h,
-                    child: Row(
-                      children: [
-                        Text('Không có đánh giá', style: defaultText16M)
-                      ],
-                    ),
-                  )
-                ],
-              ),
+              // Column(
+              //   children: [
+              //     SizedBox(
+              //       width: 343.w,
+              //       height: 80.h,
+              //       child: Row(
+              //         children: [
+              //           Text('Không có đánh giá', style: defaultText16M)
+              //         ],
+              //       ),
+              //     )
+              //   ],
+              // ),
             ],
           ),
         ),
