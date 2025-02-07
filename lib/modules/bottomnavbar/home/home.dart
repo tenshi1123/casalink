@@ -8,7 +8,7 @@ import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../../models/info_model.dart';
 import '../../../models/schedule_model.dart';
-import '../../../repo/excercise_repo.dart';
+import '../../../repo/follow_class_repo.dart';
 import '../../../repo/schedule_repo.dart';
 import '../../../utils/widget/custom_dialog.dart';
 import '../../absenteehistory/history_screen.dart';
@@ -34,6 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final controller3 = PageController(viewportFraction: 0.75, keepPage: true);
   bool _isLoading = false;
   bool _isLoading1 = false;
+  final bool _isLoading2 = false;
   @override
   Widget build(BuildContext context) {
     final page2 = List.generate(
@@ -282,8 +283,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             setState(() {
                               _isLoading = true;
                             });
-                            List<HomeWorkModel> listExcercise =
-                                await ExcerciseRepo().getExcercises();
+                            List<DataHomeWorkModel> listExcercise =
+                                await FollowClassRepo().getExcercises();
                             setState(() {
                               _isLoading = false;
                             });
@@ -326,7 +327,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               _isLoading1 = true;
                             });
                             ListFeedBackModel listFeedBack =
-                                await ExcerciseRepo().getListFeedback();
+                                await FollowClassRepo().getListFeedback();
                             setState(() {
                               _isLoading1 = false;
                             });

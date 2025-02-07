@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../models/schedule_model.dart';
-import '../../repo/excercise_repo.dart';
+import '../../repo/follow_class_repo.dart';
 import 'detail_daily_feedback.dart';
 import 'detail_periodic_feedback.dart';
 
@@ -199,7 +199,7 @@ class _FeedBackScreenState extends State<FeedBackScreen>
                           return InkWell(
                             onTap: () async {
                               String detailFeedBack =
-                                  await ExcerciseRepo().getDetailFeedback(
+                                  await FollowClassRepo().getDetailFeedback(
                                 widget.listFeedBack.listFbDaily[0]
                                     .listFeedback[index].id,
                                 widget.listFeedBack.listFbDaily[0]
@@ -220,7 +220,8 @@ class _FeedBackScreenState extends State<FeedBackScreen>
                             },
                             child: LessonItem(
                               title: title[index],
-                              model: widget.listFeedBack.listFbDaily[index],
+                              model: widget.listFeedBack.listFbDaily[0]
+                                  .listFeedback[index],
                             ),
                           );
                         }),
@@ -268,7 +269,8 @@ class _FeedBackScreenState extends State<FeedBackScreen>
                                 },
                                 child: LessonItem(
                                   title: _title123[index],
-                                  model: widget.listFeedBack.listFbDaily[index],
+                                  model: widget.listFeedBack.listFbDinhKy[0]
+                                      .listFeedback[index],
                                 ),
                               );
                             }),
@@ -289,7 +291,7 @@ class _FeedBackScreenState extends State<FeedBackScreen>
 class LessonItem extends StatefulWidget {
   const LessonItem({super.key, required this.title, required this.model});
   final String title;
-  final FeedbackHangNgayModel model;
+  final FeedbackModel model;
   @override
   State<LessonItem> createState() => _LessonItemState();
 }
@@ -310,14 +312,14 @@ class _LessonItemState extends State<LessonItem> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  widget.model.listFeedback[0].createdAt,
+                  widget.model.createdAt,
                   style: defaultText14M.copyWith(
                     fontWeight: FontWeight.w500,
                     color: const Color(0xff3C3C3C).withValues(alpha: 0.6),
                   ),
                 ),
                 Text(
-                  widget.model.listFeedback[0].tenBuoi,
+                  widget.model.tenBuoi,
                   style: defaultText16M.copyWith(
                     fontWeight: FontWeight.w600,
                   ),

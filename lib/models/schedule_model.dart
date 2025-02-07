@@ -97,6 +97,64 @@ class InfoLessonModel {
   }
 }
 
+class DataHomeWorkModel {
+  final List<ListBTModel> listHomeWorks;
+  final String name;
+  DataHomeWorkModel({
+    required this.listHomeWorks,
+    required this.name,
+  });
+  factory DataHomeWorkModel.fromJson(Map<String, dynamic> json) {
+    return DataHomeWorkModel(
+      listHomeWorks:
+          (json["list"] as List).map((e) => ListBTModel.fromJson(e)).toList(),
+      name: json['name'],
+    );
+  }
+}
+
+class ListBTModel {
+  final String id;
+  final String nameExercise;
+  final String linkExercise;
+  final String timeDeadline;
+  final String daySubmit;
+  final String status;
+  final String score;
+  final String percent;
+  final String typeLearn;
+  final String typeExercise;
+  final String noteTeacher;
+  ListBTModel({
+    required this.id,
+    required this.nameExercise,
+    required this.linkExercise,
+    required this.timeDeadline,
+    required this.daySubmit,
+    required this.status,
+    required this.score,
+    required this.percent,
+    required this.typeLearn,
+    required this.typeExercise,
+    required this.noteTeacher,
+  });
+  factory ListBTModel.fromJson(Map<String, dynamic> json) {
+    return ListBTModel(
+      id: json["class_lesson_document_id"] ?? '',
+      nameExercise: json['name_exercise'] ?? '',
+      linkExercise: json['link_exercise'] ?? '',
+      timeDeadline: json['deadline'] ?? '',
+      daySubmit: json['day_submit'] ?? '',
+      status: json['status'] ?? '',
+      score: json['score'] ?? '',
+      percent: json['percent'] ?? '',
+      typeLearn: json['type_learn'] ?? '',
+      typeExercise: json['type_exercise'] ?? '',
+      noteTeacher: json['note_teacher'] ?? '',
+    );
+  }
+}
+
 // thông tin bài tập về nhà
 class HomeWorkModel {
   final String image;

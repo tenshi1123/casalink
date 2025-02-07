@@ -142,11 +142,11 @@ class _BottomNavBarState extends State<BottomNavBar> {
                     padding: const EdgeInsets.all(5),
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(25.r),
-                    boxShadow: const [
+                    boxShadow: [
                       BoxShadow(
-                        color: Colors.grey,
-                        blurRadius: 4,
-                        offset: Offset(3, 4), // Shadow position
+                        color: const Color(0xff000000).withValues(alpha: 0.16),
+                        blurRadius: 12,
+                        offset: const Offset(0, 4), // Shadow position
                       ),
                     ],
                   ),

@@ -114,27 +114,29 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     child: Center(
                       child: TextField(
-                        keyboardType: const TextInputType.numberWithOptions(),
-                        controller: studenIdController,
-                        focusNode: _focusNode1,
-                        scrollPadding: EdgeInsets.symmetric(
-                            vertical: MediaQuery.of(context).viewInsets.bottom),
-                        decoration: InputDecoration(
-                          prefixIcon: SvgPicture.asset(
-                            'assets/icons/user1.svg',
-                            height: 17.h,
-                            width: 14.w,
-                            fit: BoxFit.scaleDown,
+                          keyboardType: const TextInputType.numberWithOptions(),
+                          controller: studenIdController,
+                          focusNode: _focusNode1,
+                          scrollPadding: EdgeInsets.symmetric(
+                              vertical:
+                                  MediaQuery.of(context).viewInsets.bottom),
+                          decoration: InputDecoration(
+                            prefixIcon: SvgPicture.asset(
+                              'assets/icons/user1.svg',
+                              height: 17.h,
+                              width: 14.w,
+                              fit: BoxFit.scaleDown,
+                            ),
+                            hintText: 'Số điện thoại',
+                            border: const OutlineInputBorder(
+                                borderSide: BorderSide.none),
+                            hintStyle: TextStyle(
+                              fontSize: 16.sp,
+                              color: Colors.white.withValues(alpha: 0.4),
+                            ),
                           ),
-                          hintText: 'Số điện thoại',
-                          border: const OutlineInputBorder(
-                              borderSide: BorderSide.none),
-                          hintStyle: TextStyle(
-                            fontSize: 16.sp,
-                            color: Colors.white.withValues(alpha: 0.4),
-                          ),
-                        ),
-                      ),
+                          style:
+                              TextStyle(fontSize: 16.sp, color: Colors.white)),
                     ),
                   ),
                   SizedBox(
@@ -156,6 +158,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         controller: passController,
                         focusNode: _focusNode,
                         textAlignVertical: TextAlignVertical.center,
+                        style: TextStyle(fontSize: 16.sp, color: Colors.white),
                         // scrollPadding: EdgeInsets.symmetric(
                         //     vertical: MediaQuery.of(context).viewInsets.top),
                         decoration: InputDecoration(

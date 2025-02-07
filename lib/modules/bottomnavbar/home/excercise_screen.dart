@@ -7,7 +7,7 @@ import '../../../utils/widget/fullscreen_image.dart';
 
 class ExcerciseScreen extends StatefulWidget {
   const ExcerciseScreen({super.key, required this.listExcercise});
-  final List<HomeWorkModel> listExcercise;
+  final List<DataHomeWorkModel> listExcercise;
   @override
   State<ExcerciseScreen> createState() => _ExcerciseScreenState();
 }
@@ -89,7 +89,7 @@ class _ExcerciseScreenState extends State<ExcerciseScreen> {
 
 class ExcerciseItem extends StatelessWidget {
   const ExcerciseItem({super.key, required this.excercise});
-  final HomeWorkModel excercise;
+  final DataHomeWorkModel excercise;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -103,7 +103,7 @@ class ExcerciseItem extends StatelessWidget {
               return FullScreenPage(
                 dark: true,
                 child: Image.network(
-                  excercise.image,
+                  excercise.listHomeWorks[0].linkExercise,
                   width: 100.w,
                   height: 90.h,
                 ),
@@ -140,7 +140,7 @@ class ExcerciseItem extends StatelessWidget {
             ),
             SizedBox(
               height: 168.h,
-              width: 311.w,
+              width: 333.w,
               child: Row(
                 children: [
                   Column(
@@ -148,7 +148,7 @@ class ExcerciseItem extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Giáo viên:',
+                        'Tên:',
                         style: defaultText14M,
                       ),
                       Text(
@@ -176,58 +176,65 @@ class ExcerciseItem extends StatelessWidget {
                   SizedBox(
                     width: 16.w,
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        excercise.nameTeacher,
-                        style: defaultText14B,
-                      ),
-                      Text(
-                        excercise.timeDeadline,
-                        style: defaultText14B,
-                      ),
-                      (excercise.isSubmit == '0')
-                          ? Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 8.w, vertical: 4.h),
-                              decoration: BoxDecoration(
-                                color: const Color(0xffED1C24),
-                                borderRadius: BorderRadius.circular(8.r),
+                  SizedBox(
+                    height: 168.h,
+                    width: 230.w,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          excercise.listHomeWorks[0].nameExercise,
+                          style: defaultText14B,
+                          overflow: TextOverflow.fade,
+                          maxLines: 1,
+                          softWrap: false,
+                        ),
+                        Text(
+                          excercise.listHomeWorks[0].timeDeadline,
+                          style: defaultText14B,
+                        ),
+                        (excercise.listHomeWorks[0].status == '0')
+                            ? Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 8.w, vertical: 4.h),
+                                decoration: BoxDecoration(
+                                  color: const Color(0xffED1C24),
+                                  borderRadius: BorderRadius.circular(8.r),
+                                ),
+                                child: Text(
+                                  'Chưa hoàn thành',
+                                  style: defaultText12B.copyWith(
+                                      color: Colors.white),
+                                ),
+                              )
+                            : Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 8.w, vertical: 4.h),
+                                decoration: BoxDecoration(
+                                  color: const Color(0xff28B4E9),
+                                  borderRadius: BorderRadius.circular(8.r),
+                                ),
+                                child: Text(
+                                  'Đã hoàn thành',
+                                  style: defaultText12B.copyWith(
+                                      color: Colors.white),
+                                ),
                               ),
-                              child: Text(
-                                'Chưa hoàn thành',
-                                style: defaultText12B.copyWith(
-                                    color: Colors.white),
-                              ),
-                            )
-                          : Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 8.w, vertical: 4.h),
-                              decoration: BoxDecoration(
-                                color: const Color(0xff28B4E9),
-                                borderRadius: BorderRadius.circular(8.r),
-                              ),
-                              child: Text(
-                                'Đã hoàn thành',
-                                style: defaultText12B.copyWith(
-                                    color: Colors.white),
-                              ),
-                            ),
-                      Text(
-                        '--',
-                        style: defaultText14B,
-                      ),
-                      Text(
-                        excercise.typeLearn,
-                        style: defaultText14B,
-                      ),
-                      Text(
-                        '',
-                        style: defaultText14B,
-                      ),
-                    ],
+                        Text(
+                          '--',
+                          style: defaultText14B,
+                        ),
+                        Text(
+                          excercise.listHomeWorks[0].typeLearn,
+                          style: defaultText14B,
+                        ),
+                        Text(
+                          '',
+                          style: defaultText14B,
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -241,7 +248,7 @@ class ExcerciseItem extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12.r),
               ),
               child: Text(
-                excercise.note,
+                excercise.listHomeWorks[0].noteTeacher,
                 style: defaultText14M.copyWith(
                   color: const Color(0xff273D8C),
                 ),

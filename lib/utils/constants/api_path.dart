@@ -25,10 +25,9 @@ class ApiPath {
   // Chi tiết feedback
   static const String detailFeedback = '$baseUrl/feedback/detail';
 
-  // danh sách bài tập đã nộp
-  static const String homeworkSubmited = '$baseUrl/homework/submit';
-  // chi tiết buổi điểm danh
-  static const String detailRollCall = '$baseUrl/detail/homework/class';
+  //điểm danh
+  static const String listCheckin = '$baseUrl/checkin';
+  static const String detailCheckin = '$baseUrl/checkin/detail';
 
   // chi tiết homework
   static const String detailHomework = '$baseUrl/detail/homework';

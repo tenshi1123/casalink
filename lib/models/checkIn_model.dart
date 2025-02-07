@@ -1,14 +1,18 @@
 class CheckinModel {
-  final CheckInOffModel checkInOffModel;
-  final CheckinZoomModel checkinZoomModel;
+  final List<CheckInOffModel> checkInOffModel;
+  final List<CheckinZoomModel> checkinZoomModel;
   CheckinModel({
     required this.checkInOffModel,
     required this.checkinZoomModel,
   });
   factory CheckinModel.fromJson(Map<String, dynamic> json) {
     return CheckinModel(
-      checkInOffModel: CheckInOffModel.fromJson(json['checkin_offline']),
-      checkinZoomModel: CheckinZoomModel.fromJson(json['checkin_zoom']),
+      checkInOffModel: (json['off'] as List)
+          .map((e) => CheckInOffModel.fromJson(e))
+          .toList(),
+      checkinZoomModel: (json['zoom'] as List)
+          .map((e) => CheckinZoomModel.fromJson(e))
+          .toList(),
     );
   }
 }

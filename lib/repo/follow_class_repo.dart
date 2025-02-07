@@ -1,12 +1,13 @@
+import 'package:casalink/models/checkin_model.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/schedule_model.dart';
 import '../utils/constants/api_path.dart';
 
-class ExcerciseRepo {
+class FollowClassRepo {
   Dio dio = Dio();
-  Future<List<HomeWorkModel>> getExcercises() async {
+  Future<List<DataHomeWorkModel>> getExcercises() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? token = prefs.getString('token');
     dio.options.headers['Authorization'] = 'Bearer $token';
@@ -14,8 +15,8 @@ class ExcerciseRepo {
     response = await dio.get(
       ApiPath.listExercise,
     );
-    List<HomeWorkModel> result = ((response.data)['data'] as List)
-        .map((e) => HomeWorkModel.fromJson(e))
+    List<DataHomeWorkModel> result = ((response.data)['data']['data'] as List)
+        .map((e) => DataHomeWorkModel.fromJson(e))
         .toList();
     return result;
   }
@@ -48,5 +49,18 @@ class ExcerciseRepo {
       },
     );
     return (response.data)['data'];
+  }
+
+  Future<CheckinModel> getListCheckin() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? token = prefs.getString('token');
+    dio.options.headers['Authorization'] = 'Bearer $token';
+    Response response;
+    response = await dio.get(
+      ApiPath.listCheckin,
+    );
+    CheckinModel result =
+        CheckinModel.fromJson((response.data)['data']['value']);
+    return result;
   }
 }
