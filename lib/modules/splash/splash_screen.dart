@@ -5,7 +5,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 //import '../bottomnavbar/bottom_nav_bar.dart';
+import '../../main.dart';
 import '../../models/info_model.dart';
+import '../../repo/category_repo.dart';
 import '../../repo/info_repo.dart';
 import '../../router/app_pages.dart';
 import '../../router/app_router.dart';
@@ -23,16 +25,19 @@ class _SplshscreenState extends State<Splshscreen> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 3), () async {
+    databaseInitialized();
+    Timer(const Duration(seconds: 0), () async {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       final String? token = prefs.getString('token');
       checked = (token != null && token != '');
       if (checked) {
         InfoModel infoModel = await InfoRepo().getInfo();
+        InfoClassModel infoClassModel = await InfoRepo().getInfoClass();
         AppRouter.toPage(context, AppPages.BottomNavBarPage,
             // blocValue: _authBloc,
             arguments: {
               'infoModel': infoModel,
+              'infoClassModel': infoClassModel
             });
       } else {
         Navigator.pushReplacement(
@@ -45,6 +50,11 @@ class _SplshscreenState extends State<Splshscreen> {
         );
       }
     });
+  }
+
+  Future<void> databaseInitialized() async {
+    listCategori = await CategoryRepo().getCategories();
+    listPostCate = await CategoryRepo().getPostCaties();
   }
 
   @override

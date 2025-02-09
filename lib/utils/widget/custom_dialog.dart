@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../models/info_model.dart';
+import '../../repo/info_repo.dart';
+
 class LeaveAbsencePopUp extends StatefulWidget {
   const LeaveAbsencePopUp({super.key, required this.type});
   final String type;
@@ -17,6 +20,9 @@ class _LeaveAbsencePopUpState extends State<LeaveAbsencePopUp> {
   String? _newCategory;
   final List<String> _categories = ['Personal', 'Work', 'Other'];
   final TextEditingController _dateController = TextEditingController();
+  var className;
+  var lessonName;
+  var newModel;
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -68,10 +74,135 @@ class _LeaveAbsencePopUpState extends State<LeaveAbsencePopUp> {
                     ),
                   ),
                 ),
+                // Padding(
+                //   padding: EdgeInsets.only(
+                //     left: 12.w,
+                //     top: 18.h,
+                //     right: 12.w,
+                //   ),
+                //   child: TextFormField(
+                //     style: defaultText14M,
+                //     controller: _dateController,
+                //     readOnly: true,
+                //     decoration: InputDecoration(
+                //       border: OutlineInputBorder(
+                //         borderRadius: BorderRadius.circular(12.r),
+                //         borderSide: BorderSide.none,
+                //       ),
+                //       // enabledBorder:
+                //       //     const OutlineInputBorder(borderSide: BorderSide.none,),
+                //       // focusedBorder: const OutlineInputBorder(
+                //       //     borderSide: BorderSide(color: Colors.grey)),
+                //       filled: true,
+                //       fillColor: Colors.grey[200],
+                //       hintText: 'Chọn lớp',
+                //       hintStyle: defaultText14M.copyWith(color: Colors.grey),
+                //       prefixIcon: SvgPicture.asset(
+                //         'assets/icons/class.svg',
+                //         height: 20.h,
+                //         width: 20.w,
+                //         fit: BoxFit.scaleDown,
+                //       ),
+                //       suffixIcon: SvgPicture.asset(
+                //         'assets/icons/down_arrow.svg',
+                //         height: 20.h,
+                //         width: 20.w,
+                //         fit: BoxFit.scaleDown,
+                //       ),
+                //     ),
+                //     onChanged: (value) {
+                //       _newCategory = value;
+                //     },
+                //     onTap: () {
+                //       _selectDate();
+                //     },
+                //     validator: (value) =>
+                //         value!.isEmpty ? 'Vui lòng chọn lớp' : null,
+                //   ),
+                // ),
                 Padding(
                   padding: EdgeInsets.only(
                     left: 12.w,
-                    top: 20.h,
+                    top: 18.h,
+                    right: 12.w,
+                  ),
+                  child: FutureBuilder<List<DropClassModel>>(
+                    future: InfoRepo().getDropClass(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return DropdownButton(
+                          // Initial Value
+                          value: className,
+                          hint: const Text('Chọn lớp'),
+                          isExpanded: true,
+                          // Down Arrow Icon
+                          icon: const Icon(Icons.keyboard_arrow_down),
+
+                          // Array list of items
+                          items: snapshot.data!.map((item) {
+                            return DropdownMenuItem(
+                              value: item.name,
+                              child: Text(item.name.toString()),
+                            );
+                          }).toList(),
+                          onChanged: (value) {
+                            className = value;
+
+                            setState(() {
+                              newModel = snapshot.data!.firstWhere(
+                                  (element) => element.name == value);
+                            });
+                          },
+                        );
+                      } else {
+                        return const Center(child: CircularProgressIndicator());
+                      }
+                    },
+                  ),
+                ),
+                className == null
+                    ? const SizedBox()
+                    : Padding(
+                        padding: EdgeInsets.only(
+                          left: 12.w,
+                          top: 18.h,
+                          right: 12.w,
+                        ),
+                        child: FutureBuilder<List<DropLessonModel>>(
+                          future: InfoRepo().getDropLesson(newModel),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              return DropdownButton(
+                                // Initial Value
+                                value: lessonName,
+                                hint: const Text('Chọn buổi học'),
+                                isExpanded: true,
+                                // Down Arrow Icon
+                                icon: const Icon(Icons.keyboard_arrow_down),
+
+                                // Array list of items
+                                items: snapshot.data!.map((item) {
+                                  return DropdownMenuItem(
+                                    value: item.name,
+                                    child: Text(item.name.toString()),
+                                  );
+                                }).toList(),
+                                onChanged: (value) {
+                                  lessonName = value;
+                                  setState(() {});
+                                },
+                              );
+                            } else {
+                              return const Center(
+                                  child: CircularProgressIndicator());
+                            }
+                          },
+                        ),
+                      ),
+                Padding(
+                  padding: EdgeInsets.only(
+                    left: 12.w,
+                    top: 10.h,
                     right: 12.w,
                   ),
                   child: TextFormField(
@@ -93,8 +224,14 @@ class _LeaveAbsencePopUpState extends State<LeaveAbsencePopUp> {
                           ? 'Nhập ngày bạn muốn xin nghỉ'
                           : 'Nhập ngày bạn muốn xin đi muộn',
                       hintStyle: defaultText14M.copyWith(color: Colors.grey),
-                      suffixIcon: SvgPicture.asset(
+                      prefixIcon: SvgPicture.asset(
                         'assets/icons/calendar.svg',
+                        height: 20.h,
+                        width: 20.w,
+                        fit: BoxFit.scaleDown,
+                      ),
+                      suffixIcon: SvgPicture.asset(
+                        'assets/icons/down_arrow.svg',
                         height: 20.h,
                         width: 20.w,
                         fit: BoxFit.scaleDown,
@@ -107,14 +244,16 @@ class _LeaveAbsencePopUpState extends State<LeaveAbsencePopUp> {
                       _selectDate();
                     },
                     validator: (value) => value!.isEmpty
-                        ? 'Vui lòng nhập ngày bạn muốn xin đi muộn'
+                        ? widget.type == '1'
+                            ? 'Nhập ngày bạn muốn xin nghỉ'
+                            : 'Nhập ngày bạn muốn xin đi muộn'
                         : null,
                   ),
                 ),
                 Padding(
                   padding: EdgeInsets.only(
                     left: 12.w,
-                    top: 12.h,
+                    top: 10.h,
                     right: 12.w,
                   ),
                   child: SizedBox(
@@ -151,12 +290,13 @@ class _LeaveAbsencePopUpState extends State<LeaveAbsencePopUp> {
                     child: ElevatedButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          if (_category == 'Other' &&
-                              _newCategory != null &&
-                              _newCategory!.isNotEmpty) {
-                            _categories.add(_newCategory!);
-                            _category = _newCategory;
-                          }
+                          // if (_category == 'Other' &&
+                          //     _newCategory != null &&
+                          //     _newCategory!.isNotEmpty) {
+                          //   _categories.add(_newCategory!);
+                          //   _category = _newCategory;
+                          // }
+
                           Navigator.of(context).pop();
                         }
                       },
@@ -368,7 +508,8 @@ class _FeedbackPopUpState extends State<FeedbackPopUp> {
 Widget feedbackItem(bool value, String title) {
   return Container(
     height: 34.h,
-    width: 98.w,
+    //width: 98.w,
+    padding: EdgeInsets.symmetric(horizontal: 8.w),
     decoration: BoxDecoration(
       border: Border.all(
         color: value ? Colors.white : const Color(0xffF2F2F2),

@@ -28,6 +28,63 @@ class InfoModel {
   }
 }
 
+class InfoClassModel {
+  final String lopHoc;
+  final String coso;
+  final String numberLessons;
+
+  InfoClassModel({
+    required this.lopHoc,
+    required this.coso,
+    required this.numberLessons,
+  });
+  factory InfoClassModel.fromJson(Map<String, dynamic> json) {
+    return InfoClassModel(
+      lopHoc: json['class'] ?? '',
+      coso: json['coso'] ?? '',
+      numberLessons: json['so_buoi_hoc'] ?? '',
+    );
+  }
+}
+
+class DropClassModel {
+  final String name;
+  final String typeId;
+  final String scheduleId;
+
+  DropClassModel({
+    required this.name,
+    required this.typeId,
+    required this.scheduleId,
+  });
+  factory DropClassModel.fromJson(Map<String, dynamic> json) {
+    return DropClassModel(
+      name: json['course_schedule_name'] ?? '',
+      typeId: json['setting_course_type_id'] ?? '',
+      scheduleId: json['course_schedule_id'] ?? '',
+    );
+  }
+}
+
+class DropLessonModel {
+  final String name;
+  final String typeLearn;
+  final String id;
+
+  DropLessonModel({
+    required this.name,
+    required this.typeLearn,
+    required this.id,
+  });
+  factory DropLessonModel.fromJson(Map<String, dynamic> json) {
+    return DropLessonModel(
+      name: json['name'] ?? '',
+      typeLearn: json['type_learn'] ?? '',
+      id: json['buoi_hoc_id'] ?? '',
+    );
+  }
+}
+
 class ChildrenInfoModel {
   final String img;
   final String nameChild;

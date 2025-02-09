@@ -232,6 +232,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                           );
                   },
                 ),
+                SizedBox(height: 24.h),
                 // FutureBuilder(
                 //   future: ScheduleRepo().getScheduleList(
                 //       DateFormat('dd-MM-yyyy')
@@ -341,7 +342,7 @@ class _ItemTableCalenderState extends State<ItemTableCalender> {
               ),
             )
           : Container(
-              margin: EdgeInsets.only(top: 16.h),
+              margin: EdgeInsets.only(top: 16.h, bottom: 10.h),
               padding: EdgeInsets.symmetric(
                 horizontal: 16.w,
                 vertical: 16.h,

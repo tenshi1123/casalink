@@ -395,32 +395,37 @@ class _NestedTabBarState extends State<NestedTabBar>
                           ),
                         );
                       },
-                      child: Row(
-                        children: [
-                          Image(
-                            image:
-                                const AssetImage('assets/images/icon_file.png'),
-                            height: 48.h,
-                            width: 48.w,
-                          ),
-                          SizedBox(
-                            width: 16.w,
-                          ),
-                          Expanded(
-                            child: Text(
-                              _detailLesson.listDocument[index].name,
-                              style: defaultText16B,
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 3,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                          vertical: 16.h,
+                        ),
+                        child: Row(
+                          children: [
+                            Image(
+                              image: const AssetImage(
+                                  'assets/images/icon_file.png'),
+                              height: 48.h,
+                              width: 48.w,
                             ),
-                          ),
-                          // Text(
-                          //   'chọn bài tập bạn muốn xem',
-                          //   style: defaultText14Re.copyWith(
-                          //     color: Colors.black.withAlpha(60),
-                          //   ),
-                          // ),
-                        ],
+                            SizedBox(
+                              width: 16.w,
+                            ),
+                            Expanded(
+                              child: Text(
+                                _detailLesson.listDocument[index].name,
+                                style: defaultText16B,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 3,
+                              ),
+                            ),
+                            // Text(
+                            //   'chọn bài tập bạn muốn xem',
+                            //   style: defaultText14Re.copyWith(
+                            //     color: Colors.black.withAlpha(60),
+                            //   ),
+                            // ),
+                          ],
+                        ),
                       ),
                     );
                   }),

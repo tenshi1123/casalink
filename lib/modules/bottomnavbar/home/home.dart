@@ -1,13 +1,17 @@
 import 'package:casalink/modules/chat/screen/list_conversation_screen.dart';
 import 'package:casalink/modules/diemdanh/diemdanh_screen.dart';
 import 'package:casalink/utils/constants/styles.dart';
+import 'package:casalink/utils/widget/custom_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import '../../../main.dart';
+import '../../../models/category_model.dart';
 import '../../../models/info_model.dart';
 import '../../../models/schedule_model.dart';
+import '../../../repo/category_repo.dart';
 import '../../../repo/follow_class_repo.dart';
 import '../../../repo/schedule_repo.dart';
 import '../../../utils/widget/custom_dialog.dart';
@@ -17,11 +21,12 @@ import 'excercise_screen.dart';
 import '../../feedback/feedback_screen.dart';
 import '../../notification/notification_screen.dart';
 import 'schedule_screen.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key, required this.infoModel});
+  const HomeScreen(
+      {super.key, required this.infoModel, required this.infoClassModel});
   final InfoModel infoModel;
+  final InfoClassModel infoClassModel;
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -34,19 +39,8 @@ class _HomeScreenState extends State<HomeScreen> {
   final controller3 = PageController(viewportFraction: 0.75, keepPage: true);
   bool _isLoading = false;
   bool _isLoading1 = false;
-  final bool _isLoading2 = false;
   @override
   Widget build(BuildContext context) {
-    final page2 = List.generate(
-        6,
-        (index) => NotificationItem(
-              index: index,
-            ));
-    final page3 = List.generate(
-        6,
-        (index) => NotificationItem(
-              index: index,
-            ));
     return Scaffold(
       backgroundColor: const Color(0xffF2FDFF),
       body: SingleChildScrollView(
@@ -71,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     image: const AssetImage(
                       'assets/images/appbar_background.png',
                     ),
-                    fit: BoxFit.fitWidth,
+                    fit: BoxFit.fill,
                   ),
                 ),
                 Positioned(
@@ -181,9 +175,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                 color: const Color(0xff292929).withAlpha(70),
                               ),
                             ),
-                            Text(
-                              'NC',
-                              style: defaultText16M,
+                            SizedBox(
+                              height: 40.h,
+                              width: 80.w,
+                              child: Text(
+                                widget.infoClassModel.lopHoc,
+                                style: defaultText16M,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ),
                           ],
                         ),
@@ -204,9 +204,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                 color: const Color(0xff292929).withAlpha(70),
                               ),
                             ),
-                            Text(
-                              'Mỹ Đình',
-                              style: defaultText16M,
+                            SizedBox(
+                              height: 40.h,
+                              width: 80.w,
+                              child: Text(
+                                widget.infoClassModel.coso,
+                                style: defaultText16M,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ),
                           ],
                         ),
@@ -227,9 +233,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                 color: const Color(0xff292929).withAlpha(70),
                               ),
                             ),
-                            Text(
-                              '50',
-                              style: defaultText16M,
+                            SizedBox(
+                              height: 40.h,
+                              width: 80.w,
+                              child: Text(
+                                widget.infoClassModel.numberLessons,
+                                style: defaultText16M,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ),
                           ],
                         ),
@@ -628,94 +640,143 @@ class _HomeScreenState extends State<HomeScreen> {
                       style: defaultText16B,
                     ),
                   ),
-                  ValueListenableBuilder<int>(
-                    valueListenable: _docLibra,
-                    builder: (BuildContext context, int value, Widget? child) {
-                      return Padding(
-                        padding: EdgeInsets.only(right: 16.w),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                _docLibra.value = 0;
-                              },
-                              child: feedbackItem(value == 0, 'Luyện thi'),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                _docLibra.value = 1;
-                              },
-                              child: feedbackItem(value == 1, 'TOEIC'),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                _docLibra.value = 2;
-                              },
-                              child: feedbackItem(value == 2, 'Giao tiếp'),
-                            )
-                          ],
-                        ),
-                      );
-                    },
-                  ),
                   SizedBox(
-                    height: 20.h,
-                  ),
-                  SizedBox(
-                    height: 229.h,
+                    height: 284.h,
                     width: 375.w,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        ClipRRect(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(16.r),
-                            bottomLeft: Radius.circular(16.r),
-                          ),
-                          child: SizedBox(
-                            height: 208.h,
-                            width: 375.w,
-                            child: PageView.builder(
-                              padEnds: false,
-                              controller: controller2,
-                              itemCount: page2.length,
-                              itemBuilder: (_, index) {
-                                return page2[index % page2.length];
-                              },
+                    child: ValueListenableBuilder<int>(
+                      valueListenable: _docLibra,
+                      builder:
+                          (BuildContext context, int value, Widget? child) {
+                        return Column(
+                          children: [
+                            SizedBox(
+                              height: 55.h,
+                              width: 375.w,
+                              child: ListView.builder(
+                                shrinkWrap: true,
+                                physics: const ScrollPhysics(),
+                                itemCount: listCategori.length,
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (context, index) {
+                                  return Padding(
+                                    padding: EdgeInsets.only(right: 16.w),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        _docLibra.value = index;
+                                      },
+                                      child: Column(
+                                        children: [
+                                          feedbackItem(
+                                            value == index,
+                                            listCategori[index].categoryName,
+                                          ),
+                                          SizedBox(
+                                            height: 20.h,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
                             ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 5.h,
-                        ),
-                        SmoothPageIndicator(
-                          controller: controller2,
-                          count: 6,
-                          effect: CustomizableEffect(
-                            activeDotDecoration: DotDecoration(
-                              width: 20.w,
-                              height: 8.h,
-                              color: Colors.indigo,
-                              borderRadius: BorderRadius.circular(24),
-                            ),
-                            dotDecoration: DotDecoration(
-                              width: 8.w,
-                              height: 8.h,
-                              color: Colors.grey,
-                              borderRadius: BorderRadius.circular(16),
-                              verticalOffset: 0,
-                            ),
-                            spacing: 6.0,
-                          ),
-                          onDotClicked: (index) {
-                            controller2.animateToPage(index,
-                                duration: const Duration(milliseconds: 300),
-                                curve: Curves.easeInOut);
-                          },
-                        ),
-                      ],
+                            SizedBox(
+                                height: 229.h,
+                                width: 375.w,
+                                child: FutureBuilder(
+                                  future: CategoryRepo().getLibrary(
+                                      listCategori[_docLibra.value]
+                                          .id), // Hàm gọi API
+                                  builder: (context, snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return Center(
+                                        child: SizedBox(
+                                          width: 40.w,
+                                          height: 40.h,
+                                          child:
+                                              const CircularProgressIndicator(),
+                                        ),
+                                      );
+                                    } else if (snapshot.hasError) {
+                                      return Text(
+                                        'Something went wrong',
+                                        style: defaultText14M,
+                                      );
+                                    } else if (snapshot.hasData) {
+                                      final listlibra =
+                                          snapshot.data as List<LibraryModel>;
+                                      return SizedBox(
+                                        width: 375.w,
+                                        height: 166.h,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: <Widget>[
+                                            ClipRRect(
+                                              borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(16.r),
+                                                bottomLeft:
+                                                    Radius.circular(16.r),
+                                              ),
+                                              child: SizedBox(
+                                                height: 208.h,
+                                                width: 375.w,
+                                                child: PageView.builder(
+                                                  padEnds: false,
+                                                  controller: controller2,
+                                                  itemCount: listlibra.length,
+                                                  itemBuilder: (_, index) {
+                                                    return DocumentItem(
+                                                      model: listlibra[index],
+                                                    );
+                                                  },
+                                                ),
+                                              ),
+                                            ),
+                                            SmoothPageIndicator(
+                                              controller: controller2,
+                                              count: 3,
+                                              effect: CustomizableEffect(
+                                                activeDotDecoration:
+                                                    DotDecoration(
+                                                  width: 20.w,
+                                                  height: 8.h,
+                                                  color: Colors.indigo,
+                                                  borderRadius:
+                                                      BorderRadius.circular(24),
+                                                ),
+                                                dotDecoration: DotDecoration(
+                                                  width: 8.w,
+                                                  height: 8.h,
+                                                  color: Colors.grey,
+                                                  borderRadius:
+                                                      BorderRadius.circular(16),
+                                                  verticalOffset: 0,
+                                                ),
+                                                spacing: 6.0,
+                                              ),
+                                              onDotClicked: (index) {
+                                                controller2.animateToPage(index,
+                                                    duration: const Duration(
+                                                        milliseconds: 300),
+                                                    curve: Curves.easeInOut);
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    } else {
+                                      return Text(
+                                        'Something went wrong2',
+                                        style: defaultText14M,
+                                      );
+                                    }
+                                  },
+                                )),
+                          ],
+                        );
+                      },
                     ),
                   ),
                   Padding(
@@ -725,94 +786,139 @@ class _HomeScreenState extends State<HomeScreen> {
                       style: defaultText16B,
                     ),
                   ),
-                  ValueListenableBuilder<int>(
-                    valueListenable: _centralBoard,
-                    builder: (BuildContext context, int value, Widget? child) {
-                      return Padding(
-                        padding: EdgeInsets.only(right: 16.w),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                _centralBoard.value = 0;
-                              },
-                              child: feedbackItem(value == 0, 'Tin tức'),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                _centralBoard.value = 1;
-                              },
-                              child: feedbackItem(value == 1, 'Event'),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                _centralBoard.value = 2;
-                              },
-                              child: feedbackItem(value == 2, 'Khóa học'),
-                            )
-                          ],
-                        ),
-                      );
-                    },
-                  ),
                   SizedBox(
-                    height: 20.h,
-                  ),
-                  SizedBox(
-                    height: 229.h,
+                    height: 284.h,
                     width: 375.w,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        ClipRRect(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(16.r),
-                            bottomLeft: Radius.circular(16.r),
-                          ),
-                          child: SizedBox(
-                            height: 208.h,
-                            width: 375.w,
-                            child: PageView.builder(
-                              padEnds: false,
-                              controller: controller3,
-                              itemCount: page3.length,
-                              itemBuilder: (_, index) {
-                                return page3[index % page3.length];
-                              },
+                    child: ValueListenableBuilder<int>(
+                      valueListenable: _centralBoard,
+                      builder:
+                          (BuildContext context, int value, Widget? child) {
+                        return Column(
+                          children: [
+                            SizedBox(
+                              height: 35.h,
+                              width: 375.w,
+                              child: ListView.builder(
+                                shrinkWrap: true,
+                                physics: const ScrollPhysics(),
+                                itemCount: listPostCate.length,
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (context, index) {
+                                  return Padding(
+                                    padding: EdgeInsets.only(right: 16.w),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        _centralBoard.value = index;
+                                      },
+                                      child: feedbackItem(
+                                        value == index,
+                                        listPostCate[index].categoryName,
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
                             ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 5.h,
-                        ),
-                        SmoothPageIndicator(
-                          controller: controller3,
-                          count: 6,
-                          effect: CustomizableEffect(
-                            activeDotDecoration: DotDecoration(
-                              width: 20.w,
-                              height: 8.h,
-                              color: Colors.indigo,
-                              borderRadius: BorderRadius.circular(24),
+                            SizedBox(
+                              height: 20.h,
                             ),
-                            dotDecoration: DotDecoration(
-                              width: 8.w,
-                              height: 8.h,
-                              color: Colors.grey,
-                              borderRadius: BorderRadius.circular(16),
-                              verticalOffset: 0,
-                            ),
-                            spacing: 6.0,
-                          ),
-                          onDotClicked: (index) {
-                            controller2.animateToPage(index,
-                                duration: const Duration(milliseconds: 300),
-                                curve: Curves.easeInOut);
-                          },
-                        ),
-                      ],
+                            SizedBox(
+                                height: 229.h,
+                                width: 375.w,
+                                child: FutureBuilder(
+                                  future: CategoryRepo().getPostCategory(
+                                      listPostCate[_centralBoard.value]
+                                          .id), // Hàm gọi API
+                                  builder: (context, snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return Center(
+                                        child: SizedBox(
+                                          width: 40.w,
+                                          height: 40.h,
+                                          child:
+                                              const CircularProgressIndicator(),
+                                        ),
+                                      );
+                                    } else if (snapshot.hasError) {
+                                      return Text(
+                                        'Something went wrong',
+                                        style: defaultText14M,
+                                      );
+                                    } else if (snapshot.hasData) {
+                                      final listPost =
+                                          snapshot.data as List<PostModel>;
+                                      return SizedBox(
+                                        width: 375.w,
+                                        height: 166.h,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: <Widget>[
+                                            ClipRRect(
+                                              borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(16.r),
+                                                bottomLeft:
+                                                    Radius.circular(16.r),
+                                              ),
+                                              child: SizedBox(
+                                                height: 208.h,
+                                                width: 375.w,
+                                                child: PageView.builder(
+                                                  padEnds: false,
+                                                  controller: controller3,
+                                                  itemCount: listPost.length,
+                                                  itemBuilder: (_, index) {
+                                                    return PostItem(
+                                                      model: listPost[index],
+                                                    );
+                                                  },
+                                                ),
+                                              ),
+                                            ),
+                                            SmoothPageIndicator(
+                                              controller: controller3,
+                                              count: 3,
+                                              effect: CustomizableEffect(
+                                                activeDotDecoration:
+                                                    DotDecoration(
+                                                  width: 20.w,
+                                                  height: 8.h,
+                                                  color: Colors.indigo,
+                                                  borderRadius:
+                                                      BorderRadius.circular(24),
+                                                ),
+                                                dotDecoration: DotDecoration(
+                                                  width: 8.w,
+                                                  height: 8.h,
+                                                  color: Colors.grey,
+                                                  borderRadius:
+                                                      BorderRadius.circular(16),
+                                                  verticalOffset: 0,
+                                                ),
+                                                spacing: 6.0,
+                                              ),
+                                              onDotClicked: (index) {
+                                                controller2.animateToPage(index,
+                                                    duration: const Duration(
+                                                        milliseconds: 300),
+                                                    curve: Curves.easeInOut);
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    } else {
+                                      return Text(
+                                        'Something went wrong2',
+                                        style: defaultText14M,
+                                      );
+                                    }
+                                  },
+                                )),
+                          ],
+                        );
+                      },
                     ),
                   ),
                   SizedBox(
@@ -832,41 +938,6 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 //Vội vl không tách widgetwidget
-class NotificationItem extends StatelessWidget {
-  const NotificationItem({super.key, required this.index});
-  final int index;
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () async {
-        if (!await launchUrl(Uri.parse('https://casalink.edu.vn/'))) {
-          throw Exception('Could not launch ');
-        }
-      },
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: 240.w,
-            height: 160.h,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(16.r)),
-              color: Colors.white,
-              image: DecorationImage(
-                image: AssetImage(list[index]),
-                fit: BoxFit.fill,
-              ),
-            ),
-          ),
-          Text(
-            'Đáp án Sách ngữ pháp sơ đồ tư duy Casalinnk',
-            style: defaultText14B,
-          )
-        ],
-      ),
-    );
-  }
-}
 
 class UpcomingSchedule extends StatelessWidget {
   const UpcomingSchedule({super.key, required this.model});

@@ -29,18 +29,11 @@ class ApiPath {
   static const String listCheckin = '$baseUrl/checkin';
   static const String detailCheckin = '$baseUrl/checkin/detail';
 
-  // chi tiết homework
-  static const String detailHomework = '$baseUrl/detail/homework';
-
-  // Tổng kết tháng danh sách khóa học
-  static const String reportSchedule = '$baseUrl/report/schedule';
-
-  // Tổng kết tháng - điểm tổng trên tháng
-  static const String reportPoint = '$baseUrl/report/point';
-
   // thông tin tài khoản
   static const String user = '$baseUrl/user/info';
-
+  static const String infoclass = '$baseUrl/info/class';
+  static const String classLearned = '$baseUrl/student/class';
+  static const String lessonLearned = '$baseUrl/student/class/lesson';
   // xóa tài khoản
   static const String deleteUser = '$baseUrl/user/delete';
 
@@ -50,25 +43,11 @@ class ApiPath {
   // Đổi mật khẩu
   static const String changePassword = '$baseUrl/user/password/update';
 
-  //check thông báo mới hay không
-  static const String checkNoti = '$baseUrl/notification/check';
-
-  //danh sách thông báo
-  static const String getListNoti = '$baseUrl/notification';
-
-  //Chi tiết thông báo
-  static const String getDetailNoti = '$baseUrl/notification/detail';
-
   //Gửi thông tin onesignal id
   static const String pushOnsignalId = '$baseUrl/notify/onesignal_id';
 
   //Xóa thông tin onesignal id
   static const String deleteOnsignalId = '$baseUrl/notify/remove/onesignal_id';
-  //Lấy danh sách banner
-  static const String getbanner = '$baseUrl/banner';
-
-  //Cập nhật trạng thái khi ấn vào chi tiết
-  static const String updateStatusNoti = '$baseUrl/notification/update';
 
   //Gửi bài tập
   static const String uploadHomeWork = '$baseUrl/detail/homework/upload';
@@ -78,4 +57,13 @@ class ApiPath {
 
   //Lấy danh sách banner
   static const String getBanner = '$baseUrl/banner';
+
+  //Lấy danh sách danh mục
+  static const String category = '$baseUrl/category';
+
+  static const String library = '$baseUrl/library';
+
+  static const String postCategory = '$baseUrl/post/category';
+
+  static const String detailPost = '$baseUrl/post';
 }

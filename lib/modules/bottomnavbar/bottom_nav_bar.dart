@@ -17,8 +17,10 @@ class BottomNavBar extends StatefulWidget {
   const BottomNavBar({
     super.key,
     required this.infoModel,
+    required this.infoClassModel,
   });
   final InfoModel infoModel;
+  final InfoClassModel infoClassModel;
   @override
   State<BottomNavBar> createState() => _BottomNavBarState();
 }
@@ -57,6 +59,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
         PersistentTabConfig(
           screen: HomeScreen(
             infoModel: widget.infoModel,
+            infoClassModel: widget.infoClassModel,
           ),
           item: ItemConfig(
             icon: SvgPicture.asset(

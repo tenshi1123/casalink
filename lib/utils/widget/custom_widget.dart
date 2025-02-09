@@ -1,8 +1,12 @@
 import 'package:casalink/utils/constants/styles.dart';
+import 'package:casalink/utils/widget/webview_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
+import 'package:url_launcher/url_launcher.dart';
+import '../../models/category_model.dart';
 import '../../modules/chat/screen/chat_screen.dart';
 import '../constants/color.dart';
 
@@ -135,6 +139,87 @@ class ConversationItem extends StatelessWidget {
                 fit: BoxFit.scaleDown,
               ),
             ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class DocumentItem extends StatelessWidget {
+  const DocumentItem({
+    super.key,
+    required this.model,
+  });
+  final LibraryModel model;
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () async {
+        pushWithoutNavBar(
+          context,
+          MaterialPageRoute(
+            builder: ((context) => WebViewScreen(
+                  link: model.linkDetail,
+                  title: 'Thư viện tài liệu',
+                )),
+          ),
+        );
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Image.network(
+            model.img,
+            width: 240.w,
+            height: 160.h,
+            fit: BoxFit.fill,
+          ),
+          // Text(
+          //   model.id,
+          //   style: defaultText14B,
+          // ),
+        ],
+      ),
+    );
+  }
+}
+
+class PostItem extends StatelessWidget {
+  const PostItem({
+    super.key,
+    required this.model,
+  });
+  final PostModel model;
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () async {
+        pushWithoutNavBar(
+          context,
+          MaterialPageRoute(
+            builder: ((context) => WebViewScreen(
+                  link: model.link,
+                  title: model.postTitle,
+                )),
+          ),
+        );
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Image.network(
+            model.thumbnailUrl,
+            width: 240.w,
+            height: 160.h,
+            fit: BoxFit.fill,
+          ),
+          Expanded(
+            child: Text(
+              model.postTitle,
+              style: defaultText14B,
+              maxLines: 2,
+            ),
           ),
         ],
       ),
