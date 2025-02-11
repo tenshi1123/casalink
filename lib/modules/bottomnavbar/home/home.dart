@@ -26,7 +26,7 @@ class HomeScreen extends StatefulWidget {
   const HomeScreen(
       {super.key, required this.infoModel, required this.infoClassModel});
   final InfoModel infoModel;
-  final InfoClassModel infoClassModel;
+  final InfoHomeModel infoClassModel;
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -558,7 +558,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         return const CircularProgressIndicator();
                       } else if (snapshot.hasError) {
                         return Text(
-                          'Something went wrong',
+                          'Vui lòng kiểm tra lại kết nối internet',
                           style: defaultText14M,
                         );
                       } else if (snapshot.hasData) {
@@ -592,7 +592,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               SmoothPageIndicator(
                                 controller: controller1,
-                                count: listLichHoc.length,
+                                count: listLichHoc.isEmpty
+                                    ? 1
+                                    : listLichHoc.length,
                                 effect: CustomizableEffect(
                                   activeDotDecoration: DotDecoration(
                                     width: 20.w,
@@ -627,7 +629,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         );
                       } else {
                         return Text(
-                          'Something went wrong2',
+                          'Vui lòng kiểm tra lại kết nối internet2',
                           style: defaultText14M,
                         );
                       }
@@ -700,7 +702,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       );
                                     } else if (snapshot.hasError) {
                                       return Text(
-                                        'Something went wrong',
+                                        'Vui lòng kiểm tra lại kết nối internet',
                                         style: defaultText14M,
                                       );
                                     } else if (snapshot.hasData) {
@@ -736,7 +738,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                             ),
                                             SmoothPageIndicator(
                                               controller: controller2,
-                                              count: 3,
+                                              count: listlibra.isEmpty
+                                                  ? 1
+                                                  : listlibra.length,
                                               effect: CustomizableEffect(
                                                 activeDotDecoration:
                                                     DotDecoration(
@@ -768,7 +772,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       );
                                     } else {
                                       return Text(
-                                        'Something went wrong2',
+                                        'Vui lòng kiểm tra lại kết nối internet2',
                                         style: defaultText14M,
                                       );
                                     }
@@ -842,7 +846,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       );
                                     } else if (snapshot.hasError) {
                                       return Text(
-                                        'Something went wrong',
+                                        'Vui lòng kiểm tra lại kết nối internet',
                                         style: defaultText14M,
                                       );
                                     } else if (snapshot.hasData) {
@@ -878,7 +882,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                             ),
                                             SmoothPageIndicator(
                                               controller: controller3,
-                                              count: 3,
+                                              count: listPost.isEmpty
+                                                  ? 1
+                                                  : listPost.length,
                                               effect: CustomizableEffect(
                                                 activeDotDecoration:
                                                     DotDecoration(
@@ -910,7 +916,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       );
                                     } else {
                                       return Text(
-                                        'Something went wrong2',
+                                        'Vui lòng kiểm tra lại kết nối internet2',
                                         style: defaultText14M,
                                       );
                                     }

@@ -11,6 +11,8 @@ import "../../models/info_model.dart";
 import "../../utils/onesignal.dart";
 import "screen/class_screen.dart";
 import "info/personal_screen.dart";
+import "screen/list_class_screen.dart";
+import "screen/list_video_course.dart";
 import "screen/video_course.dart";
 
 class BottomNavBar extends StatefulWidget {
@@ -20,7 +22,7 @@ class BottomNavBar extends StatefulWidget {
     required this.infoClassModel,
   });
   final InfoModel infoModel;
-  final InfoClassModel infoClassModel;
+  final InfoHomeModel infoClassModel;
   @override
   State<BottomNavBar> createState() => _BottomNavBarState();
 }
@@ -73,7 +75,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
           ),
         ),
         PersistentTabConfig(
-          screen: const ClassScreen(),
+          screen: const ListClassScreen(),
           item: ItemConfig(
             icon: SvgPicture.asset(
               'assets/icons/lophoc.svg',
@@ -89,7 +91,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
           ),
         ),
         PersistentTabConfig(
-          screen: const VideoCourse(),
+          screen: const ListVideoCourse(),
           item: ItemConfig(
             icon: SvgPicture.asset(
               'assets/icons/video.svg',
@@ -105,7 +107,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
           ),
         ),
         PersistentTabConfig(
-          screen: const PersonalScreen(),
+          screen: PersonalScreen(
+            infoModel: widget.infoModel,
+          ),
           item: ItemConfig(
             icon: SvgPicture.asset(
               'assets/icons/personal.svg',

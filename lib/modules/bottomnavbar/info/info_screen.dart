@@ -1,10 +1,11 @@
+import 'package:casalink/models/info_model.dart';
 import 'package:casalink/utils/constants/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class InfoScreen extends StatefulWidget {
-  const InfoScreen({super.key});
-
+  const InfoScreen({super.key, required this.infoModel});
+  final InfoModel infoModel;
   @override
   State<InfoScreen> createState() => _InfoScreenState();
 }
@@ -24,7 +25,7 @@ class _InfoScreenState extends State<InfoScreen> {
         ),
         title: Center(
           child: Text(
-            'Thông tin tài khoản    ',
+            'Thông tin tài khoản       ',
             style: defaultText18B,
           ),
         ),
@@ -33,15 +34,17 @@ class _InfoScreenState extends State<InfoScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Image(
-              image: const AssetImage('assets/images/avatar2.png'),
-              height: 120.h,
-              width: 120.w,
-              fit: BoxFit.fill,
+            SizedBox(
+              height: 16.h,
+            ),
+            CircleAvatar(
+              radius: 60.r,
+              backgroundImage: NetworkImage(widget.infoModel.avatar),
             ),
             MyTextFormField(
               labelText: 'Họ và tên',
-              controller: TextEditingController(text: 'Nguyễn Thế Hoàng'),
+              controller:
+                  TextEditingController(text: widget.infoModel.fullName),
               keyboardType: TextInputType.phone,
               onChanged: (value) {
                 print('Họ và tên đã thay đổi: $value');
@@ -49,7 +52,7 @@ class _InfoScreenState extends State<InfoScreen> {
             ),
             MyTextFormField(
               labelText: 'Số điện thoại',
-              controller: TextEditingController(text: '097 111 626'),
+              controller: TextEditingController(text: widget.infoModel.phone),
               keyboardType: TextInputType.phone,
               onChanged: (value) {
                 print('Số điện thoại đã thay đổi: $value');
@@ -57,7 +60,7 @@ class _InfoScreenState extends State<InfoScreen> {
             ),
             MyTextFormField(
               labelText: 'Email',
-              controller: TextEditingController(text: 'Abcxyz@casalink.vn'),
+              controller: TextEditingController(text: widget.infoModel.email),
               keyboardType: TextInputType.phone,
               onChanged: (value) {
                 print('Email đã thay đổi: $value');

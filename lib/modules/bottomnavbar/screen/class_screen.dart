@@ -3,26 +3,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 
+import '../../../models/info_class_model.dart';
 import '../../../models/schedule_model.dart';
 import '../../../repo/schedule_repo.dart';
 import '../../diemdanh/detail_screen.dart';
 
 class ClassScreen extends StatelessWidget {
-  const ClassScreen({super.key});
-
+  const ClassScreen({super.key, required this.detailClassModel});
+  final ClassDetailModel detailClassModel;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: const Color(0xff273D8C),
-        // leading: IconButton(
-        //   icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white),
-        //   onPressed: () {},
-        // ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white),
+          onPressed: () {
+            Navigator.of(context).pop(false);
+          },
+        ),
         title: Center(
           child: Text(
-            'Lớp học',
+            'Danh sách buổi học        ',
             style: defaultText18B.copyWith(
               color: Colors.white,
             ),
@@ -35,17 +38,29 @@ class ClassScreen extends StatelessWidget {
           children: [
             Container(
               margin: EdgeInsets.only(top: 16.h, left: 16.w, right: 16.w),
-              width: 343.w,
-              height: 218.h,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(16.r)),
                 color: Colors.white,
-                image: const DecorationImage(
-                  image: AssetImage('assets/images/class_banner.png'),
-                  fit: BoxFit.fill,
-                ),
+              ),
+              child: Image.network(
+                detailClassModel.detailClassModel.courseImg,
+                width: 343.w,
+                //height: 160.h,
+                fit: BoxFit.fitWidth,
               ),
             ),
+            // Padding(
+            //   padding: EdgeInsets.only(
+            //     top: 16.h,
+            //     left: 16.w,
+            //   ),
+            //   child: Image.network(
+            //     detailClassModel.detailClassModel.courseImg,
+            //     width: 343.w,
+            //     height: 160.h,
+            //     fit: BoxFit.fitWidth,
+            //   ),
+            // ),
             Container(
               height: 32.h,
               width: 226.w,
@@ -56,7 +71,7 @@ class ClassScreen extends StatelessWidget {
               ),
               child: Center(
                 child: Text(
-                  'Học trực tiếp tại trung tâm',
+                  detailClassModel.detailClassModel.settingCourseTypeName,
                   style: defaultText16M.copyWith(
                     color: Colors.white,
                   ),
@@ -66,7 +81,7 @@ class ClassScreen extends StatelessWidget {
             Padding(
               padding: EdgeInsets.only(top: 10.h, left: 16.w),
               child: Text(
-                'Grammar & Writing',
+                detailClassModel.detailClassModel.name,
                 style: defaultText20B.copyWith(
                   color: const Color(0xff273D8C),
                 ),
@@ -90,7 +105,11 @@ class ClassScreen extends StatelessWidget {
                       margin: EdgeInsets.symmetric(
                           vertical: 10.h, horizontal: 16.w),
                       height: 8.h,
-                      width: (296 * 26 / 100).w,
+                      width: (296 *
+                              detailClassModel
+                                  .detailClassModel.percentLearning /
+                              100)
+                          .w,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(24.r),
                         color: const Color(0xff28B4E9),
@@ -99,7 +118,7 @@ class ClassScreen extends StatelessWidget {
                   ],
                 ),
                 Text(
-                  '26%',
+                  '${detailClassModel.detailClassModel.percentLearning}%',
                   style: defaultText16B.copyWith(
                     color: const Color(0xff28B4E9),
                   ),
@@ -116,9 +135,10 @@ class ClassScreen extends StatelessWidget {
                     onTap: () async {
                       DetaiLessonModel listExcercise =
                           await ScheduleRepo().getDetailSchedule(
-                        checkinOffId: '6874',
-                        typeLearn: 'zoom',
-                        meetingId: '59',
+                        checkinOffId:
+                            detailClassModel.listLesson[index].checkId,
+                        typeLearn: detailClassModel.listLesson[index].typeLearn,
+                        meetingId: detailClassModel.listLesson[index].leaveId,
                       );
                       pushWithoutNavBar(
                         context,
@@ -152,7 +172,7 @@ class ClassScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              time[index],
+                              "${detailClassModel.listLesson[index].createdDate} ${detailClassModel.listLesson[index].cosoName}",
                               style: defaultText14M.copyWith(
                                   color: const Color(0xff273D8C)),
                             ),
@@ -160,7 +180,7 @@ class ClassScreen extends StatelessWidget {
                               height: 10.h,
                             ),
                             Text(
-                              title[index],
+                              detailClassModel.listLesson[index].name,
                               style: defaultText16B.copyWith(
                                   color: const Color(0xff273D8C)),
                             ),
@@ -168,10 +188,20 @@ class ClassScreen extends StatelessWidget {
                               height: 10.h,
                             ),
                             Text(
-                              'Nội dung buổi học: ${content[index]}',
+                              'Nội dung buổi học: ${detailClassModel.listLesson[index].topic}',
                               style: defaultText14M.copyWith(
                                   color: const Color(0xff273D8C)),
                             ),
+                            SizedBox(
+                              height: 10.h,
+                            ),
+                            detailClassModel.listLesson[index].leaveReason == ''
+                                ? const SizedBox()
+                                : Text(
+                                    'Lịch sử nghỉ học \nLý do: ${detailClassModel.listLesson[index].leaveReason}',
+                                    style: defaultText14M.copyWith(
+                                        color: const Color(0xffED1C24)),
+                                  ),
                           ],
                         )),
                   );

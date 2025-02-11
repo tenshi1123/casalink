@@ -43,7 +43,7 @@ extension AppPagesExtension on AppPages {
         return PageConfig()..pageBuilder = () => const ForgotPassScreen();
       case AppPages.BottomNavBarPage:
         final InfoModel infoModel = arguments!['infoModel'];
-        final InfoClassModel infoClassModel = arguments['infoClassModel'];
+        final InfoHomeModel infoClassModel = arguments['infoClassModel'];
         return PageConfig()
           ..pageBuilder = () => BottomNavBar(
                 infoModel: infoModel,

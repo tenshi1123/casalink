@@ -40,10 +40,12 @@ class _DetailScreenState extends State<DetailScreen> {
             Navigator.of(context).pop(false);
           },
         ),
-        title: Text(
-          'Chi tiết buổi học',
-          style: defaultText18B.copyWith(
-            color: Colors.white,
+        title: Center(
+          child: Text(
+            'Chi tiết buổi học          ',
+            style: defaultText18B.copyWith(
+              color: Colors.white,
+            ),
           ),
         ),
       ),

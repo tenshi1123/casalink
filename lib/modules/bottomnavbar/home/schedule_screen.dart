@@ -251,7 +251,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                 //       return const CircularProgressIndicator();
                 //     } else if (snapshot.hasError) {
                 //       return Text(
-                //         'Something went wrong',
+                //         'Vui lòng kiểm tra lại kết nối internet',
                 //         style: defaultText14M,
                 //       );
                 //     } else if (snapshot.hasData) {
@@ -259,7 +259,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                 //       return
                 //     } else {
                 //       return Text(
-                //         'Something went wrong2',
+                //         'Vui lòng kiểm tra lại kết nối internet2',
                 //         style: defaultText14M,
                 //       );
                 //     }

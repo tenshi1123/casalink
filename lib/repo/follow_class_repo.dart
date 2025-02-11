@@ -1,4 +1,5 @@
 import 'package:casalink/models/checkin_model.dart';
+import 'package:casalink/models/info_class_model.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -62,5 +63,34 @@ class FollowClassRepo {
     CheckinModel result =
         CheckinModel.fromJson((response.data)['data']['value']);
     return result;
+  }
+
+  Future<List<InfoClassModel>> getListClass() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? token = prefs.getString('token');
+    dio.options.headers['Authorization'] = 'Bearer $token';
+    Response response;
+    response = await dio.get(
+      ApiPath.listClass,
+    );
+    List<InfoClassModel> result = ((response.data)['data'] as List)
+        .map((e) => InfoClassModel.fromJson(e))
+        .toList();
+    return result;
+  }
+
+  Future<ClassDetailModel> getListLesson(
+      {required String typeId, required String scheduleId}) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? token = prefs.getString('token');
+    dio.options.headers['Authorization'] = 'Bearer $token';
+    final response = await dio.post(
+      ApiPath.detailClass,
+      data: {
+        'setting_course_type_id': typeId,
+        'course_schedule_id': scheduleId,
+      },
+    );
+    return ClassDetailModel.fromJson(response.data['data']);
   }
 }

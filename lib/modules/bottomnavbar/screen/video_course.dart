@@ -2,25 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
+import '../../../models/info_class_model.dart';
 import '../../../utils/constants/styles.dart';
 import '../../videoplayer/animation_player.dart';
 
 class VideoCourse extends StatelessWidget {
-  const VideoCourse({super.key});
-
+  const VideoCourse({super.key, required this.courseVideoModel});
+  final CourseVideoModel courseVideoModel;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: const Color(0xff273D8C),
-        // leading: IconButton(
-        //   icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white),
-        //   onPressed: () {},
-        // ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white),
+          onPressed: () {
+            Navigator.of(context).pop(false);
+          },
+        ),
         title: Center(
           child: Text(
-            'Khoá học video',
+            'Khoá học video        ',
             style: defaultText18B.copyWith(
               color: Colors.white,
             ),
@@ -33,15 +36,15 @@ class VideoCourse extends StatelessWidget {
           children: [
             Container(
               margin: EdgeInsets.only(top: 16.h, left: 16.w, right: 16.w),
-              width: 343.w,
-              height: 218.h,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(16.r)),
                 color: Colors.white,
-                image: const DecorationImage(
-                  image: AssetImage('assets/images/class_banner.png'),
-                  fit: BoxFit.fill,
-                ),
+              ),
+              child: Image.network(
+                courseVideoModel.detailClassModel.courseImg,
+                width: 343.w,
+                //height: 160.h,
+                fit: BoxFit.fitWidth,
               ),
             ),
             Container(
@@ -55,7 +58,7 @@ class VideoCourse extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  'Khoá học video',
+                  courseVideoModel.detailClassModel.settingCourseTypeName,
                   style: defaultText16M.copyWith(
                     color: Colors.white,
                   ),
@@ -65,7 +68,7 @@ class VideoCourse extends StatelessWidget {
             Padding(
               padding: EdgeInsets.only(top: 10.h, left: 16.w),
               child: Text(
-                'Grammar & Writing',
+                courseVideoModel.detailClassModel.name,
                 style: defaultText20B.copyWith(
                   color: const Color(0xff273D8C),
                 ),
@@ -89,7 +92,11 @@ class VideoCourse extends StatelessWidget {
                       margin: EdgeInsets.symmetric(
                           vertical: 10.h, horizontal: 16.w),
                       height: 8.h,
-                      width: (296 * 26 / 100).w,
+                      width: (296 *
+                              courseVideoModel
+                                  .detailClassModel.percentLearning /
+                              100)
+                          .w,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(24.r),
                         color: const Color(0xff28B4E9),
@@ -98,7 +105,7 @@ class VideoCourse extends StatelessWidget {
                   ],
                 ),
                 Text(
-                  '26%',
+                  '${courseVideoModel.detailClassModel.percentLearning}%',
                   style: defaultText16B.copyWith(
                     color: const Color(0xff28B4E9),
                   ),

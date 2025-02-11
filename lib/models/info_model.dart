@@ -20,26 +20,26 @@ class InfoModel {
       avatar: json['avatar'] ?? '',
       fullName: json['full_name'] ?? '',
       id: json['id'] ?? '',
-      email: json['email'] ?? '',
-      phone: json['phone'] ?? '',
+      email: json['email'] ?? 'Không xác định',
+      phone: json['phone'] ?? 'Không xác định',
       gender: json['gender'] ?? 'Không xác định',
-      birthday: json['birthday'] ?? '',
+      birthday: json['birthday'] ?? 'Không xác định',
     );
   }
 }
 
-class InfoClassModel {
+class InfoHomeModel {
   final String lopHoc;
   final String coso;
   final String numberLessons;
 
-  InfoClassModel({
+  InfoHomeModel({
     required this.lopHoc,
     required this.coso,
     required this.numberLessons,
   });
-  factory InfoClassModel.fromJson(Map<String, dynamic> json) {
-    return InfoClassModel(
+  factory InfoHomeModel.fromJson(Map<String, dynamic> json) {
+    return InfoHomeModel(
       lopHoc: json['class'] ?? '',
       coso: json['coso'] ?? '',
       numberLessons: json['so_buoi_hoc'] ?? '',
@@ -70,17 +70,19 @@ class DropLessonModel {
   final String name;
   final String typeLearn;
   final String id;
+  final String day;
 
-  DropLessonModel({
-    required this.name,
-    required this.typeLearn,
-    required this.id,
-  });
+  DropLessonModel(
+      {required this.name,
+      required this.typeLearn,
+      required this.id,
+      required this.day});
   factory DropLessonModel.fromJson(Map<String, dynamic> json) {
     return DropLessonModel(
       name: json['name'] ?? '',
       typeLearn: json['type_learn'] ?? '',
       id: json['buoi_hoc_id'] ?? '',
+      day: json['day'] ?? '',
     );
   }
 }

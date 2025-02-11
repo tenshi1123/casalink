@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 
+import '../../../models/info_model.dart';
 import '../../login/login_screen.dart';
 import '../../../utils/constants/styles.dart';
 import 'change_pass.dart';
 
 class PersonalScreen extends StatelessWidget {
-  const PersonalScreen({super.key});
-
+  const PersonalScreen({super.key, required this.infoModel});
+  final InfoModel infoModel;
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -29,10 +30,9 @@ class PersonalScreen extends StatelessWidget {
           left: 16.w,
           child: Row(
             children: [
-              Image(
-                image: const AssetImage('assets/images/avatar2.png'),
-                height: 48.h,
-                width: 48.w,
+              CircleAvatar(
+                radius: 24.r,
+                backgroundImage: NetworkImage(infoModel.avatar),
               ),
               SizedBox(
                 width: 16.w,
@@ -41,14 +41,14 @@ class PersonalScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Nguyễn Thế Hoàng',
+                    infoModel.fullName,
                     style: defaultText18B.copyWith(color: Colors.white),
                   ),
                   SizedBox(
                     height: 4.h,
                   ),
                   Text(
-                    '097 111 6262',
+                    infoModel.phone,
                     style: defaultText16M.copyWith(
                       color: Colors.white,
                     ),
@@ -76,7 +76,9 @@ class PersonalScreen extends StatelessWidget {
                       Navigator.of(context, rootNavigator: true).push(
                         MaterialPageRoute(
                           builder: (BuildContext context) {
-                            return const InfoScreen();
+                            return InfoScreen(
+                              infoModel: infoModel,
+                            );
                           },
                         ),
                         // (_) => false,

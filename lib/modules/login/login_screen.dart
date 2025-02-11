@@ -270,7 +270,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         );
                         if (loged == true) {
                           InfoModel infoModel = await InfoRepo().getInfo();
-                          InfoClassModel infoClassModel =
+                          InfoHomeModel infoClassModel =
                               await InfoRepo().getInfoClass();
                           AppRouter.toPage(context, AppPages.BottomNavBarPage,
                               // blocValue: _authBloc,

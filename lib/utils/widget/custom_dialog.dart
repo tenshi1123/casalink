@@ -1,8 +1,6 @@
 import 'package:casalink/utils/constants/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-
 import '../../models/info_model.dart';
 import '../../repo/info_repo.dart';
 
@@ -16,13 +14,12 @@ class LeaveAbsencePopUp extends StatefulWidget {
 
 class _LeaveAbsencePopUpState extends State<LeaveAbsencePopUp> {
   final _formKey = GlobalKey<FormState>();
-  String? _category;
-  String? _newCategory;
-  final List<String> _categories = ['Personal', 'Work', 'Other'];
   final TextEditingController _dateController = TextEditingController();
   var className;
   var lessonName;
-  var newModel;
+  String reason = '';
+  late DropClassModel newModel;
+  late DropLessonModel newLesson;
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -127,7 +124,7 @@ class _LeaveAbsencePopUpState extends State<LeaveAbsencePopUp> {
                     right: 12.w,
                   ),
                   child: FutureBuilder<List<DropClassModel>>(
-                    future: InfoRepo().getDropClass(),
+                    future: InfoRepo().getDropClass(type: widget.type),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         return DropdownButton(
@@ -147,7 +144,6 @@ class _LeaveAbsencePopUpState extends State<LeaveAbsencePopUp> {
                           }).toList(),
                           onChanged: (value) {
                             className = value;
-
                             setState(() {
                               newModel = snapshot.data!.firstWhere(
                                   (element) => element.name == value);
@@ -169,7 +165,8 @@ class _LeaveAbsencePopUpState extends State<LeaveAbsencePopUp> {
                           right: 12.w,
                         ),
                         child: FutureBuilder<List<DropLessonModel>>(
-                          future: InfoRepo().getDropLesson(newModel),
+                          future:
+                              InfoRepo().getDropLesson(newModel, widget.type),
                           builder: (context, snapshot) {
                             if (snapshot.hasData) {
                               return DropdownButton(
@@ -183,13 +180,19 @@ class _LeaveAbsencePopUpState extends State<LeaveAbsencePopUp> {
                                 // Array list of items
                                 items: snapshot.data!.map((item) {
                                   return DropdownMenuItem(
-                                    value: item.name,
-                                    child: Text(item.name.toString()),
+                                    value: '${item.name} ngày ${item.day}',
+                                    child:
+                                        Text('${item.name} ngày ${item.day}'),
                                   );
                                 }).toList(),
                                 onChanged: (value) {
                                   lessonName = value;
-                                  setState(() {});
+                                  setState(() {
+                                    newLesson = snapshot.data!.firstWhere(
+                                        (element) =>
+                                            '${element.name} ngày ${element.day}' ==
+                                            value);
+                                  });
                                 },
                               );
                             } else {
@@ -199,57 +202,58 @@ class _LeaveAbsencePopUpState extends State<LeaveAbsencePopUp> {
                           },
                         ),
                       ),
-                Padding(
-                  padding: EdgeInsets.only(
-                    left: 12.w,
-                    top: 10.h,
-                    right: 12.w,
-                  ),
-                  child: TextFormField(
-                    style: defaultText14M,
-                    controller: _dateController,
-                    readOnly: true,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12.r),
-                        borderSide: BorderSide.none,
-                      ),
-                      // enabledBorder:
-                      //     const OutlineInputBorder(borderSide: BorderSide.none,),
-                      // focusedBorder: const OutlineInputBorder(
-                      //     borderSide: BorderSide(color: Colors.grey)),
-                      filled: true,
-                      fillColor: Colors.grey[200],
-                      hintText: widget.type == '1'
-                          ? 'Nhập ngày bạn muốn xin nghỉ'
-                          : 'Nhập ngày bạn muốn xin đi muộn',
-                      hintStyle: defaultText14M.copyWith(color: Colors.grey),
-                      prefixIcon: SvgPicture.asset(
-                        'assets/icons/calendar.svg',
-                        height: 20.h,
-                        width: 20.w,
-                        fit: BoxFit.scaleDown,
-                      ),
-                      suffixIcon: SvgPicture.asset(
-                        'assets/icons/down_arrow.svg',
-                        height: 20.h,
-                        width: 20.w,
-                        fit: BoxFit.scaleDown,
-                      ),
-                    ),
-                    onChanged: (value) {
-                      _newCategory = value;
-                    },
-                    onTap: () {
-                      _selectDate();
-                    },
-                    validator: (value) => value!.isEmpty
-                        ? widget.type == '1'
-                            ? 'Nhập ngày bạn muốn xin nghỉ'
-                            : 'Nhập ngày bạn muốn xin đi muộn'
-                        : null,
-                  ),
-                ),
+                // Chọn ngày
+                // Padding(
+                //   padding: EdgeInsets.only(
+                //     left: 12.w,
+                //     top: 10.h,
+                //     right: 12.w,
+                //   ),
+                //   child: TextFormField(
+                //     style: defaultText14M,
+                //     controller: _dateController,
+                //     readOnly: true,
+                //     decoration: InputDecoration(
+                //       border: OutlineInputBorder(
+                //         borderRadius: BorderRadius.circular(12.r),
+                //         borderSide: BorderSide.none,
+                //       ),
+                //       // enabledBorder:
+                //       //     const OutlineInputBorder(borderSide: BorderSide.none,),
+                //       // focusedBorder: const OutlineInputBorder(
+                //       //     borderSide: BorderSide(color: Colors.grey)),
+                //       filled: true,
+                //       fillColor: Colors.grey[200],
+                //       hintText: widget.type == '1'
+                //           ? 'Nhập ngày bạn muốn xin nghỉ'
+                //           : 'Nhập ngày bạn muốn xin đi muộn',
+                //       hintStyle: defaultText14M.copyWith(color: Colors.grey),
+                //       prefixIcon: SvgPicture.asset(
+                //         'assets/icons/calendar.svg',
+                //         height: 20.h,
+                //         width: 20.w,
+                //         fit: BoxFit.scaleDown,
+                //       ),
+                //       suffixIcon: SvgPicture.asset(
+                //         'assets/icons/down_arrow.svg',
+                //         height: 20.h,
+                //         width: 20.w,
+                //         fit: BoxFit.scaleDown,
+                //       ),
+                //     ),
+                //     onChanged: (value) {
+                //       _newCategory = value;
+                //     },
+                //     onTap: () {
+                //       _selectDate();
+                //     },
+                //     validator: (value) => value!.isEmpty
+                //         ? widget.type == '1'
+                //             ? 'Nhập ngày bạn muốn xin nghỉ'
+                //             : 'Nhập ngày bạn muốn xin đi muộn'
+                //         : null,
+                //   ),
+                // ),
                 Padding(
                   padding: EdgeInsets.only(
                     left: 12.w,
@@ -296,7 +300,11 @@ class _LeaveAbsencePopUpState extends State<LeaveAbsencePopUp> {
                           //   _categories.add(_newCategory!);
                           //   _category = _newCategory;
                           // }
-
+                          InfoRepo().requestLeave(
+                              reason: reason,
+                              type: newLesson.typeLearn,
+                              id: newLesson.id,
+                              typeRequest: widget.type);
                           Navigator.of(context).pop();
                         }
                       },

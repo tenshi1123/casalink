@@ -32,8 +32,17 @@ class ApiPath {
   // thông tin tài khoản
   static const String user = '$baseUrl/user/info';
   static const String infoclass = '$baseUrl/info/class';
+
+  // về việc xin nghỉ
   static const String classLearned = '$baseUrl/student/class';
   static const String lessonLearned = '$baseUrl/student/class/lesson';
+  static const String requestLeave = '$baseUrl/student/leave';
+  //dm cứ nhìn nhìn khó chịu vl
+
+  // về việc xin đi muộn
+  static const String classLater = '$baseUrl/student/class/later';
+  static const String lessonLater = '$baseUrl/student/class/lesson/later';
+  static const String requestLater = '$baseUrl/student/later';
   // xóa tài khoản
   static const String deleteUser = '$baseUrl/user/delete';
 
@@ -66,4 +75,18 @@ class ApiPath {
   static const String postCategory = '$baseUrl/post/category';
 
   static const String detailPost = '$baseUrl/post';
+
+  //Danh sách lớp học
+  static const String listClass = '$baseUrl/class';
+  // Chi tiết lớp học
+  static const String detailClass = '$baseUrl/class/detail';
+
+  //Danh sách khóa học video
+  static const String listLessonVideo = '$baseUrl/lesson';
+  //Danh sách Topical
+  static const String listTopical = '$baseUrl/lesson/topical';
+  //Danh sách bài giảng
+  static const String listLecture = '$baseUrl/lesson/topical/video';
+  //Chi tiết 1 video
+  static const String detailLesson = '$baseUrl/lesson/topical/video/detail';
 }

@@ -28,7 +28,7 @@ class InfoRepo {
     return InfoModel.fromJson(response.data['data']);
   }
 
-  Future<InfoClassModel> getInfoClass() async {
+  Future<InfoHomeModel> getInfoClass() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? token = prefs.getString('token');
     dio.options.headers['Authorization'] = 'Bearer $token';
@@ -36,16 +36,16 @@ class InfoRepo {
     response = await dio.get(
       ApiPath.infoclass,
     );
-    return InfoClassModel.fromJson(response.data['data']);
+    return InfoHomeModel.fromJson(response.data['data']);
   }
 
-  Future<List<DropClassModel>> getDropClass() async {
+  Future<List<DropClassModel>> getDropClass({required String type}) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? token = prefs.getString('token');
     dio.options.headers['Authorization'] = 'Bearer $token';
     Response response;
     response = await dio.get(
-      ApiPath.classLearned,
+      type == '1' ? ApiPath.classLearned : ApiPath.classLater,
     );
     List<DropClassModel> list = [];
     for (var item in response.data['data']) {
@@ -54,13 +54,14 @@ class InfoRepo {
     return list;
   }
 
-  Future<List<DropLessonModel>> getDropLesson(DropClassModel model) async {
+  Future<List<DropLessonModel>> getDropLesson(
+      DropClassModel model, String type) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? token = prefs.getString('token');
     dio.options.headers['Authorization'] = 'Bearer $token';
     Response response;
     response = await dio.post(
-      ApiPath.lessonLearned,
+      type == '1' ? ApiPath.lessonLearned : ApiPath.lessonLater,
       queryParameters: {
         'course_schedule_id': model.scheduleId,
         'setting_course_type_id': model.typeId,
@@ -71,6 +72,25 @@ class InfoRepo {
       list.add(DropLessonModel.fromJson(item));
     }
     return list;
+  }
+
+  Future requestLeave({
+    required String reason,
+    required String type,
+    required String id,
+    required String typeRequest,
+  }) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? token = prefs.getString('token');
+    dio.options.headers['Authorization'] = 'Bearer $token';
+    await dio.post(
+      type == '1' ? ApiPath.requestLeave : ApiPath.requestLater,
+      data: {
+        'type': type,
+        'buoi_hoc_id': id,
+        'reason': reason,
+      },
+    );
   }
 
   Future deleteInfo() async {
