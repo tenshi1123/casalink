@@ -1,5 +1,7 @@
+import 'package:casalink/models/notification_model.dart';
 import 'package:casalink/modules/chat/screen/list_conversation_screen.dart';
 import 'package:casalink/modules/diemdanh/diemdanh_screen.dart';
+import 'package:casalink/repo/notification_repo.dart';
 import 'package:casalink/utils/constants/styles.dart';
 import 'package:casalink/utils/widget/custom_widget.dart';
 import 'package:flutter/material.dart';
@@ -103,12 +105,15 @@ class _HomeScreenState extends State<HomeScreen> {
                               width: 16.w,
                             ),
                             InkWell(
-                              onTap: () {
+                              onTap: () async {
+                                List<NotificationModel> listNoti =
+                                    await NotiRepo().getNotifications();
                                 pushWithoutNavBar(
                                   context,
                                   MaterialPageRoute(
-                                    builder: ((context) =>
-                                        const NotificationScreen()),
+                                    builder: ((context) => NotificationScreen(
+                                          listNoti: listNoti,
+                                        )),
                                   ),
                                 );
                               },
@@ -373,12 +378,22 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            pushWithoutNavBar(
-                              context,
-                              MaterialPageRoute(
-                                builder: ((context) => const RollCallScreen()),
-                              ),
-                            );
+                            FollowClassRepo().getListCheckin().then((value) {
+                              pushWithoutNavBar(
+                                context,
+                                MaterialPageRoute(
+                                  builder: ((context) => RollCallScreen(
+                                        model: value,
+                                      )),
+                                ),
+                              );
+                            });
+                            // pushWithoutNavBar(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //     builder: ((context) => const RollCallScreen()),
+                            //   ),
+                            // );
                           },
                           child: Image.asset(
                             'assets/images/diem_danh.png',

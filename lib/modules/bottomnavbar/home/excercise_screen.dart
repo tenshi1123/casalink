@@ -1,6 +1,8 @@
 import 'package:casalink/utils/constants/styles.dart';
+import 'package:casalink/utils/widget/webview_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 
 import '../../../models/schedule_model.dart';
 import '../../../utils/widget/fullscreen_image.dart';
@@ -94,23 +96,33 @@ class ExcerciseItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
+        pushWithoutNavBar(
           context,
-          PageRouteBuilder(
-            opaque: false,
-            barrierColor: Colors.black,
-            pageBuilder: (BuildContext context, _, __) {
-              return FullScreenPage(
-                dark: true,
-                child: Image.network(
-                  excercise.listHomeWorks[0].linkExercise,
-                  width: 100.w,
-                  height: 90.h,
-                ),
-              );
-            },
+          MaterialPageRoute(
+            builder: ((context) => WebViewScreen(
+                  link: excercise.listHomeWorks[0].linkExercise,
+                  title: 'Chi tiết bài tập',
+                )),
           ),
         );
+
+        // Navigator.push(
+        //   context,
+        //   PageRouteBuilder(
+        //     opaque: false,
+        //     barrierColor: Colors.black,
+        //     pageBuilder: (BuildContext context, _, __) {
+        //       return FullScreenPage(
+        //         dark: true,
+        //         child: Image.network(
+        //           excercise.listHomeWorks[0].linkExercise,
+        //           width: 100.w,
+        //           height: 90.h,
+        //         ),
+        //       );
+        //     },
+        //   ),
+        // );
       },
       child: Container(
         margin: EdgeInsets.only(top: 16.h),

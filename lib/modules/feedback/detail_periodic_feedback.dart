@@ -1,10 +1,15 @@
 import 'package:casalink/utils/constants/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+
+import '../../models/schedule_model.dart';
 
 class PeriodicFeedback extends StatefulWidget {
-  const PeriodicFeedback({super.key});
-
+  const PeriodicFeedback(
+      {super.key, required this.feedbackModel, required this.feedback});
+  final FeedbackModel feedbackModel;
+  final String feedback;
   @override
   State<PeriodicFeedback> createState() => _PeriodicFeedbackState();
 }
@@ -54,158 +59,165 @@ class _PeriodicFeedbackState extends State<PeriodicFeedback> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Đánh giá giữa khoá - tháng 6',
+                      widget.feedbackModel.tenBuoi,
                       style: defaultText16B.copyWith(color: Colors.white),
                     ),
                     SizedBox(
                       height: 4.h,
                     ),
                     Text(
-                      'Ngày: 26/12/2024',
+                      'Ngày: ${widget.feedbackModel.createdAt}',
                       style: defaultText16M.copyWith(color: Colors.white),
                     ),
                   ],
                 )),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '1. Tổng quan',
-                    style: defaultText16B.copyWith(
-                      color: const Color(0xff273D8C),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 6.h,
-                  ),
-                  Text('・ Học viên bắt nhịp và làm quen rất tốt với tiết học',
-                      style: defaultText14Re),
-                  Divider(
-                    color: const Color(0xff292929).withAlpha(80),
-                    height: 40.h,
-                  ),
-                  Text(
-                    '2. Loại đánh giá',
-                    style: defaultText16B.copyWith(
-                      color: const Color(0xff273D8C),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 6.h,
-                  ),
-                  Text('・ Đánh giá giữa khoá học', style: defaultText14Re),
-                  Divider(
-                    color: const Color(0xff292929).withAlpha(80),
-                    height: 40.h,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        '3. Nghe + nói',
-                        style: defaultText16B.copyWith(
-                          color: const Color(0xff273D8C),
-                        ),
-                      ),
-                      Text(
-                        '4. Viết + ngữ pháp   ',
-                        style: defaultText16B.copyWith(
-                          color: const Color(0xff273D8C),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 6.h,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        height: 40.h,
-                        width: 164.w,
-                        decoration: BoxDecoration(
-                          color: const Color(0xff28B4E9),
-                          borderRadius: BorderRadius.circular(8.r),
-                        ),
-                        child: Center(
-                          child: Text(
-                            '7 điểm',
-                            style: defaultText16M.copyWith(
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        height: 40.h,
-                        width: 164.w,
-                        decoration: BoxDecoration(
-                          color: const Color(0xff28B4E9),
-                          borderRadius: BorderRadius.circular(8.r),
-                        ),
-                        child: Center(
-                          child: Text(
-                            '8 điểm',
-                            style: defaultText16M.copyWith(
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Divider(
-                    color: const Color(0xff292929).withAlpha(80),
-                    height: 40.h,
-                  ),
-                  Text(
-                    '5. Đánh giá bài kiểm tra giữa khoá học',
-                    style: defaultText16B.copyWith(
-                      color: const Color(0xff273D8C),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 6.h,
-                  ),
-                  Text('・ Nội dung đánh giá', style: defaultText14Re),
-                  Divider(
-                    color: const Color(0xff292929).withAlpha(80),
-                    height: 40.h,
-                  ),
-                  Text(
-                    '6. Góc nhắc nhở',
-                    style: defaultText16B.copyWith(
-                      color: const Color(0xff273D8C),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 6.h,
-                  ),
-                  Text('・ Nội dung nhắc nhở', style: defaultText14Re),
-                  Divider(
-                    color: const Color(0xff292929).withAlpha(80),
-                    height: 40.h,
-                  ),
-                  Text(
-                    '7. Đánh giá bổ sung',
-                    style: defaultText16B.copyWith(
-                      color: const Color(0xff273D8C),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 6.h,
-                  ),
-                  Text('・ Thái độ học tập', style: defaultText14Re),
-                  Divider(
-                    color: const Color(0xff292929).withAlpha(80),
-                    height: 40.h,
-                  ),
-                ],
+              padding: const EdgeInsets.all(20.0),
+              child: HtmlWidget(
+                widget.feedback,
+                textStyle: defaultText14B,
               ),
             ),
+            // Padding(
+            //   padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+            //   child: Column(
+            //     crossAxisAlignment: CrossAxisAlignment.start,
+            //     children: [
+            //       Text(
+            //         '1. Tổng quan',
+            //         style: defaultText16B.copyWith(
+            //           color: const Color(0xff273D8C),
+            //         ),
+            //       ),
+            //       SizedBox(
+            //         height: 6.h,
+            //       ),
+            //       Text('・ Học viên bắt nhịp và làm quen rất tốt với tiết học',
+            //           style: defaultText14Re),
+            //       Divider(
+            //         color: const Color(0xff292929).withAlpha(80),
+            //         height: 40.h,
+            //       ),
+            //       Text(
+            //         '2. Loại đánh giá',
+            //         style: defaultText16B.copyWith(
+            //           color: const Color(0xff273D8C),
+            //         ),
+            //       ),
+            //       SizedBox(
+            //         height: 6.h,
+            //       ),
+            //       Text('・ Đánh giá giữa khoá học', style: defaultText14Re),
+            //       Divider(
+            //         color: const Color(0xff292929).withAlpha(80),
+            //         height: 40.h,
+            //       ),
+            //       Row(
+            //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //         children: [
+            //           Text(
+            //             '3. Nghe + nói',
+            //             style: defaultText16B.copyWith(
+            //               color: const Color(0xff273D8C),
+            //             ),
+            //           ),
+            //           Text(
+            //             '4. Viết + ngữ pháp   ',
+            //             style: defaultText16B.copyWith(
+            //               color: const Color(0xff273D8C),
+            //             ),
+            //           ),
+            //         ],
+            //       ),
+            //       SizedBox(
+            //         height: 6.h,
+            //       ),
+            //       Row(
+            //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //         children: [
+            //           Container(
+            //             height: 40.h,
+            //             width: 164.w,
+            //             decoration: BoxDecoration(
+            //               color: const Color(0xff28B4E9),
+            //               borderRadius: BorderRadius.circular(8.r),
+            //             ),
+            //             child: Center(
+            //               child: Text(
+            //                 '7 điểm',
+            //                 style: defaultText16M.copyWith(
+            //                   color: Colors.white,
+            //                 ),
+            //               ),
+            //             ),
+            //           ),
+            //           Container(
+            //             height: 40.h,
+            //             width: 164.w,
+            //             decoration: BoxDecoration(
+            //               color: const Color(0xff28B4E9),
+            //               borderRadius: BorderRadius.circular(8.r),
+            //             ),
+            //             child: Center(
+            //               child: Text(
+            //                 '8 điểm',
+            //                 style: defaultText16M.copyWith(
+            //                   color: Colors.white,
+            //                 ),
+            //               ),
+            //             ),
+            //           ),
+            //         ],
+            //       ),
+            //       Divider(
+            //         color: const Color(0xff292929).withAlpha(80),
+            //         height: 40.h,
+            //       ),
+            //       Text(
+            //         '5. Đánh giá bài kiểm tra giữa khoá học',
+            //         style: defaultText16B.copyWith(
+            //           color: const Color(0xff273D8C),
+            //         ),
+            //       ),
+            //       SizedBox(
+            //         height: 6.h,
+            //       ),
+            //       Text('・ Nội dung đánh giá', style: defaultText14Re),
+            //       Divider(
+            //         color: const Color(0xff292929).withAlpha(80),
+            //         height: 40.h,
+            //       ),
+            //       Text(
+            //         '6. Góc nhắc nhở',
+            //         style: defaultText16B.copyWith(
+            //           color: const Color(0xff273D8C),
+            //         ),
+            //       ),
+            //       SizedBox(
+            //         height: 6.h,
+            //       ),
+            //       Text('・ Nội dung nhắc nhở', style: defaultText14Re),
+            //       Divider(
+            //         color: const Color(0xff292929).withAlpha(80),
+            //         height: 40.h,
+            //       ),
+            //       Text(
+            //         '7. Đánh giá bổ sung',
+            //         style: defaultText16B.copyWith(
+            //           color: const Color(0xff273D8C),
+            //         ),
+            //       ),
+            //       SizedBox(
+            //         height: 6.h,
+            //       ),
+            //       Text('・ Thái độ học tập', style: defaultText14Re),
+            //       Divider(
+            //         color: const Color(0xff292929).withAlpha(80),
+            //         height: 40.h,
+            //       ),
+            //     ],
+            //   ),
+            // ),
           ],
         ),
       ),

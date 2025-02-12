@@ -1,5 +1,3 @@
-import 'package:casalink/modules/bottomnavbar/screen/class_screen.dart';
-import 'package:casalink/repo/follow_class_repo.dart';
 import 'package:casalink/repo/video_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

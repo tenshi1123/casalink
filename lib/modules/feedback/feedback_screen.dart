@@ -258,14 +258,35 @@ class _FeedBackScreenState extends State<FeedBackScreen>
                             itemCount: widget.listFeedBack.listFbDaily.length,
                             itemBuilder: (BuildContext context, int index) {
                               return InkWell(
-                                onTap: () {
+                                onTap: () async {
+                                  String detailFeedBack =
+                                      await FollowClassRepo().getDetailFeedback(
+                                    widget.listFeedBack.listFbDinhKy[0]
+                                        .listFeedback[index].id,
+                                    widget.listFeedBack.listFbDinhKy[0]
+                                        .listFeedback[index].typelearn,
+                                    widget.listFeedBack.listFbDinhKy[0]
+                                        .listFeedback[index].meetingId,
+                                  );
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: ((context) =>
-                                          const PeriodicFeedback()),
+                                      builder: ((context) => PeriodicFeedback(
+                                            feedback: detailFeedBack,
+                                            feedbackModel: widget
+                                                .listFeedBack
+                                                .listFbDinhKy[0]
+                                                .listFeedback[index],
+                                          )),
                                     ),
                                   );
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //     builder: ((context) =>
+                                  //         const PeriodicFeedback()),
+                                  //   ),
+                                  // );
                                 },
                                 child: LessonItem(
                                   title: _title123[index],

@@ -100,3 +100,36 @@ class CheckinZoomModel {
     );
   }
 }
+
+class DetailCheckinModel {
+  final String typeLearn;
+  final String createdDate;
+  final String name;
+  final String topic;
+  final String phonghocName;
+  final String cosoName;
+  final String gvStatus;
+  final String checkinOffId;
+  DetailCheckinModel({
+    required this.typeLearn,
+    required this.createdDate,
+    required this.name,
+    required this.topic,
+    required this.phonghocName,
+    required this.cosoName,
+    required this.gvStatus,
+    required this.checkinOffId,
+  });
+  factory DetailCheckinModel.fromJson(Map<String, dynamic> json) {
+    return DetailCheckinModel(
+      typeLearn: json['type_learn'] ?? '',
+      createdDate: json['created_date'] ?? '',
+      name: json['name'] ?? '',
+      topic: json['topic'] ?? '',
+      phonghocName: json['phonghoc_name'] ?? '',
+      cosoName: json['coso_name'] ?? '',
+      gvStatus: json['gv_status'] ?? '',
+      checkinOffId: json['checkin_off_id'] ?? '',
+    );
+  }
+}

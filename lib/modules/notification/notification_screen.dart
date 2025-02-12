@@ -1,3 +1,4 @@
+import 'package:casalink/models/notification_model.dart';
 import 'package:casalink/utils/constants/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,30 +6,19 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'detail_noti_screen.dart';
 
 class NotificationScreen extends StatefulWidget {
-  const NotificationScreen({super.key});
-
+  const NotificationScreen({super.key, required this.listNoti});
+  final List<NotificationModel> listNoti;
   @override
   State<NotificationScreen> createState() => _NotificationScreenState();
 }
 
 class _NotificationScreenState extends State<NotificationScreen>
     with SingleTickerProviderStateMixin {
-  late TabController _tabController;
   int activeTabIndex = 0;
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(
-      length: 2,
-      vsync: this,
-      initialIndex: 0,
-    );
-    _tabController.addListener(() {
-      setState(() {
-        activeTabIndex = _tabController.index;
-      });
-    });
   }
 
   @override
@@ -55,36 +45,25 @@ class _NotificationScreenState extends State<NotificationScreen>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Hôm qua',
-              style: defaultText16B,
-            ),
+            // Text(
+            //   'Hôm qua',
+            //   style: defaultText16B,
+            // ),
             SizedBox(
               height: 12.h,
             ),
-            const _NotificationItem(
-              title1: '',
-              title2: 'Học ngay thôi nào!',
-              title3:
-                  'Bạn Hải ơi! Đã đến giờ học Tiếng Anh rồi nè, ngồi vào bàn học ngay thôi!!!',
-              title4: '20:05 - 28/10/2022',
-            ),
-            Divider(
-              color: const Color(0xff292929).withValues(alpha: 0.2),
-            ),
-            Text(
-              'Thứ hai - 27/10/2022',
-              style: defaultText16B,
-            ),
-            SizedBox(
-              height: 12.h,
-            ),
-            const _NotificationItem(
-              title1: 'Thứ hai - 27/10/2022',
-              title2: 'Học cùng Casalink',
-              title3:
-                  'Hi Hải. Giờ ôn thi môn toán đến rồi, một bài nữa bạn nhé. Cheer!',
-              title4: '20:05 - 27/10/2022',
+            ListView.builder(
+              shrinkWrap: true,
+              physics: const ScrollPhysics(),
+              itemCount: widget.listNoti.length,
+              itemBuilder: (context, index) {
+                return _NotificationItem(
+                  title1: '',
+                  title2: widget.listNoti[0].title,
+                  title3: widget.listNoti[0].content,
+                  title4: widget.listNoti[0].createdAt,
+                );
+              },
             ),
           ],
         ),
@@ -132,7 +111,7 @@ class _NotificationItem extends StatelessWidget {
               ),
               SizedBox(
                 width: 299.w,
-                height: 90.h,
+                //height: 90.h,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -162,6 +141,9 @@ class _NotificationItem extends StatelessWidget {
                 ),
               ),
             ],
+          ),
+          Divider(
+            color: const Color(0xff292929).withValues(alpha: 0.2),
           ),
         ],
       ),

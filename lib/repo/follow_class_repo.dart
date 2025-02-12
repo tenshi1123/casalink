@@ -52,6 +52,7 @@ class FollowClassRepo {
     return (response.data)['data'];
   }
 
+  //Danh sách điểm danh
   Future<CheckinModel> getListCheckin() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? token = prefs.getString('token');
@@ -62,6 +63,30 @@ class FollowClassRepo {
     );
     CheckinModel result =
         CheckinModel.fromJson((response.data)['data']['value']);
+    return result;
+  }
+
+  //Chi tiết điểm danh
+  Future<List<DetailCheckinModel>> getDetailCheckin({
+    required String type,
+    required String status,
+    required String id,
+  }) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? token = prefs.getString('token');
+    dio.options.headers['Authorization'] = 'Bearer $token';
+    Response response;
+    response = await dio.get(
+      ApiPath.detailCheckin,
+      queryParameters: {
+        'type': type,
+        'status': status,
+        'customer_zoom_google_offline_id': id,
+      },
+    );
+    List<DetailCheckinModel> result = ((response.data)['data'] as List)
+        .map((e) => DetailCheckinModel.fromJson(e))
+        .toList();
     return result;
   }
 

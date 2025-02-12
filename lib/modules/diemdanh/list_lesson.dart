@@ -4,12 +4,15 @@ import 'package:casalink/utils/constants/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../models/checkin_model.dart';
 import '../bottomnavbar/screen/class_screen.dart';
 import 'detail_screen.dart';
 
 class ListLessonScreen extends StatefulWidget {
-  const ListLessonScreen({super.key, required this.title});
+  const ListLessonScreen(
+      {super.key, required this.title, required this.listDetails});
   final String title;
+  final List<DetailCheckinModel> listDetails;
   @override
   State<ListLessonScreen> createState() => _ListLessonScreenState();
 }
@@ -51,15 +54,15 @@ class _ListLessonScreenState extends State<ListLessonScreen> {
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 padding: EdgeInsets.symmetric(horizontal: 16.w),
-                itemCount: 5,
+                itemCount: widget.listDetails.length,
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(
                     onTap: () async {
                       DetaiLessonModel listExcercise =
                           await ScheduleRepo().getDetailSchedule(
-                        checkinOffId: '6874',
-                        typeLearn: 'zoom',
-                        meetingId: '59',
+                        checkinOffId: widget.listDetails[index].checkinOffId,
+                        typeLearn: widget.listDetails[index].typeLearn,
+                        meetingId: widget.listDetails[index].checkinOffId,
                       );
                       Navigator.push(
                         context,
@@ -93,7 +96,7 @@ class _ListLessonScreenState extends State<ListLessonScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              time[index],
+                              '${widget.listDetails[index].createdDate} - ${widget.listDetails[index].cosoName}',
                               style: defaultText14M.copyWith(
                                   color: const Color(0xff273D8C)),
                             ),
@@ -101,7 +104,7 @@ class _ListLessonScreenState extends State<ListLessonScreen> {
                               height: 12.h,
                             ),
                             Text(
-                              title[index],
+                              'Tên buổi học : ${widget.listDetails[index].name}',
                               style: defaultText16B.copyWith(
                                   color: const Color(0xff273D8C)),
                             ),
@@ -109,7 +112,7 @@ class _ListLessonScreenState extends State<ListLessonScreen> {
                               height: 12.h,
                             ),
                             Text(
-                              'Nội dung buổi học : ${content[index]}',
+                              'Nội dung buổi học : ${widget.listDetails[index].topic}',
                               style: defaultText14M.copyWith(
                                   color: const Color(0xff273D8C)),
                             ),

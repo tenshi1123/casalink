@@ -89,4 +89,10 @@ class ApiPath {
   static const String listLecture = '$baseUrl/lesson/topical/video';
   //Chi tiết 1 video
   static const String detailLesson = '$baseUrl/lesson/topical/video/detail';
+
+  //Danh sách thông báo
+  static const String listNotify = '$baseUrl/notification';
+  //Check có thông báo mới hay không
+  //Chi tiết thông báo
+  //Cập nhật trạng thái khi ấn vào
 }
