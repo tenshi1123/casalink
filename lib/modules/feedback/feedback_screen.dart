@@ -191,40 +191,44 @@ class _FeedBackScreenState extends State<FeedBackScreen>
                       ],
                       color: Colors.white,
                     ),
-                    child: ListView.builder(
-                        shrinkWrap: true,
-                        physics: const ClampingScrollPhysics(),
-                        itemCount: widget.listFeedBack.listFbDaily.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return InkWell(
-                            onTap: () async {
-                              String detailFeedBack =
-                                  await FollowClassRepo().getDetailFeedback(
-                                widget.listFeedBack.listFbDaily[0]
-                                    .listFeedback[index].id,
-                                widget.listFeedBack.listFbDaily[0]
-                                    .listFeedback[index].typelearn,
-                                widget.listFeedBack.listFbDaily[0]
-                                    .listFeedback[index].meetingId,
-                              );
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: ((context) => DailyFeedback(
-                                        feedback: detailFeedBack,
-                                        feedbackModel: widget.listFeedBack
-                                            .listFbDaily[0].listFeedback[index],
-                                      )),
+                    child: widget.listFeedBack.listFbDaily.isEmpty
+                        ? Image.asset('assets/images/empty2.png')
+                        : ListView.builder(
+                            shrinkWrap: true,
+                            physics: const ClampingScrollPhysics(),
+                            itemCount: widget.listFeedBack.listFbDaily.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return InkWell(
+                                onTap: () async {
+                                  String detailFeedBack =
+                                      await FollowClassRepo().getDetailFeedback(
+                                    widget.listFeedBack.listFbDaily[0]
+                                        .listFeedback[index].id,
+                                    widget.listFeedBack.listFbDaily[0]
+                                        .listFeedback[index].typelearn,
+                                    widget.listFeedBack.listFbDaily[0]
+                                        .listFeedback[index].meetingId,
+                                  );
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: ((context) => DailyFeedback(
+                                            feedback: detailFeedBack,
+                                            feedbackModel: widget
+                                                .listFeedBack
+                                                .listFbDaily[0]
+                                                .listFeedback[index],
+                                          )),
+                                    ),
+                                  );
+                                },
+                                child: LessonItem(
+                                  title: title[index],
+                                  model: widget.listFeedBack.listFbDaily[0]
+                                      .listFeedback[index],
                                 ),
                               );
-                            },
-                            child: LessonItem(
-                              title: title[index],
-                              model: widget.listFeedBack.listFbDaily[0]
-                                  .listFeedback[index],
-                            ),
-                          );
-                        }),
+                            }),
                   ),
                   //Dinh ki
                   Container(
@@ -249,54 +253,62 @@ class _FeedBackScreenState extends State<FeedBackScreen>
                       ],
                       color: Colors.white,
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ListView.builder(
-                            shrinkWrap: true,
-                            physics: const ClampingScrollPhysics(),
-                            itemCount: widget.listFeedBack.listFbDaily.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return InkWell(
-                                onTap: () async {
-                                  String detailFeedBack =
-                                      await FollowClassRepo().getDetailFeedback(
-                                    widget.listFeedBack.listFbDinhKy[0]
-                                        .listFeedback[index].id,
-                                    widget.listFeedBack.listFbDinhKy[0]
-                                        .listFeedback[index].typelearn,
-                                    widget.listFeedBack.listFbDinhKy[0]
-                                        .listFeedback[index].meetingId,
-                                  );
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: ((context) => PeriodicFeedback(
-                                            feedback: detailFeedBack,
-                                            feedbackModel: widget
-                                                .listFeedBack
-                                                .listFbDinhKy[0]
-                                                .listFeedback[index],
-                                          )),
-                                    ),
-                                  );
-                                  // Navigator.push(
-                                  //   context,
-                                  //   MaterialPageRoute(
-                                  //     builder: ((context) =>
-                                  //         const PeriodicFeedback()),
-                                  //   ),
-                                  // );
-                                },
-                                child: LessonItem(
-                                  title: _title123[index],
-                                  model: widget.listFeedBack.listFbDinhKy[0]
-                                      .listFeedback[index],
-                                ),
-                              );
-                            }),
-                      ],
-                    ),
+                    child: widget.listFeedBack.listFbDinhKy.isEmpty
+                        ? Image.asset('assets/images/empty2.png')
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: const ClampingScrollPhysics(),
+                                  itemCount:
+                                      widget.listFeedBack.listFbDinhKy.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return InkWell(
+                                      onTap: () async {
+                                        String detailFeedBack =
+                                            await FollowClassRepo()
+                                                .getDetailFeedback(
+                                          widget.listFeedBack.listFbDinhKy[0]
+                                              .listFeedback[index].id,
+                                          widget.listFeedBack.listFbDinhKy[0]
+                                              .listFeedback[index].typelearn,
+                                          widget.listFeedBack.listFbDinhKy[0]
+                                              .listFeedback[index].meetingId,
+                                        );
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: ((context) =>
+                                                PeriodicFeedback(
+                                                  feedback: detailFeedBack,
+                                                  feedbackModel: widget
+                                                      .listFeedBack
+                                                      .listFbDinhKy[0]
+                                                      .listFeedback[index],
+                                                )),
+                                          ),
+                                        );
+                                        // Navigator.push(
+                                        //   context,
+                                        //   MaterialPageRoute(
+                                        //     builder: ((context) =>
+                                        //         const PeriodicFeedback()),
+                                        //   ),
+                                        // );
+                                      },
+                                      child: LessonItem(
+                                        title: _title123[index],
+                                        model: widget
+                                            .listFeedBack
+                                            .listFbDinhKy[0]
+                                            .listFeedback[index],
+                                      ),
+                                    );
+                                  }),
+                            ],
+                          ),
                   ),
                 ],
               ),
