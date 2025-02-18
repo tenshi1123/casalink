@@ -34,20 +34,57 @@ class ListVideoCourse extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const CircularProgressIndicator();
           } else if (snapshot.hasError) {
-            return Text(
-              'Vui lòng kiểm tra lại kết nối internet',
-              style: defaultText14M,
+            return Center(
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  Image.asset(
+                    'assets/images/empty.png',
+                    height: 200.h,
+                    width: 200.w,
+                  ),
+                  Text(
+                    'Vui lòng kiểm tra lại kết nối internet',
+                    style: defaultText16B,
+                  ),
+                ],
+              ),
             );
           } else if (snapshot.hasData) {
             final listLichHoc = snapshot.data as List<InfoClassModel>;
-            return GridView.count(
-                crossAxisCount: 2,
-                children: List.generate(listLichHoc.length, (index) {
-                  return _VideoCourseItem(
-                    index: index,
-                    model: listLichHoc[index],
-                  );
-                }));
+            return listLichHoc.isEmpty
+                ? Center(
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 20.h,
+                        ),
+                        Image.asset(
+                          'assets/images/empty.png',
+                          height: 200.h,
+                          width: 200.w,
+                        ),
+                        Text(
+                          'Học sinh chưa có lớp học',
+                          style: defaultText16B,
+                        ),
+                      ],
+                    ),
+                  )
+                : GridView.count(
+                    crossAxisCount: 2,
+                    children: List.generate(listLichHoc.length, (index) {
+                      return SizedBox(
+                        width: 164.w,
+                        height: 300.h,
+                        child: _VideoCourseItem(
+                          index: index,
+                          model: listLichHoc[index],
+                        ),
+                      );
+                    }));
           } else {
             return Text(
               'Vui lòng kiểm tra lại kết nối internet',
@@ -138,7 +175,7 @@ class __VideoCourseItemState extends State<_VideoCourseItem> {
                 style: defaultText12B.copyWith(
                   color: const Color(0xff273D8C),
                 ),
-                maxLines: 1,
+                maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),
             ),

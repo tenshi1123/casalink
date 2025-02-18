@@ -44,54 +44,89 @@ class _ExcerciseScreenState extends State<ExcerciseScreen> {
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-                height: 60.h,
-                width: 375.w,
-                padding: EdgeInsets.symmetric(horizontal: 16.w),
-                decoration: const BoxDecoration(
-                  color: Color(0xff273D8C),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    RichText(
-                      text: TextSpan(
-                        text: 'Lớp NC ',
-                        style: defaultText20B.copyWith(color: Colors.white),
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: '( Phòng 101 - Mỹ Đình)',
-                            style: defaultText16M.copyWith(color: Colors.white),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                )),
-            ListView.builder(
+      body: widget.listExcercise.isEmpty
+          ? Center(
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  Image.asset(
+                    'assets/images/empty.png',
+                    height: 200.h,
+                    width: 200.w,
+                  ),
+                  Text(
+                    'Học sinh chưa có lớp học',
+                    style: defaultText16B,
+                  ),
+                ],
+              ),
+            )
+          : ListView.builder(
               shrinkWrap: true,
               physics: const ScrollPhysics(),
               itemCount: widget.listExcercise.length,
               itemBuilder: (context, index) {
-                return ExcerciseItem(
+                return ListExcerciseItem(
                   excercise: widget.listExcercise[index],
                 );
               },
             ),
-          ],
+    );
+  }
+}
+
+class ListExcerciseItem extends StatelessWidget {
+  const ListExcerciseItem({super.key, required this.excercise});
+  final DataHomeWorkModel excercise;
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+            height: 60.h,
+            width: 375.w,
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
+            decoration: const BoxDecoration(
+              color: Color(0xff273D8C),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                RichText(
+                  text: TextSpan(
+                    text: 'Lớp ${excercise.name}',
+                    style: defaultText20B.copyWith(color: Colors.white),
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: '',
+                        style: defaultText16M.copyWith(color: Colors.white),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            )),
+        ListView.builder(
+          shrinkWrap: true,
+          physics: const ScrollPhysics(),
+          itemCount: excercise.listHomeWorks.length,
+          itemBuilder: (context, index) {
+            return ExcerciseItem(
+              excercise: excercise.listHomeWorks[index],
+            );
+          },
         ),
-      ),
+      ],
     );
   }
 }
 
 class ExcerciseItem extends StatelessWidget {
   const ExcerciseItem({super.key, required this.excercise});
-  final DataHomeWorkModel excercise;
+  final ListBTModel excercise;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -100,7 +135,7 @@ class ExcerciseItem extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: ((context) => WebViewScreen(
-                  link: excercise.listHomeWorks[0].linkExercise,
+                  link: excercise.linkExercise,
                   title: 'Chi tiết bài tập',
                 )),
           ),
@@ -125,8 +160,12 @@ class ExcerciseItem extends StatelessWidget {
         // );
       },
       child: Container(
-        margin: EdgeInsets.only(top: 16.h),
-        height: 358.h,
+        margin: EdgeInsets.only(
+          top: 16.h,
+          left: 16.w,
+          right: 16.w,
+        ),
+        height: 310.h,
         width: 343.w,
         padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
         decoration: BoxDecoration(
@@ -144,12 +183,6 @@ class ExcerciseItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              excercise.name,
-              style: defaultText16B.copyWith(
-                color: const Color(0xff273D8C),
-              ),
-            ),
             SizedBox(
               height: 168.h,
               width: 333.w,
@@ -179,34 +212,28 @@ class ExcerciseItem extends StatelessWidget {
                         'Loại lớp học',
                         style: defaultText14M,
                       ),
-                      Text(
-                        'Nhận xét:',
-                        style: defaultText14M,
-                      ),
                     ],
                   ),
-                  SizedBox(
-                    width: 16.w,
-                  ),
+                  const Spacer(),
                   SizedBox(
                     height: 168.h,
-                    width: 230.w,
+                    width: 215.w,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          excercise.listHomeWorks[0].nameExercise,
+                          excercise.nameExercise,
                           style: defaultText14B,
                           overflow: TextOverflow.fade,
                           maxLines: 1,
                           softWrap: false,
                         ),
                         Text(
-                          excercise.listHomeWorks[0].timeDeadline,
+                          excercise.timeDeadline,
                           style: defaultText14B,
                         ),
-                        (excercise.listHomeWorks[0].status == '0')
+                        (excercise.status == '0')
                             ? Container(
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 8.w, vertical: 4.h),
@@ -234,15 +261,11 @@ class ExcerciseItem extends StatelessWidget {
                                 ),
                               ),
                         Text(
-                          '--',
+                          excercise.score,
                           style: defaultText14B,
                         ),
                         Text(
-                          excercise.listHomeWorks[0].typeLearn,
-                          style: defaultText14B,
-                        ),
-                        Text(
-                          '',
+                          excercise.typeLearn,
                           style: defaultText14B,
                         ),
                       ],
@@ -260,7 +283,7 @@ class ExcerciseItem extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12.r),
               ),
               child: Text(
-                excercise.listHomeWorks[0].noteTeacher,
+                'Nhận xét: ${excercise.noteTeacher}',
                 style: defaultText14M.copyWith(
                   color: const Color(0xff273D8C),
                 ),

@@ -1,5 +1,6 @@
 import 'package:casalink/modules/bottomnavbar/screen/class_screen.dart';
 import 'package:casalink/repo/follow_class_repo.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
@@ -40,27 +41,46 @@ class ListClassScreen extends StatelessWidget {
             );
           } else if (snapshot.hasData) {
             final listLichHoc = snapshot.data as List<InfoClassModel>;
-            return GridView.count(
-                crossAxisCount: 2,
-                children: List.generate(listLichHoc.length, (index) {
-                  return _ClassItem(
-                    index: index,
-                    model: listLichHoc[index],
-                  );
-                })
+            return listLichHoc.isEmpty
+                ? Center(
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 20.h,
+                        ),
+                        Image.asset(
+                          'assets/images/empty.png',
+                          height: 200.h,
+                          width: 200.w,
+                        ),
+                        Text(
+                          'Học sinh chưa có lớp học',
+                          style: defaultText16B,
+                        ),
+                      ],
+                    ),
+                  )
+                : GridView.count(
+                    crossAxisCount: 2,
+                    children: List.generate(listLichHoc.length, (index) {
+                      return _ClassItem(
+                        index: index,
+                        model: listLichHoc[index],
+                      );
+                    })
 
-                //  ListView.builder(
-                //     shrinkWrap: true,
+                    //  ListView.builder(
+                    //     shrinkWrap: true,
 
-                //     physics: const ClampingScrollPhysics(),
-                //     itemCount: listLichHoc.length,
-                //     itemBuilder: (BuildContext context, int index) {
-                //       return _ClassItem(
-                //         index: index,
-                //         model: listLichHoc[index],
-                //       );
-                //     }),
-                );
+                    //     physics: const ClampingScrollPhysics(),
+                    //     itemCount: listLichHoc.length,
+                    //     itemBuilder: (BuildContext context, int index) {
+                    //       return _ClassItem(
+                    //         index: index,
+                    //         model: listLichHoc[index],
+                    //       );
+                    //     }),
+                    );
           } else {
             return Text(
               'Vui lòng kiểm tra lại kết nối internet',
@@ -86,19 +106,43 @@ class __ClassItemState extends State<_ClassItem> {
   Widget build(BuildContext context) {
     return InkWell(
         onTap: () async {
-          ClassDetailModel detailClassModel =
-              await FollowClassRepo().getListLesson(
-            typeId: widget.model.typeId,
-            scheduleId: widget.model.scheduleId,
-          );
-          pushWithoutNavBar(
-            context,
-            MaterialPageRoute(
-              builder: ((context) => ClassScreen(
-                    detailClassModel: detailClassModel,
-                  )),
-            ),
-          );
+          if (widget.model.scheduleId == '') {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return CupertinoAlertDialog(
+                  title: const Text(
+                      'Đã có lỗi xảy ra, lớp học đã bị xóa lỗi mạngmạng'),
+                  actions: <Widget>[
+                    CupertinoDialogAction(
+                      isDefaultAction: true,
+                      child: Text(
+                        'ok',
+                        style: defaultText20B,
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    )
+                  ],
+                );
+              },
+            );
+          } else {
+            ClassDetailModel detailClassModel =
+                await FollowClassRepo().getListLesson(
+              typeId: widget.model.typeId,
+              scheduleId: widget.model.scheduleId,
+            );
+            pushWithoutNavBar(
+              context,
+              MaterialPageRoute(
+                builder: ((context) => ClassScreen(
+                      detailClassModel: detailClassModel,
+                    )),
+              ),
+            );
+          }
         },
         child: Container(
           margin: EdgeInsets.only(top: 16.h, left: 16.w),

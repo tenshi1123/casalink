@@ -125,87 +125,110 @@ class ClassScreen extends StatelessWidget {
                 ),
               ],
             ),
-            ListView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                padding: EdgeInsets.symmetric(horizontal: 16.w),
-                itemCount: 5,
-                itemBuilder: (BuildContext context, int index) {
-                  return InkWell(
-                    onTap: () async {
-                      DetaiLessonModel listExcercise =
-                          await ScheduleRepo().getDetailSchedule(
-                        checkinOffId:
-                            detailClassModel.listLesson[index].checkId,
-                        typeLearn: detailClassModel.listLesson[index].typeLearn,
-                        meetingId: detailClassModel.listLesson[index].leaveId,
-                      );
-                      pushWithoutNavBar(
-                        context,
-                        MaterialPageRoute(
-                          builder: ((context) => DetailScreen(
-                                detailLesson: listExcercise,
-                              )),
+            detailClassModel.listLesson.isEmpty
+                ? Center(
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 20.h,
                         ),
-                      );
-                    },
-                    child: Container(
-                        width: 343.w,
-                        margin: EdgeInsets.only(top: 16.h),
-                        padding: EdgeInsets.symmetric(
-                            vertical: 16.h, horizontal: 16.w),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16.r),
-                          boxShadow: [
-                            BoxShadow(
-                              color: const Color(0xff273D8C).withAlpha(80),
-                              spreadRadius: 0,
-                              blurRadius: 8,
-                              offset: const Offset(
-                                  0, 4), // changes position of shadow
-                            ),
-                          ],
-                          color: Colors.white,
+                        Image.asset(
+                          'assets/images/empty.png',
+                          height: 200.h,
+                          width: 200.w,
                         ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "${detailClassModel.listLesson[index].createdDate} ${detailClassModel.listLesson[index].cosoName}",
-                              style: defaultText14M.copyWith(
-                                  color: const Color(0xff273D8C)),
+                        Text(
+                          'Học sinh chưa có lớp học',
+                          style: defaultText16B,
+                        ),
+                      ],
+                    ),
+                  )
+                : ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    padding: EdgeInsets.symmetric(horizontal: 16.w),
+                    itemCount: detailClassModel.listLesson.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return InkWell(
+                        onTap: () async {
+                          DetaiLessonModel listExcercise =
+                              await ScheduleRepo().getDetailSchedule(
+                            checkinOffId:
+                                detailClassModel.listLesson[index].checkId,
+                            typeLearn:
+                                detailClassModel.listLesson[index].typeLearn,
+                            meetingId:
+                                detailClassModel.listLesson[index].leaveId,
+                          );
+                          pushWithoutNavBar(
+                            context,
+                            MaterialPageRoute(
+                              builder: ((context) => DetailScreen(
+                                    detailLesson: listExcercise,
+                                  )),
                             ),
-                            SizedBox(
-                              height: 10.h,
+                          );
+                        },
+                        child: Container(
+                            width: 343.w,
+                            margin: EdgeInsets.only(top: 16.h),
+                            padding: EdgeInsets.symmetric(
+                                vertical: 16.h, horizontal: 16.w),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(16.r),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: const Color(0xff273D8C).withAlpha(80),
+                                  spreadRadius: 0,
+                                  blurRadius: 8,
+                                  offset: const Offset(
+                                      0, 4), // changes position of shadow
+                                ),
+                              ],
+                              color: Colors.white,
                             ),
-                            Text(
-                              detailClassModel.listLesson[index].name,
-                              style: defaultText16B.copyWith(
-                                  color: const Color(0xff273D8C)),
-                            ),
-                            SizedBox(
-                              height: 10.h,
-                            ),
-                            Text(
-                              'Nội dung buổi học: ${detailClassModel.listLesson[index].topic}',
-                              style: defaultText14M.copyWith(
-                                  color: const Color(0xff273D8C)),
-                            ),
-                            SizedBox(
-                              height: 10.h,
-                            ),
-                            detailClassModel.listLesson[index].leaveReason == ''
-                                ? const SizedBox()
-                                : Text(
-                                    'Lịch sử nghỉ học \nLý do: ${detailClassModel.listLesson[index].leaveReason}',
-                                    style: defaultText14M.copyWith(
-                                        color: const Color(0xffED1C24)),
-                                  ),
-                          ],
-                        )),
-                  );
-                }),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "${detailClassModel.listLesson[index].createdDate} ${detailClassModel.listLesson[index].cosoName}",
+                                  style: defaultText14M.copyWith(
+                                      color: const Color(0xff273D8C)),
+                                ),
+                                SizedBox(
+                                  height: 10.h,
+                                ),
+                                Text(
+                                  detailClassModel.listLesson[index].name,
+                                  style: defaultText16B.copyWith(
+                                      color: const Color(0xff273D8C)),
+                                ),
+                                SizedBox(
+                                  height: 10.h,
+                                ),
+                                Text(
+                                  'Nội dung buổi học: ${detailClassModel.listLesson[index].topic}',
+                                  style: defaultText14M.copyWith(
+                                      color: const Color(0xff273D8C)),
+                                ),
+                                SizedBox(
+                                  height: 10.h,
+                                ),
+                                detailClassModel
+                                            .listLesson[index].leaveReason ==
+                                        ''
+                                    ? const SizedBox()
+                                    : Text(
+                                        'Lịch sử nghỉ học \nLý do: ${detailClassModel.listLesson[index].leaveReason}',
+                                        style: defaultText14M.copyWith(
+                                            color: const Color(0xffED1C24)),
+                                      ),
+                              ],
+                            )),
+                      );
+                    }),
             SizedBox(
               height: 80.h,
             ),

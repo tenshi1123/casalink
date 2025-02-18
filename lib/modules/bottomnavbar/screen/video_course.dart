@@ -145,7 +145,7 @@ class VideoCourse extends StatelessWidget {
 class LessonItem extends StatefulWidget {
   const LessonItem({super.key, required this.index});
   final int index;
-
+  //final listTopical lis
   @override
   State<LessonItem> createState() => _LessonItemState();
 }
