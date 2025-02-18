@@ -80,12 +80,18 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         Row(
                           children: [
-                            Image(
-                              image:
-                                  const AssetImage('assets/images/avatar.png'),
-                              height: 44.h,
-                              width: 44.w,
-                              fit: BoxFit.fill,
+                            // Image(
+                            //   image:
+                            //       const AssetImage('assets/images/avatar.png'),
+                            //   height: 44.h,
+                            //   width: 44.w,
+                            //   fit: BoxFit.fill,
+                            // ),
+                            CircleAvatar(
+                              radius: 22.r,
+                              backgroundImage: NetworkImage(
+                                widget.infoModel.avatar,
+                              ),
                             ),
                             const Spacer(),
                             GestureDetector(
@@ -171,8 +177,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
+                        const SizedBox(
+                          width: 1,
+                        ),
                         Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               'Lớp',
@@ -249,6 +259,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                           ],
+                        ),
+                        const SizedBox(
+                          width: 1,
                         ),
                       ],
                     ),
