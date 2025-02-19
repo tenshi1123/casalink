@@ -159,7 +159,7 @@ class ClassScreen extends StatelessWidget {
                             typeLearn:
                                 detailClassModel.listLesson[index].typeLearn,
                             meetingId:
-                                detailClassModel.listLesson[index].leaveId,
+                                detailClassModel.listLesson[index].meetingId,
                           );
                           pushWithoutNavBar(
                             context,

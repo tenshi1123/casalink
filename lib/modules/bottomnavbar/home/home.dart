@@ -1076,22 +1076,27 @@ class UpcomingSchedule extends StatelessWidget {
                               color: const Color(0xff273D8C))),
                     ],
                   ),
+                  maxLines: 2,
                 ),
                 Container(
+                  margin: EdgeInsets.symmetric(horizontal: 5.w),
                   width: 1.w,
                   height: 20.h,
                   color: const Color(0xff273D8C),
                 ),
-                RichText(
-                  text: TextSpan(
-                    text: 'Chi nhánh: ',
-                    style: defaultText16M,
-                    children: [
-                      TextSpan(
-                          text: model.cosoName ?? 'Mỹ Đình',
-                          style: defaultText16B.copyWith(
-                              color: const Color(0xff273D8C))),
-                    ],
+                Expanded(
+                  child: RichText(
+                    text: TextSpan(
+                      text: 'Chi nhánh: ',
+                      style: defaultText16M,
+                      children: [
+                        TextSpan(
+                            text: model.cosoName ?? 'Mỹ Đình',
+                            style: defaultText16B.copyWith(
+                                color: const Color(0xff273D8C))),
+                      ],
+                    ),
+                    maxLines: 2,
                   ),
                 ),
               ],

@@ -76,7 +76,10 @@ class CheckinZoomModel {
   final String courseName;
   final String thoiluong;
   final String chuaThamGia;
-  final String thamGia;
+  final String vangMat;
+  final String xinNghi;
+  final String diMuon;
+  final String dungGio;
   CheckinZoomModel({
     required this.id,
     required this.type,
@@ -85,7 +88,10 @@ class CheckinZoomModel {
     required this.courseName,
     required this.thoiluong,
     required this.chuaThamGia,
-    required this.thamGia,
+    required this.vangMat,
+    required this.xinNghi,
+    required this.diMuon,
+    required this.dungGio,
   });
   factory CheckinZoomModel.fromJson(Map<String, dynamic> json) {
     return CheckinZoomModel(
@@ -96,7 +102,10 @@ class CheckinZoomModel {
       courseName: json['course_name'] ?? '',
       thoiluong: json['thoi_luong'] ?? '',
       chuaThamGia: json['chua_tham_gia'] ?? '',
-      thamGia: json['tham_gia'] ?? '',
+      vangMat: json['vang_mat'] ?? '',
+      xinNghi: json['xin_nghi'] ?? '',
+      diMuon: json['di_muon'] ?? '',
+      dungGio: json['dung_gio'] ?? '',
     );
   }
 }
@@ -110,6 +119,7 @@ class DetailCheckinModel {
   final String cosoName;
   final String gvStatus;
   final String checkinOffId;
+  final String meetingId;
   DetailCheckinModel({
     required this.typeLearn,
     required this.createdDate,
@@ -119,6 +129,7 @@ class DetailCheckinModel {
     required this.cosoName,
     required this.gvStatus,
     required this.checkinOffId,
+    required this.meetingId,
   });
   factory DetailCheckinModel.fromJson(Map<String, dynamic> json) {
     return DetailCheckinModel(
@@ -130,6 +141,7 @@ class DetailCheckinModel {
       cosoName: json['coso_name'] ?? '',
       gvStatus: json['gv_status'] ?? '',
       checkinOffId: json['checkin_off_id'] ?? '',
+      meetingId: json['meeting_id'] ?? '',
     );
   }
 }

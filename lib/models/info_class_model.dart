@@ -66,6 +66,7 @@ class InfoLessonModel {
   final String leaveId;
   final String leaveReason;
   final String leaveCreateAt;
+  final String meetingId;
   InfoLessonModel({
     required this.typeLearn,
     required this.createdDate,
@@ -78,6 +79,7 @@ class InfoLessonModel {
     required this.leaveId,
     required this.leaveReason,
     required this.leaveCreateAt,
+    required this.meetingId,
   });
   factory InfoLessonModel.fromJson(Map<String, dynamic> json) {
     return InfoLessonModel(
@@ -92,6 +94,7 @@ class InfoLessonModel {
       leaveId: json['customer_leave_id'] ?? '',
       leaveReason: json['customer_leave_reason'] ?? '',
       leaveCreateAt: json['customer_leave_created_at'] ?? '',
+      meetingId: json['meeting_id'] ?? '',
     );
   }
 }

@@ -2,6 +2,7 @@ import 'package:casalink/utils/constants/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../models/schedule_model.dart';
 import '../../utils/widget/fullscreen_image.dart';
 
@@ -55,9 +56,33 @@ class _DetailScreenState extends State<DetailScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              widget.detailLesson.infoLesson.linkZoom == ''
+                  ? const SizedBox()
+                  : GestureDetector(
+                      onTap: () async {
+                        if (!await launchUrl(Uri.parse(
+                            widget.detailLesson.infoLesson.linkZoom ?? ''))) {
+                          throw Exception('Could not launch ');
+                        }
+                      },
+                      child: Column(
+                        children: [
+                          Text(
+                            ('Vào Phòng học zoom'),
+                            style: defaultText14B.copyWith(
+                              color: const Color(0xff273D8C),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10.h,
+                          )
+                        ],
+                      ),
+                    ),
+
               Text(
                 widget.detailLesson.infoLesson.nameLesson,
-                style: defaultText14M.copyWith(color: const Color(0xff273D8C)),
+                style: defaultText14B.copyWith(color: const Color(0xff273D8C)),
               ),
               SizedBox(height: 12.h),
               Text(

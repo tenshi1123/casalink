@@ -147,7 +147,7 @@ class __ClassItemState extends State<_ClassItem> {
         child: Container(
           margin: EdgeInsets.only(top: 16.h, left: 16.w),
           width: 164.w,
-          height: 300.h,
+          height: 310.h,
           child: Column(
             children: [
               Container(
@@ -185,9 +185,7 @@ class __ClassItemState extends State<_ClassItem> {
                   ),
                 ),
               ),
-              SizedBox(
-                height: 12.h,
-              ),
+              const Spacer(),
               Text(
                 widget.model.courseName,
                 style: defaultText12B.copyWith(
