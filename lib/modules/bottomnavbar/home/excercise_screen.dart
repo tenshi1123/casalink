@@ -6,7 +6,7 @@ import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 
 import '../../../models/schedule_model.dart';
 import '../../../utils/constants/color.dart';
-import '../../../utils/widget/fullscreen_image.dart';
+import '../../../utils/widget/download_test.dart';
 
 class ExcerciseScreen extends StatefulWidget {
   const ExcerciseScreen({super.key, required this.listExcercise});
@@ -154,12 +154,17 @@ class ExcerciseItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          GestureDetector(
+          InkWell(
             onTap: () {
               pushWithoutNavBar(
                 context,
                 MaterialPageRoute(
-                  builder: ((context) => WebViewScreen(
+                  builder: ((context) =>
+                      // DownloadTest(
+                      //           title: '',
+                      //           platform: Theme.of(context).platform,
+                      //         )
+                      WebViewScreen(
                         link: excercise.linkExercise,
                         title: 'Chi tiết bài tập',
                       )),
@@ -167,7 +172,7 @@ class ExcerciseItem extends StatelessWidget {
               );
             },
             child: Container(
-              height: 15.h,
+              //height: 15.h,
               width: 150.w,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(
@@ -175,7 +180,7 @@ class ExcerciseItem extends StatelessWidget {
                 ),
                 gradient: mainGradient2,
               ),
-              padding: EdgeInsets.symmetric(horizontal: 6.w),
+              padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 4.h),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

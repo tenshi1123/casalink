@@ -1,7 +1,7 @@
-import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:casalink/utils/constants/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 // Import for Android features.
 import 'package:webview_flutter_android/webview_flutter_android.dart';
@@ -133,35 +133,51 @@ Page resource error:
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color(0xff273D8C),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white),
-          onPressed: () {
-            Navigator.of(context).pop(false);
-          },
-        ),
-        title: Text(
-          widget.title,
-          style: defaultText18B.copyWith(
-            color: Colors.white,
-          ),
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.file_download, color: Colors.white),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(100),
+        child: AppBar(
+          backgroundColor: const Color(0xff273D8C),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white),
             onPressed: () {
-              downloadFile(widget.link, generateFileNameFromUrl(widget.link));
-              // FileDownloader.downloadFile(
-              //     url: widget.link,
-              //     //name: "PANDA",
-              //     onDownloadCompleted: (path) {
-              //       final File file = File(path);
-              //       //This will be the path of the downloaded file
-              //     });
+              Navigator.of(context).pop(false);
             },
           ),
-        ],
+          title: Text(
+            widget.title,
+            style: defaultText18B.copyWith(
+              color: Colors.white,
+            ),
+          ),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.file_download, color: Colors.white),
+              onPressed: () {
+                downloadFile(widget.link, generateFileNameFromUrl(widget.link));
+                // FileDownloader.downloadFile(
+                //     url: widget.link,
+                //     //name: "PANDA",
+                //     onDownloadCompleted: (path) {
+                //       final File file = File(path);
+                //       //This will be the path of the downloaded file
+                //     });
+              },
+            ),
+          ],
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(4.0),
+            child: TextButton(
+                style: TextButton.styleFrom(
+                  foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                ),
+                onPressed: () async {
+                  if (!await launchUrl(Uri.parse(widget.link ?? ''))) {
+                    throw Exception('Could not launch ');
+                  }
+                },
+                child: const Text('Mở trình duyệt')),
+          ),
+        ),
       ),
       body: WebViewWidget(controller: _controller),
     );

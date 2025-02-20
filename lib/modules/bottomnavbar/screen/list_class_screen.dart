@@ -169,19 +169,21 @@ class __ClassItemState extends State<_ClassItem> {
                 height: 12.h,
               ),
               Container(
-                height: 32.h,
+                //height: 32.h,
                 width: 164.w,
                 //margin: EdgeInsets.only(top: 16.h, left: 16.w),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8.r),
                   color: const Color(0xff28B4E9),
                 ),
+                constraints: BoxConstraints(minHeight: 32.h),
                 child: Center(
                   child: Text(
                     widget.model.typeName,
                     style: defaultText12M.copyWith(
                       color: Colors.white,
                     ),
+                    maxLines: 2,
                   ),
                 ),
               ),

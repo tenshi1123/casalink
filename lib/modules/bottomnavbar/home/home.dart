@@ -160,7 +160,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     padding:
                         EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
                     width: 343.w,
-                    height: 90.h,
+                    //height: 90.h,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(
                         Radius.circular(16.r),
@@ -190,8 +190,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 color: const Color(0xff292929).withAlpha(70),
                               ),
                             ),
-                            SizedBox(
-                              height: 40.h,
+                            Container(
+                              //height: 40.h,
+                              constraints: BoxConstraints(minHeight: 40.h),
                               width: 80.w,
                               child: Text(
                                 widget.infoClassModel.lopHoc,
@@ -219,8 +220,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 color: const Color(0xff292929).withAlpha(70),
                               ),
                             ),
-                            SizedBox(
-                              height: 40.h,
+                            Container(
+                              //height: 40.h,
+                              constraints: BoxConstraints(minHeight: 40.h),
                               width: 80.w,
                               child: Text(
                                 widget.infoClassModel.coso,
@@ -248,9 +250,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                 color: const Color(0xff292929).withAlpha(70),
                               ),
                             ),
-                            SizedBox(
-                              height: 40.h,
+                            Container(
+                              //height: 40.h,
                               width: 80.w,
+                              constraints: BoxConstraints(minHeight: 40.h),
                               child: Text(
                                 widget.infoClassModel.numberLessons,
                                 style: defaultText16M,
@@ -599,7 +602,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
                               ClipRRect(
-                                borderRadius: BorderRadius.circular(16.r),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(16.r),
+                                ),
                                 child: SizedBox(
                                   height: 146.h,
                                   width: 343.w,
@@ -700,9 +705,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             value == index,
                                             listCategori[index].categoryName,
                                           ),
-                                          SizedBox(
-                                            height: 20.h,
-                                          ),
+                                          const Spacer(),
                                         ],
                                       ),
                                     ),
@@ -744,10 +747,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                               CrossAxisAlignment.center,
                                           children: <Widget>[
                                             ClipRRect(
-                                              borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(16.r),
-                                                bottomLeft:
-                                                    Radius.circular(16.r),
+                                              borderRadius: BorderRadius.all(
+                                                Radius.circular(16.r),
                                               ),
                                               child: SizedBox(
                                                 height: 208.h,
@@ -828,7 +829,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         return Column(
                           children: [
                             SizedBox(
-                              height: 35.h,
+                              height: 55.h,
                               width: 375.w,
                               child: ListView.builder(
                                 shrinkWrap: true,
@@ -842,17 +843,19 @@ class _HomeScreenState extends State<HomeScreen> {
                                       onTap: () {
                                         _centralBoard.value = index;
                                       },
-                                      child: feedbackItem(
-                                        value == index,
-                                        listPostCate[index].categoryName,
+                                      child: Column(
+                                        children: [
+                                          feedbackItem(
+                                            value == index,
+                                            listPostCate[index].categoryName,
+                                          ),
+                                          const Spacer(),
+                                        ],
                                       ),
                                     ),
                                   );
                                 },
                               ),
-                            ),
-                            SizedBox(
-                              height: 20.h,
                             ),
                             SizedBox(
                                 height: 229.h,
@@ -888,10 +891,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                               CrossAxisAlignment.center,
                                           children: <Widget>[
                                             ClipRRect(
-                                              borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(16.r),
-                                                bottomLeft:
-                                                    Radius.circular(16.r),
+                                              borderRadius: BorderRadius.all(
+                                                Radius.circular(16.r),
                                               ),
                                               child: SizedBox(
                                                 height: 208.h,
@@ -910,9 +911,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             ),
                                             SmoothPageIndicator(
                                               controller: controller3,
-                                              count: listPost.isEmpty
-                                                  ? 1
-                                                  : listPost.length,
+                                              count: listPost.isEmpty ? 1 : 3,
                                               effect: CustomizableEffect(
                                                 activeDotDecoration:
                                                     DotDecoration(

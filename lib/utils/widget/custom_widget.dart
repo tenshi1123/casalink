@@ -167,11 +167,14 @@ class DocumentItem extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.network(
-            model.img,
-            width: 240.w,
-            height: 160.h,
-            fit: BoxFit.fill,
+          ClipRRect(
+            borderRadius: BorderRadius.all(Radius.circular(16.r)),
+            child: Image.network(
+              model.img,
+              width: 240.w,
+              height: 160.h,
+              fit: BoxFit.fill,
+            ),
           ),
           // Text(
           //   model.id,
@@ -206,11 +209,14 @@ class PostItem extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.network(
-            model.thumbnailUrl,
-            width: 240.w,
-            height: 160.h,
-            fit: BoxFit.fill,
+          ClipRRect(
+            borderRadius: BorderRadius.all(Radius.circular(16.r)),
+            child: Image.network(
+              model.thumbnailUrl,
+              width: 240.w,
+              height: 160.h,
+              fit: BoxFit.fill,
+            ),
           ),
           Expanded(
             child: Text(

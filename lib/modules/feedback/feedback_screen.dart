@@ -1,4 +1,3 @@
-import 'package:casalink/modules/bottomnavbar/screen/class_screen.dart';
 import 'package:casalink/utils/constants/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,7 +10,6 @@ import 'detail_periodic_feedback.dart';
 class FeedBackScreen extends StatefulWidget {
   final ListFeedBackModel listFeedBack;
   const FeedBackScreen({super.key, required this.listFeedBack});
-
   @override
   State<FeedBackScreen> createState() => _FeedBackScreenState();
 }
@@ -20,7 +18,6 @@ class _FeedBackScreenState extends State<FeedBackScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   int activeTabIndex = 0;
-
   @override
   void initState() {
     super.initState();
@@ -67,53 +64,6 @@ class _FeedBackScreenState extends State<FeedBackScreen>
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            // TabBar.secondary(
-            //   controller: _tabController,
-            //   indicator: BoxDecoration(
-            //     borderRadius: BorderRadius.circular(
-            //       8.r,
-            //     ),
-            //     //color: const Color(0xff273D8C),
-            //   ),
-            //   isScrollable: false,
-            //   automaticIndicatorColorAdjustment: false,
-            //   dividerColor: Colors.white,
-            //   labelStyle: defaultText14M,
-            //   labelColor: Colors.white,
-            //   unselectedLabelColor: const Color(0xff273D8C),
-            //   tabs: [
-            //     Tab(
-            //       child: Container(
-            //         height: 34.h,
-            //         width: 108.w,
-            //         decoration: BoxDecoration(
-            //             color: activeTabIndex == 0
-            //                 ? const Color(0xFF273D8C)
-            //                 : const Color(0xFFEFF1F7),
-            //             borderRadius: BorderRadius.all(Radius.circular(8.r))),
-            //         child: const Align(
-            //           alignment: Alignment.center,
-            //           child: Text("Hằng ngày"),
-            //         ),
-            //       ),
-            //     ),
-            //     Tab(
-            //       child: Container(
-            //         height: 34.h,
-            //         width: 108.w,
-            //         decoration: BoxDecoration(
-            //             color: activeTabIndex == 1
-            //                 ? const Color(0xFF273D8C)
-            //                 : const Color(0xFFEFF1F7),
-            //             borderRadius: BorderRadius.all(Radius.circular(8.r))),
-            //         child: const Align(
-            //           alignment: Alignment.center,
-            //           child: Text("Định kì"),
-            //         ),
-            //       ),
-            //     ),
-            //   ],
-            // ),
             Container(
               height: kToolbarHeight,
               margin: EdgeInsets.only(
@@ -150,20 +100,10 @@ class _FeedBackScreenState extends State<FeedBackScreen>
                   ),
                   Tab(
                     text: "Định kì",
-                    // child: Container(
-                    //   color: activeTabIndex == 1
-                    //       ? const Color(0xFF273D8C)
-                    //       : const Color(0xFFEFF1F7),
-                    //   child: const Align(
-                    //     alignment: Alignment.center,
-                    //     child: Text("Định kì"),
-                    //   ),
-                    // ),
                   ),
                 ],
               ),
             ),
-
             Flexible(
               child: TabBarView(
                 controller: _tabController,
@@ -198,35 +138,8 @@ class _FeedBackScreenState extends State<FeedBackScreen>
                             physics: const ClampingScrollPhysics(),
                             itemCount: widget.listFeedBack.listFbDaily.length,
                             itemBuilder: (BuildContext context, int index) {
-                              return InkWell(
-                                onTap: () async {
-                                  String detailFeedBack =
-                                      await FollowClassRepo().getDetailFeedback(
-                                    widget.listFeedBack.listFbDaily[0]
-                                        .listFeedback[index].id,
-                                    widget.listFeedBack.listFbDaily[0]
-                                        .listFeedback[index].typelearn,
-                                    widget.listFeedBack.listFbDaily[0]
-                                        .listFeedback[index].meetingId,
-                                  );
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: ((context) => DailyFeedback(
-                                            feedback: detailFeedBack,
-                                            feedbackModel: widget
-                                                .listFeedBack
-                                                .listFbDaily[0]
-                                                .listFeedback[index],
-                                          )),
-                                    ),
-                                  );
-                                },
-                                child: LessonItem(
-                                  title: title[index],
-                                  model: widget.listFeedBack.listFbDaily[0]
-                                      .listFeedback[index],
-                                ),
+                              return ListFbDaily(
+                                model: widget.listFeedBack.listFbDaily[index],
                               );
                             }),
                   ),
@@ -255,65 +168,19 @@ class _FeedBackScreenState extends State<FeedBackScreen>
                     ),
                     child: widget.listFeedBack.listFbDinhKy.isEmpty
                         ? Image.asset('assets/images/empty2.png')
-                        : Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              ListView.builder(
-                                  shrinkWrap: true,
-                                  physics: const ClampingScrollPhysics(),
-                                  itemCount:
-                                      widget.listFeedBack.listFbDinhKy.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    return InkWell(
-                                      onTap: () async {
-                                        String detailFeedBack =
-                                            await FollowClassRepo()
-                                                .getDetailFeedback(
-                                          widget.listFeedBack.listFbDinhKy[0]
-                                              .listFeedback[index].id,
-                                          widget.listFeedBack.listFbDinhKy[0]
-                                              .listFeedback[index].typelearn,
-                                          widget.listFeedBack.listFbDinhKy[0]
-                                              .listFeedback[index].meetingId,
-                                        );
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: ((context) =>
-                                                PeriodicFeedback(
-                                                  feedback: detailFeedBack,
-                                                  feedbackModel: widget
-                                                      .listFeedBack
-                                                      .listFbDinhKy[0]
-                                                      .listFeedback[index],
-                                                )),
-                                          ),
-                                        );
-                                        // Navigator.push(
-                                        //   context,
-                                        //   MaterialPageRoute(
-                                        //     builder: ((context) =>
-                                        //         const PeriodicFeedback()),
-                                        //   ),
-                                        // );
-                                      },
-                                      child: LessonItem(
-                                        title: _title123[index],
-                                        model: widget
-                                            .listFeedBack
-                                            .listFbDinhKy[0]
-                                            .listFeedback[index],
-                                      ),
-                                    );
-                                  }),
-                            ],
-                          ),
+                        : ListView.builder(
+                            shrinkWrap: true,
+                            physics: const ClampingScrollPhysics(),
+                            itemCount: widget.listFeedBack.listFbDaily.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return ListFbDinhKy(
+                                model: widget.listFeedBack.listFbDinhKy[index],
+                              );
+                            }),
                   ),
                 ],
               ),
             ),
-            //Dinh Ki
           ],
         ),
       ),
@@ -321,9 +188,118 @@ class _FeedBackScreenState extends State<FeedBackScreen>
   }
 }
 
+class ListFbDaily extends StatelessWidget {
+  const ListFbDaily({super.key, required this.model});
+  final FeedbackHangNgayModel model;
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Padding(
+          padding: EdgeInsets.only(
+            top: 16.h,
+            bottom: 12.h,
+          ),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              'Lớp ${model.name}',
+              style: defaultText20B.copyWith(
+                color: const Color(0xff273D8C),
+              ),
+            ),
+          ),
+        ),
+        ListView.builder(
+            shrinkWrap: true,
+            physics: const ClampingScrollPhysics(),
+            itemCount: model.listFeedback.length,
+            itemBuilder: (BuildContext context, int index) {
+              return InkWell(
+                onTap: () async {
+                  String detailFeedBack =
+                      await FollowClassRepo().getDetailFeedback(
+                    model.listFeedback[index].id,
+                    model.listFeedback[index].typelearn,
+                    model.listFeedback[index].meetingId,
+                  );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: ((context) => DailyFeedback(
+                            feedback: detailFeedBack,
+                            feedbackModel: model.listFeedback[index],
+                          )),
+                    ),
+                  );
+                },
+                child: LessonItem(
+                  model: model.listFeedback[index],
+                ),
+              );
+            }),
+      ],
+    );
+  }
+}
+
+class ListFbDinhKy extends StatelessWidget {
+  const ListFbDinhKy({super.key, required this.model});
+  final FeedbackDinhKyModel model;
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Padding(
+          padding: EdgeInsets.only(
+            top: 16.h,
+            bottom: 12.h,
+          ),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              'Lớp ${model.name}',
+              style: defaultText20B.copyWith(
+                color: const Color(0xff273D8C),
+              ),
+            ),
+          ),
+        ),
+        ListView.builder(
+            shrinkWrap: true,
+            physics: const ClampingScrollPhysics(),
+            itemCount: model.listFeedback.length,
+            itemBuilder: (BuildContext context, int index) {
+              return InkWell(
+                onTap: () async {
+                  String detailFeedBack =
+                      await FollowClassRepo().getDetailFeedback(
+                    model.listFeedback[index].id,
+                    model.listFeedback[index].typelearn,
+                    model.listFeedback[index].meetingId,
+                  );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: ((context) => PeriodicFeedback(
+                            feedback: detailFeedBack,
+                            feedbackModel: model.listFeedback[index],
+                          )),
+                    ),
+                  );
+                },
+                child: LessonItem(
+                  model: model.listFeedback[index],
+                ),
+              );
+            }),
+      ],
+    );
+  }
+}
+
 class LessonItem extends StatefulWidget {
-  const LessonItem({super.key, required this.title, required this.model});
-  final String title;
+  const LessonItem({super.key, required this.model});
   final FeedbackModel model;
   @override
   State<LessonItem> createState() => _LessonItemState();
@@ -375,12 +351,3 @@ class _LessonItemState extends State<LessonItem> {
     );
   }
 }
-
-List<String> _title123 = [
-  'Đánh giá giữa khoá - tháng 6',
-  'Đánh giá giữa khoá - tháng 7',
-  'Đánh giá giữa khoá - tháng 8',
-  'Đánh giá giữa khoá - tháng 9',
-  'Đánh giá giữa khoá - tháng 10',
-  'Đánh giá giữa khoá - tháng 11',
-];

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:upgrader/upgrader.dart';
 
 //import '../bottomnavbar/bottom_nav_bar.dart';
 import '../../main.dart';
@@ -59,13 +60,20 @@ class _SplshscreenState extends State<Splshscreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Image.asset(
-        "assets/images/splash.png",
-        height: 844.h,
-        width: 390.w,
-        fit: BoxFit.fill,
+    return UpgradeAlert(
+      dialogStyle: UpgradeDialogStyle.cupertino,
+      showLater: true,
+      upgrader: Upgrader(
+        languageCode: "vi",
+      ),
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: Image.asset(
+          "assets/images/splash.png",
+          height: 844.h,
+          width: 390.w,
+          fit: BoxFit.fill,
+        ),
       ),
     );
   }
