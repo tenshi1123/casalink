@@ -10,7 +10,7 @@ List<CategoryModel> listCategori = [];
 List<CategoryModel> listPostCate = [];
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await FlutterDownloader.initialize(debug: true);
+  await FlutterDownloader.initialize();
   await Firebase.initializeApp();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
