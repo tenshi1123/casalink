@@ -94,19 +94,19 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                             const Spacer(),
-                            GestureDetector(
-                              onTap: () {
-                                pushWithoutNavBar(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: ((context) =>
-                                        const ListConversationScreen()),
-                                  ),
-                                );
-                              },
-                              child: const Image(
-                                  image: AssetImage('assets/images/mess.png')),
-                            ),
+                            // GestureDetector(
+                            //   onTap: () {
+                            //     pushWithoutNavBar(
+                            //       context,
+                            //       MaterialPageRoute(
+                            //         builder: ((context) =>
+                            //             const ListConversationScreen()),
+                            //       ),
+                            //     );
+                            //   },
+                            //   child: const Image(
+                            //       image: AssetImage('assets/images/mess.png')),
+                            // ),
                             SizedBox(
                               width: 16.w,
                             ),

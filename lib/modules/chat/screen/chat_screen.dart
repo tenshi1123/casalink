@@ -253,25 +253,24 @@ class _ChatScreenState extends State<ChatScreen> {
 
 List<MessageModel> listMessages = [
   MessageModel(
-    content:
-        'Đã đi qua giới hạn duyên trời tự vỡ nát Nếu như ngay ban đầu đã không trân trọng nhau',
+    content: '',
     senderType: '0',
     createdAt: DateFormat("yyyy-MM-dd HH:mm:ss").parse("2025-01-09 13:40:23"),
   ),
   MessageModel(
-    content:
-        'Hạnh phúc cớ sao càng giữ càng mong manh Có những nỗi đau ùa đến chẳng thể lành',
+    content: '',
     senderType: '1',
     createdAt: DateFormat("yyyy-MM-dd HH:mm:ss").parse("2025-01-09 12:40:23"),
   ),
   MessageModel(
     content:
-        'Tình đẹp như phép màu ta gặp nhau Ngập trong bao đắm say mà không biết kết thúc này Một ngày em đổi thay quên hết mối tình đã từng vô giá Chỉ có anh là người được biết sau cùng',
+        'Hi, I am fine. Thank you for asking. How about you? How is your day going?',
     senderType: '0',
     createdAt: DateFormat("yyyy-MM-dd HH:mm:ss").parse("2025-01-09 9:40:23"),
   ),
   MessageModel(
-    content: 'Nếu em giữ anh lại câu chuyện cũng thế thôi',
+    content:
+        'hello, how are you? I am very happy to see you today. I hope you are happy too',
     senderType: '1',
     createdAt: DateFormat("yyyy-MM-dd HH:mm:ss").parse("2025-01-09 8:45:23"),
   ),

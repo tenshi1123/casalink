@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shorebird_code_push/shorebird_code_push.dart';
 import 'package:upgrader/upgrader.dart';
 
 //import '../bottomnavbar/bottom_nav_bar.dart';
@@ -23,9 +24,14 @@ class Splshscreen extends StatefulWidget {
 
 class _SplshscreenState extends State<Splshscreen> {
   bool checked = false;
+  final updater = ShorebirdUpdater();
   @override
   void initState() {
     super.initState();
+
+    // Get the current patch number and print it to the console.
+    // It will be `null` if no patches are installed.
+    _checkForUpdates();
     databaseInitialized();
     Timer(const Duration(seconds: 0), () async {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -51,6 +57,23 @@ class _SplshscreenState extends State<Splshscreen> {
         );
       }
     });
+  }
+
+  Future<void> _checkForUpdates() async {
+    updater.readCurrentPatch().then((currentPatch) {
+      print('The current patch number is: ${currentPatch?.number}');
+    });
+    // Check whether a new update is available.
+    final status = await updater.checkForUpdate();
+
+    if (status == UpdateStatus.outdated) {
+      try {
+        // Perform the update
+        await updater.update();
+      } on UpdateException catch (error) {
+        // Handle any errors that occur while updating.
+      }
+    }
   }
 
   Future<void> databaseInitialized() async {
