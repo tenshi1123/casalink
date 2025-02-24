@@ -1,7 +1,9 @@
+import 'package:casalink/repo/video_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../models/info_class_model.dart';
 import '../../../utils/constants/styles.dart';
 import '../../videoplayer/animation_player.dart';
@@ -153,7 +155,7 @@ class LessonItem extends StatefulWidget {
 
 class _LessonItemState extends State<LessonItem> {
   bool isExpanded = false;
-
+  List<LessonVideoModel> listLessonVideoModels = [];
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -164,7 +166,11 @@ class _LessonItemState extends State<LessonItem> {
           height: 12.h,
         ),
         InkWell(
-          onTap: () {
+          onTap: () async {
+            listLessonVideoModels = await VideoRepository().getlistLessonVideo(
+              topicalId: widget.topicModel.topicalId,
+              settingCoureTypeId: widget.topicModel.settingCourseTypeId,
+            );
             setState(() {
               isExpanded = !isExpanded;
             });
@@ -227,15 +233,36 @@ class _LessonItemState extends State<LessonItem> {
           ),
         ),
         const Divider(),
-        // if (isExpanded)
-        //   Column(
-        //     children: title
-        //         .map((e) => DetailItem(
-        //               title: e,
-        //               index: title.indexOf(e),
-        //             ))
-        //         .toList(),
-        //   ),
+        if (isExpanded)
+          Column(
+            children: listLessonVideoModels
+                .map((e) => GestureDetector(
+                      // onTap: () {
+                      //   pushWithoutNavBar(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //       builder: ((context) => AnimationPlayer(
+                      //             index: index,
+                      //           )),
+                      //     ),
+                      //   );
+                      // },
+                      onTap: () async {
+                        String link = await VideoRepository().getLinkVideo(
+                            lessonId: e.lessonsId,
+                            settingCoureTypeId: e.settingCourseTypeId,
+                            lessonType: e.lessonType);
+                        if (!await launchUrl(Uri.parse(link))) {
+                          throw Exception('Could not launch ');
+                        }
+                      },
+                      child: DetailItem(
+                        title: e.name,
+                        index: listLessonVideoModels.indexOf(e),
+                      ),
+                    ))
+                .toList(),
+          ),
       ],
     );
   }
@@ -247,86 +274,85 @@ class DetailItem extends StatelessWidget {
   final int index;
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        pushWithoutNavBar(
-          context,
-          MaterialPageRoute(
-            builder: ((context) => AnimationPlayer(
-                  index: index,
-                )),
-          ),
-        );
-      },
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SizedBox(
-            width: 16.w,
-          ),
-          Column(
-            children: [
-              SvgPicture.asset(
-                'assets/icons/green_tick.svg',
-                height: 12.h,
-                width: 12.w,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        SizedBox(
+          width: 16.w,
+        ),
+        Column(
+          children: [
+            SvgPicture.asset(
+              'assets/icons/green_tick.svg',
+              height: 12.h,
+              width: 12.w,
+            ),
+            Container(
+              height: 32.h,
+              width: 1.w,
+              margin: EdgeInsets.symmetric(vertical: 8.h),
+              decoration: const BoxDecoration(
+                color: Colors.green,
               ),
-              Container(
-                height: 32.h,
-                width: 1.w,
-                margin: EdgeInsets.symmetric(vertical: 8.h),
-                decoration: const BoxDecoration(
-                  color: Colors.green,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(
-            width: 16.w,
-          ),
-          Image.asset(
-            'assets/images/video.png',
-            height: 24.h,
-            width: 24.w,
-            fit: BoxFit.fill,
-          ),
-          SizedBox(
-            width: 16.w,
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
+            ),
+          ],
+        ),
+        SizedBox(
+          width: 16.w,
+        ),
+        Image.asset(
+          'assets/images/video.png',
+          height: 24.h,
+          width: 24.w,
+          fit: BoxFit.fill,
+        ),
+        SizedBox(
+          width: 16.w,
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              width: 267.w,
+              child: Text(
                 title,
                 style: defaultText14M,
               ),
-              SizedBox(
-                width: 267.w,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Bài giảng',
-                      style: defaultText12M.copyWith(
-                        fontWeight: FontWeight.w500,
-                        color: const Color(0xff3C3C3C).withValues(alpha: 0.6),
-                      ),
+            ),
+            SizedBox(
+              width: 267.w,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Bài giảng',
+                    style: defaultText12M.copyWith(
+                      fontWeight: FontWeight.w500,
+                      color: const Color(0xff3C3C3C).withValues(alpha: 0.6),
                     ),
-                    Text(
-                      '10 Phút',
-                      style: defaultText12M.copyWith(
-                        fontWeight: FontWeight.w500,
-                        color: const Color(0xff3C3C3C).withValues(alpha: 0.6),
-                      ),
+                  ),
+                  Text(
+                    '10 Phút',
+                    style: defaultText12M.copyWith(
+                      fontWeight: FontWeight.w500,
+                      color: const Color(0xff3C3C3C).withValues(alpha: 0.6),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
-          ),
-        ],
-      ),
+            ),
+            Container(
+              height: 1.h,
+              width: 267.w,
+              margin: EdgeInsets.symmetric(vertical: 4.h),
+              decoration: const BoxDecoration(
+                color: Color(0xffEDEDED),
+              ),
+            )
+          ],
+        ),
+      ],
     );
   }
 }

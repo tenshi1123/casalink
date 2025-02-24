@@ -25,9 +25,12 @@ class InfoClassModel {
   });
   factory InfoClassModel.fromJson(Map<String, dynamic> json) {
     return InfoClassModel(
-      courseName: json['course_name'] ?? '',
+      courseName: json['course_name'].replaceAll(RegExp(r'&amp;'), '&') ?? '',
       courseId: json['course_id'] ?? '',
-      courseScheduleName: json['course_schedule_name'] ?? '',
+      courseScheduleName:
+          json['course_schedule_name'].replaceAll(RegExp(r'&amp;'), '&') ??
+              '' ??
+              '',
       customerScheduleId: json['customer_course_schedule_id'] ?? '',
       courseImg: json['course_img'] ?? '',
       scheduleId: json['course_schedule_id'] ?? '',
@@ -118,7 +121,7 @@ class DetailClassModel {
   });
   factory DetailClassModel.fromJson(Map<String, dynamic> json) {
     return DetailClassModel(
-      name: json['name'] ?? '',
+      name: json['name'].replaceAll(RegExp(r'&amp;'), '&') ?? '',
       courseId: json['course_id'] ?? '',
       settingCourseTypeName: json['setting_course_type_name'] ?? '',
       settingCourseTypeId: json['setting_course_type_id'] ?? '',
@@ -179,7 +182,7 @@ class LessonVideoModel {
   final String isTrial;
   final String documentFilesActive;
   final String type;
-  final String document;
+  //final String document;
   LessonVideoModel({
     required this.lessonsId,
     required this.lessonType,
@@ -189,6 +192,19 @@ class LessonVideoModel {
     required this.isTrial,
     required this.documentFilesActive,
     required this.type,
-    required this.document,
+    //required this.document,
   });
+  factory LessonVideoModel.fromJson(Map<String, dynamic> json) {
+    return LessonVideoModel(
+      lessonsId: json['lessons_id'] ?? '',
+      lessonType: json['lesson_type'] ?? '',
+      settingCourseTypeId: json['setting_course_type_id'] ?? '',
+      name: json['name'] ?? '',
+      time: json['time'] ?? '',
+      isTrial: json['is_trial'] ?? '',
+      documentFilesActive: json['document_files_active'] ?? '',
+      type: json['type'] ?? '',
+      //document: json['document'] ?? '',
+    );
+  }
 }

@@ -37,4 +37,43 @@ class VideoRepository {
     );
     return CourseVideoModel.fromJson(response.data['data']);
   }
+
+  Future<List<LessonVideoModel>> getlistLessonVideo({
+    required String topicalId,
+    required String settingCoureTypeId,
+  }) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? token = prefs.getString('token');
+    dio.options.headers['Authorization'] = 'Bearer $token';
+    final response = await dio.post(
+      ApiPath.listLecture,
+      data: {
+        'topical_id': topicalId,
+        'setting_course_type_id': settingCoureTypeId,
+      },
+    );
+    List<LessonVideoModel> result = ((response.data)['data']['lessons'] as List)
+        .map((e) => LessonVideoModel.fromJson(e))
+        .toList();
+    return result;
+  }
+
+  Future<String> getLinkVideo({
+    required String lessonId,
+    required String settingCoureTypeId,
+    required String lessonType,
+  }) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? token = prefs.getString('token');
+    dio.options.headers['Authorization'] = 'Bearer $token';
+    final response = await dio.post(
+      ApiPath.detailLesson,
+      data: {
+        'lesson_id': lessonId,
+        'setting_course_type_id': settingCoureTypeId,
+        'lesson_type': lessonType,
+      },
+    );
+    return response.data['data']['lesson_content'];
+  }
 }

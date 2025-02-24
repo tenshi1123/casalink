@@ -60,7 +60,9 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             SizedBox(
               width: 375.w,
-              height: 315.h + (listClass.length - 1) * 60.h,
+              height: listClass.isEmpty
+                  ? 300.h
+                  : 300.h + (listClass.length - 1) * 60.h,
               child: Stack(children: [
                 Container(
                   height: 295.h,
@@ -170,7 +172,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     padding:
                         EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
                     width: 343.w,
-                    height: 102.h + (listClass.length - 1) * 60.h,
+                    height: 82.h + (listClass.length - 1) * 60.h,
+                    constraints: BoxConstraints(minHeight: 82.h),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(
                         Radius.circular(16.r),
@@ -217,28 +220,34 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ],
                         ),
-                        SizedBox(
-                          height: 60.h + (listClass.length - 1) * 60.h,
-                          width: 343.w,
-                          child: ListView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: listClass.length,
-                            itemBuilder: (context, index) {
-                              return _ItemClass(
-                                model: listClass[index],
-                              );
-                            },
-                          ),
-                        ),
                       ],
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: 200.h,
+                  left: 32.w,
+                  child: SizedBox(
+                    height: listClass.isEmpty
+                        ? 60.h
+                        : 60.h + (listClass.length - 1) * 60.h,
+                    width: 310.w,
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: listClass.length,
+                      itemBuilder: (context, index) {
+                        return _ItemClass(
+                          model: listClass[index],
+                        );
+                      },
                     ),
                   ),
                 )
               ]),
             ),
             Padding(
-              padding: EdgeInsets.only(left: 16.w, top: 10.h, bottom: 10.h),
+              padding: EdgeInsets.only(left: 16.w, bottom: 10.h),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -1018,10 +1027,15 @@ class UpcomingSchedule extends StatelessWidget {
                     SizedBox(
                       height: 8.h,
                     ),
-                    Text(
-                      '${DateFormat('EEEE').format(model.createdDate)}  (${model.timeStart.replaceRange(5, null, '')} - ${model.timeEnd.replaceRange(5, null, '')})',
-                      style: defaultText14M,
-                    ),
+                    (model.typeLearn == 'off')
+                        ? Text(
+                            '${DateFormat('EEEE').format(model.createdDate)}  (${model.timeStart.replaceRange(5, null, '')} - ${model.timeEnd.replaceRange(5, null, '')})',
+                            style: defaultText14M,
+                          )
+                        : Text(
+                            DateFormat('EEEE').format(model.createdDate),
+                            style: defaultText14M,
+                          ),
                   ],
                 )
               ],
@@ -1113,11 +1127,12 @@ class UpcomingSchedule extends StatelessWidget {
 }
 
 class _ItemClass extends StatelessWidget {
-  const _ItemClass({super.key, required this.model});
+  const _ItemClass({required this.model});
   final CheckInModel model;
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

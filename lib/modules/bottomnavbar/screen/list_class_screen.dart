@@ -62,6 +62,7 @@ class ListClassScreen extends StatelessWidget {
                   )
                 : GridView.count(
                     crossAxisCount: 2,
+                    childAspectRatio: (188 / 230),
                     children: List.generate(listLichHoc.length, (index) {
                       return _ClassItem(
                         index: index,
@@ -112,7 +113,7 @@ class __ClassItemState extends State<_ClassItem> {
               builder: (BuildContext context) {
                 return CupertinoAlertDialog(
                   title: const Text(
-                      'Đã có lỗi xảy ra, lớp học đã bị xóa lỗi mạngmạng'),
+                      'Đã có lỗi xảy ra, lớp học đã bị xóa lỗi mạng'),
                   actions: <Widget>[
                     CupertinoDialogAction(
                       isDefaultAction: true,
@@ -187,11 +188,15 @@ class __ClassItemState extends State<_ClassItem> {
                   ),
                 ),
               ),
-              const Spacer(),
-              Text(
-                widget.model.courseScheduleName,
-                style: defaultText12B.copyWith(
-                  color: const Color(0xff273D8C),
+              SizedBox(
+                height: 8.h,
+              ),
+              Expanded(
+                child: Text(
+                  widget.model.courseScheduleName,
+                  style: defaultText12B.copyWith(
+                    color: const Color(0xff273D8C),
+                  ),
                 ),
               ),
               Text(
@@ -200,6 +205,7 @@ class __ClassItemState extends State<_ClassItem> {
                   color: const Color(0xff273D8C),
                 ),
               ),
+              const Spacer(),
             ],
           ),
         )
