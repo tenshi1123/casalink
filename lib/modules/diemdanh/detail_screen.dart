@@ -67,10 +67,20 @@ class _DetailScreenState extends State<DetailScreen> {
                       },
                       child: Column(
                         children: [
-                          Text(
-                            ('Vào Phòng học zoom'),
-                            style: defaultText14B.copyWith(
-                              color: const Color(0xff273D8C),
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                              vertical: 4.h,
+                              horizontal: 12.w,
+                            ),
+                            decoration: BoxDecoration(
+                                color: const Color(0xFF273D8C),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(8.r))),
+                            child: Text(
+                              ('Vào Phòng học zoom'),
+                              style: defaultText14B.copyWith(
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                           SizedBox(

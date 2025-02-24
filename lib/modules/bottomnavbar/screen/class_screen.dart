@@ -1,16 +1,39 @@
 import 'package:casalink/utils/constants/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 
 import '../../../models/info_class_model.dart';
-import '../../../models/schedule_model.dart';
+import '../../../models/schedule_model.dart' as schedule_model;
 import '../../../repo/schedule_repo.dart';
 import '../../diemdanh/detail_screen.dart';
 
-class ClassScreen extends StatelessWidget {
+class ClassScreen extends StatefulWidget {
   const ClassScreen({super.key, required this.detailClassModel});
   final ClassDetailModel detailClassModel;
+
+  @override
+  State<ClassScreen> createState() => _ClassScreenState();
+}
+
+class _ClassScreenState extends State<ClassScreen> {
+  final List<InfoLessonModel> listLesson = [];
+  @override
+  void initState() {
+    super.initState();
+    List<InfoLessonModel> pastEvents = widget.detailClassModel.listLesson
+        .where((e) => e.createdDate.isBefore(DateTime.now()))
+        .toList();
+    List<InfoLessonModel> futureEvents = widget.detailClassModel.listLesson
+        .where((e) => e.createdDate.isAfter(DateTime.now()))
+        .toList();
+    pastEvents.sort((a, b) => b.createdDate.compareTo(a.createdDate));
+    futureEvents.sort((a, b) => a.createdDate.compareTo(b.createdDate));
+    listLesson.addAll(pastEvents);
+    listLesson.addAll(futureEvents);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +66,7 @@ class ClassScreen extends StatelessWidget {
                 color: Colors.white,
               ),
               child: Image.network(
-                detailClassModel.detailClassModel.courseImg,
+                widget.detailClassModel.detailClassModel.courseImg,
                 width: 343.w,
                 //height: 160.h,
                 fit: BoxFit.fitWidth,
@@ -71,7 +94,8 @@ class ClassScreen extends StatelessWidget {
               ),
               child: Center(
                 child: Text(
-                  detailClassModel.detailClassModel.settingCourseTypeName,
+                  widget
+                      .detailClassModel.detailClassModel.settingCourseTypeName,
                   style: defaultText16M.copyWith(
                     color: Colors.white,
                   ),
@@ -81,7 +105,7 @@ class ClassScreen extends StatelessWidget {
             Padding(
               padding: EdgeInsets.only(top: 10.h, left: 16.w),
               child: Text(
-                detailClassModel.detailClassModel.name,
+                widget.detailClassModel.detailClassModel.name,
                 style: defaultText20B.copyWith(
                   color: const Color(0xff273D8C),
                 ),
@@ -106,8 +130,8 @@ class ClassScreen extends StatelessWidget {
                           vertical: 10.h, horizontal: 16.w),
                       height: 8.h,
                       width: (296 *
-                              detailClassModel
-                                  .detailClassModel.percentLearning /
+                              widget.detailClassModel.detailClassModel
+                                  .percentLearning /
                               100)
                           .w,
                       decoration: BoxDecoration(
@@ -118,14 +142,14 @@ class ClassScreen extends StatelessWidget {
                   ],
                 ),
                 Text(
-                  '${detailClassModel.detailClassModel.percentLearning}%',
+                  '${widget.detailClassModel.detailClassModel.percentLearning}%',
                   style: defaultText16B.copyWith(
                     color: const Color(0xff28B4E9),
                   ),
                 ),
               ],
             ),
-            detailClassModel.listLesson.isEmpty
+            listLesson.isEmpty
                 ? Center(
                     child: Column(
                       children: [
@@ -148,18 +172,15 @@ class ClassScreen extends StatelessWidget {
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     padding: EdgeInsets.symmetric(horizontal: 16.w),
-                    itemCount: detailClassModel.listLesson.length,
+                    itemCount: listLesson.length,
                     itemBuilder: (BuildContext context, int index) {
                       return InkWell(
                         onTap: () async {
-                          DetaiLessonModel listExcercise =
+                          schedule_model.DetaiLessonModel listExcercise =
                               await ScheduleRepo().getDetailSchedule(
-                            checkinOffId:
-                                detailClassModel.listLesson[index].checkId,
-                            typeLearn:
-                                detailClassModel.listLesson[index].typeLearn,
-                            meetingId:
-                                detailClassModel.listLesson[index].meetingId,
+                            checkinOffId: listLesson[index].checkId,
+                            typeLearn: listLesson[index].typeLearn,
+                            meetingId: listLesson[index].meetingId,
                           );
                           pushWithoutNavBar(
                             context,
@@ -193,7 +214,7 @@ class ClassScreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  "${detailClassModel.listLesson[index].createdDate} ${detailClassModel.listLesson[index].cosoName}",
+                                  "${DateFormat("dd-MM-yyyy").format(listLesson[index].createdDate)} ${listLesson[index].cosoName}",
                                   style: defaultText14M.copyWith(
                                       color: const Color(0xff273D8C)),
                                 ),
@@ -201,7 +222,7 @@ class ClassScreen extends StatelessWidget {
                                   height: 10.h,
                                 ),
                                 Text(
-                                  detailClassModel.listLesson[index].name,
+                                  listLesson[index].name,
                                   style: defaultText16B.copyWith(
                                       color: const Color(0xff273D8C)),
                                 ),
@@ -209,19 +230,17 @@ class ClassScreen extends StatelessWidget {
                                   height: 10.h,
                                 ),
                                 Text(
-                                  'Nội dung buổi học: ${detailClassModel.listLesson[index].topic}',
+                                  'Nội dung buổi học: ${listLesson[index].topic}',
                                   style: defaultText14M.copyWith(
                                       color: const Color(0xff273D8C)),
                                 ),
                                 SizedBox(
                                   height: 10.h,
                                 ),
-                                detailClassModel
-                                            .listLesson[index].leaveReason ==
-                                        ''
+                                listLesson[index].leaveReason == ''
                                     ? const SizedBox()
                                     : Text(
-                                        'Lịch sử nghỉ học \nLý do: ${detailClassModel.listLesson[index].leaveReason}',
+                                        'Lịch sử nghỉ học \nLý do: ${listLesson[index].leaveReason}',
                                         style: defaultText14M.copyWith(
                                             color: const Color(0xffED1C24)),
                                       ),

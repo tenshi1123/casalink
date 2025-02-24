@@ -8,8 +8,10 @@ import 'package:upgrader/upgrader.dart';
 
 //import '../bottomnavbar/bottom_nav_bar.dart';
 import '../../main.dart';
+import '../../models/checkin_model.dart';
 import '../../models/info_model.dart';
 import '../../repo/category_repo.dart';
+import '../../repo/follow_class_repo.dart';
 import '../../repo/info_repo.dart';
 import '../../router/app_pages.dart';
 import '../../router/app_router.dart';
@@ -39,7 +41,8 @@ class _SplshscreenState extends State<Splshscreen> {
       checked = (token != null && token != '');
       if (checked) {
         InfoModel infoModel = await InfoRepo().getInfo();
-        InfoHomeModel infoClassModel = await InfoRepo().getInfoClass();
+        CheckinModel infoClassModel = await FollowClassRepo().getListCheckin();
+
         AppRouter.toPage(context, AppPages.BottomNavBarPage,
             // blocValue: _authBloc,
             arguments: {
@@ -88,6 +91,7 @@ class _SplshscreenState extends State<Splshscreen> {
       showLater: true,
       upgrader: Upgrader(
         languageCode: "vi",
+        durationUntilAlertAgain: const Duration(minutes: 5),
       ),
       child: Scaffold(
         backgroundColor: Colors.white,

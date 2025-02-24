@@ -6,14 +6,13 @@ import "package:flutter_screenutil/flutter_screenutil.dart";
 import "package:onesignal_flutter/onesignal_flutter.dart";
 import "package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart";
 import 'package:flutter_svg/flutter_svg.dart';
-
+import "package:upgrader/upgrader.dart";
+import "../../models/checkin_model.dart";
 import "../../models/info_model.dart";
 import "../../utils/onesignal.dart";
-import "screen/class_screen.dart";
 import "info/personal_screen.dart";
 import "screen/list_class_screen.dart";
 import "screen/list_video_course.dart";
-import "screen/video_course.dart";
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({
@@ -22,7 +21,7 @@ class BottomNavBar extends StatefulWidget {
     required this.infoClassModel,
   });
   final InfoModel infoModel;
-  final InfoHomeModel infoClassModel;
+  final CheckinModel infoClassModel;
   @override
   State<BottomNavBar> createState() => _BottomNavBarState();
 }
@@ -128,44 +127,53 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
   @override
   Widget build(BuildContext context) {
-    return PersistentTabView(
-      controller: _controller,
-      tabs: _tabs(),
-      navBarBuilder: (navBarConfig) => SizedBox(
-        width: 375.w,
-        height: 81.h,
-        child: Stack(
-          children: [
-            Positioned(
-              left: 16.w,
-              top: 6.h,
-              child: SizedBox(
-                width: 343.w,
-                height: 81.h,
-                child: Style6BottomNavBar(
-                  //itemPadding: EdgeInsets.all(5.h),
-                  navBarConfig: navBarConfig,
-                  navBarDecoration: NavBarDecoration(
-                    padding: const EdgeInsets.all(5),
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(25.r),
-                    boxShadow: [
-                      BoxShadow(
-                        color: const Color(0xff000000).withValues(alpha: 0.16),
-                        blurRadius: 12,
-                        offset: const Offset(0, 4), // Shadow position
-                      ),
-                    ],
+    return UpgradeAlert(
+      dialogStyle: UpgradeDialogStyle.cupertino,
+      showLater: true,
+      upgrader: Upgrader(
+        languageCode: "vi",
+        durationUntilAlertAgain: const Duration(minutes: 5),
+      ),
+      child: PersistentTabView(
+        controller: _controller,
+        tabs: _tabs(),
+        navBarBuilder: (navBarConfig) => SizedBox(
+          width: 375.w,
+          height: 81.h,
+          child: Stack(
+            children: [
+              Positioned(
+                left: 16.w,
+                top: 6.h,
+                child: SizedBox(
+                  width: 343.w,
+                  height: 81.h,
+                  child: Style6BottomNavBar(
+                    //itemPadding: EdgeInsets.all(5.h),
+                    navBarConfig: navBarConfig,
+                    navBarDecoration: NavBarDecoration(
+                      padding: const EdgeInsets.all(5),
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(25.r),
+                      boxShadow: [
+                        BoxShadow(
+                          color:
+                              const Color(0xff000000).withValues(alpha: 0.16),
+                          blurRadius: 12,
+                          offset: const Offset(0, 4), // Shadow position
+                        ),
+                      ],
+                    ),
+                    //itemAnimationProperties: const ItemAnimation(),
                   ),
-                  //itemAnimationProperties: const ItemAnimation(),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
+        backgroundColor: Colors.white,
+        navBarHeight: 50.h,
       ),
-      backgroundColor: Colors.white,
-      navBarHeight: 50.h,
     );
   }
 }

@@ -189,6 +189,12 @@ class __ClassItemState extends State<_ClassItem> {
               ),
               const Spacer(),
               Text(
+                widget.model.courseScheduleName,
+                style: defaultText12B.copyWith(
+                  color: const Color(0xff273D8C),
+                ),
+              ),
+              Text(
                 widget.model.courseName,
                 style: defaultText12B.copyWith(
                   color: const Color(0xff273D8C),

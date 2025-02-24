@@ -39,7 +39,10 @@ class _InfoScreenState extends State<InfoScreen> {
             ),
             CircleAvatar(
               radius: 60.r,
-              backgroundImage: NetworkImage(widget.infoModel.avatar),
+              backgroundImage: const NetworkImage(
+                'https://i.imgur.com/SGlyNxJ.png',
+                scale: 1.5,
+              ),
             ),
             MyTextFormField(
               labelText: 'Họ và tên',

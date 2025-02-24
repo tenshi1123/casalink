@@ -11,6 +11,7 @@ import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../../main.dart';
 import '../../../models/category_model.dart';
+import '../../../models/checkin_model.dart';
 import '../../../models/info_model.dart';
 import '../../../models/schedule_model.dart';
 import '../../../repo/category_repo.dart';
@@ -28,7 +29,7 @@ class HomeScreen extends StatefulWidget {
   const HomeScreen(
       {super.key, required this.infoModel, required this.infoClassModel});
   final InfoModel infoModel;
-  final InfoHomeModel infoClassModel;
+  final CheckinModel infoClassModel;
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -41,6 +42,14 @@ class _HomeScreenState extends State<HomeScreen> {
   final controller3 = PageController(viewportFraction: 0.75, keepPage: true);
   bool _isLoading = false;
   bool _isLoading1 = false;
+  final List<CheckInModel> listClass = [];
+  @override
+  void initState() {
+    super.initState();
+    listClass.addAll(widget.infoClassModel.checkInOffModel);
+    listClass.addAll(widget.infoClassModel.checkinZoomModel);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             SizedBox(
               width: 375.w,
-              height: 295.h,
+              height: 315.h + (listClass.length - 1) * 60.h,
               child: Stack(children: [
                 Container(
                   height: 295.h,
@@ -89,8 +98,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             // ),
                             CircleAvatar(
                               radius: 22.r,
-                              backgroundImage: NetworkImage(
-                                widget.infoModel.avatar,
+                              backgroundImage: const NetworkImage(
+                                'https://i.imgur.com/SGlyNxJ.png',
+                                scale: 1.5,
                               ),
                             ),
                             const Spacer(),
@@ -154,13 +164,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 Positioned(
-                  bottom: 5.h,
+                  top: 200.h,
                   left: 20.w,
                   child: Container(
                     padding:
-                        EdgeInsets.symmetric(horizontal: 5.w, vertical: 5.h),
+                        EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
                     width: 343.w,
-                    //height: 90.h,
+                    height: 102.h + (listClass.length - 1) * 60.h,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(
                         Radius.circular(16.r),
@@ -174,97 +184,52 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                       color: Colors.white,
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        const SizedBox(
-                          width: 1,
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              'Lớp',
-                              style: defaultText14M.copyWith(
-                                color: const Color(0xff292929).withAlpha(70),
-                              ),
-                            ),
-                            Container(
-                              //height: 40.h,
-                              constraints: BoxConstraints(minHeight: 40.h),
-                              width: 80.w,
+                            SizedBox(
+                              width: 100.w,
                               child: Text(
-                                widget.infoClassModel.lopHoc,
-                                style: defaultText16M,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
+                                'Lớp',
+                                style: defaultText14M.copyWith(
+                                  color: const Color(0xff292929).withAlpha(80),
+                                ),
                               ),
                             ),
-                          ],
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: VerticalDivider(
-                            color: Color(0xffD9D9D9),
-                            thickness: 1,
-                          ),
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Chi nhánh',
-                              style: defaultText14M.copyWith(
-                                color: const Color(0xff292929).withAlpha(70),
-                              ),
-                            ),
-                            Container(
-                              //height: 40.h,
-                              constraints: BoxConstraints(minHeight: 40.h),
-                              width: 80.w,
+                            SizedBox(
+                              width: 100.w,
                               child: Text(
-                                widget.infoClassModel.coso,
-                                style: defaultText16M,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
+                                'Chi nhánh',
+                                style: defaultText14M.copyWith(
+                                  color: const Color(0xff292929).withAlpha(80),
+                                ),
                               ),
                             ),
-                          ],
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: VerticalDivider(
-                            color: Color(0xffD9D9D9),
-                            thickness: 1,
-                          ),
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
                             Text(
                               'Số buổi còn lại',
                               style: defaultText14M.copyWith(
-                                color: const Color(0xff292929).withAlpha(70),
-                              ),
-                            ),
-                            Container(
-                              //height: 40.h,
-                              width: 80.w,
-                              constraints: BoxConstraints(minHeight: 40.h),
-                              child: Text(
-                                widget.infoClassModel.numberLessons,
-                                style: defaultText16M,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
+                                color: const Color(0xff292929).withAlpha(80),
                               ),
                             ),
                           ],
                         ),
-                        const SizedBox(
-                          width: 1,
+                        SizedBox(
+                          height: 60.h + (listClass.length - 1) * 60.h,
+                          width: 343.w,
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: listClass.length,
+                            itemBuilder: (context, index) {
+                              return _ItemClass(
+                                model: listClass[index],
+                              );
+                            },
+                          ),
                         ),
                       ],
                     ),
@@ -273,7 +238,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ]),
             ),
             Padding(
-              padding: EdgeInsets.only(left: 16.w, top: 20.h, bottom: 10.h),
+              padding: EdgeInsets.only(left: 16.w, top: 10.h, bottom: 10.h),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -583,7 +548,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     future: ScheduleRepo().getScheduleList(
                         DateFormat('dd-MM-yyyy').format(DateTime.now()),
                         DateFormat('dd-MM-yyyy').format(DateTime.now()
-                            .add(const Duration(days: 7)))), // Hàm gọi API
+                            .add(const Duration(days: 15)))), // Hàm gọi API
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return const CircularProgressIndicator();
@@ -1061,45 +1026,85 @@ class UpcomingSchedule extends StatelessWidget {
                 )
               ],
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                RichText(
-                  text: TextSpan(
-                    text: 'Phòng học: ',
-                    style: defaultText16M,
+            (model.typeLearn == 'off')
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      TextSpan(
-                          text: model.phongHocName ?? 'A101',
-                          style: defaultText16B.copyWith(
-                              color: const Color(0xff273D8C))),
+                      RichText(
+                        text: TextSpan(
+                          text: 'Phòng học: ',
+                          style: defaultText16M,
+                          children: [
+                            TextSpan(
+                                text: model.phongHocName ?? 'A101',
+                                style: defaultText16B.copyWith(
+                                    color: const Color(0xff273D8C))),
+                          ],
+                        ),
+                        maxLines: 2,
+                      ),
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 5.w),
+                        width: 1.w,
+                        height: 20.h,
+                        color: const Color(0xff273D8C),
+                      ),
+                      Expanded(
+                        child: RichText(
+                          text: TextSpan(
+                            text: 'Chi nhánh: ',
+                            style: defaultText16M,
+                            children: [
+                              TextSpan(
+                                  text: model.cosoName ?? 'Mỹ Đình',
+                                  style: defaultText16B.copyWith(
+                                      color: const Color(0xff273D8C))),
+                            ],
+                          ),
+                          maxLines: 2,
+                        ),
+                      ),
+                    ],
+                  )
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      RichText(
+                        text: TextSpan(
+                          text: 'Lớp: ',
+                          style: defaultText16M,
+                          children: [
+                            TextSpan(
+                                text: model.courseName,
+                                style: defaultText16B.copyWith(
+                                    color: const Color(0xff273D8C))),
+                          ],
+                        ),
+                        maxLines: 2,
+                      ),
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 5.w),
+                        width: 1.w,
+                        height: 20.h,
+                        color: const Color(0xff273D8C),
+                      ),
+                      Expanded(
+                        child: RichText(
+                          text: TextSpan(
+                            text: '',
+                            style: defaultText16M,
+                            children: [
+                              TextSpan(
+                                  text: model.cosoName ?? 'Học online',
+                                  style: defaultText16B.copyWith(
+                                      color: const Color(0xff273D8C))),
+                            ],
+                          ),
+                          maxLines: 2,
+                        ),
+                      ),
                     ],
                   ),
-                  maxLines: 2,
-                ),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 5.w),
-                  width: 1.w,
-                  height: 20.h,
-                  color: const Color(0xff273D8C),
-                ),
-                Expanded(
-                  child: RichText(
-                    text: TextSpan(
-                      text: 'Chi nhánh: ',
-                      style: defaultText16M,
-                      children: [
-                        TextSpan(
-                            text: model.cosoName ?? 'Mỹ Đình',
-                            style: defaultText16B.copyWith(
-                                color: const Color(0xff273D8C))),
-                      ],
-                    ),
-                    maxLines: 2,
-                  ),
-                ),
-              ],
-            ),
           ],
         ),
       ),
@@ -1107,11 +1112,50 @@ class UpcomingSchedule extends StatelessWidget {
   }
 }
 
-List<String> list = [
-  'assets/images/banner.png',
-  'assets/images/banner1.png',
-  'assets/images/banner2.png',
-  'assets/images/banner3.png',
-  'assets/images/banner4.png',
-  'assets/images/banner5.png',
-];
+class _ItemClass extends StatelessWidget {
+  const _ItemClass({super.key, required this.model});
+  final CheckInModel model;
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              constraints: BoxConstraints(minHeight: 40.h),
+              width: 100.w,
+              child: Text(
+                model.className,
+                style: defaultText16M,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            Container(
+              constraints: BoxConstraints(minHeight: 40.h),
+              width: 110.w,
+              child: Text(
+                model.cosoName,
+                style: defaultText16M,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            Container(
+              width: 80.w,
+              constraints: BoxConstraints(minHeight: 40.h),
+              child: Text(
+                model.chuaHoc,
+                style: defaultText16M,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ],
+        ),
+        const Divider(),
+      ],
+    );
+  }
+}

@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class InfoClassModel {
   final String courseName;
   final String courseId;
@@ -56,7 +58,7 @@ class ClassDetailModel {
 
 class InfoLessonModel {
   final String typeLearn;
-  final String createdDate;
+  final DateTime createdDate;
   final String phonghocName;
   final String cosoName;
   final String name;
@@ -84,7 +86,7 @@ class InfoLessonModel {
   factory InfoLessonModel.fromJson(Map<String, dynamic> json) {
     return InfoLessonModel(
       typeLearn: json['type_learn'] ?? '',
-      createdDate: json['created_date'] ?? '',
+      createdDate: DateFormat("dd-MM-yyyy").parse(json['created_date'] ?? ''),
       phonghocName: json['phonghoc_name'] ?? '',
       cosoName: json['coso_name'] ?? '',
       name: json['name'] ?? '',
@@ -146,7 +148,7 @@ class TopicalModel {
       nameTopical: json['name_topical'] ?? '',
       courseId: json['course_id'] ?? '',
       settingCourseTypeId: json['setting_course_type_id'] ?? '',
-      numLLessson: json['num_lesson'] ?? '',
+      numLLessson: json['num_lessson'] ?? '0',
     );
   }
 }
@@ -166,4 +168,27 @@ class CourseVideoModel {
           .toList()),
     );
   }
+}
+
+class LessonVideoModel {
+  final String lessonsId;
+  final String lessonType;
+  final String settingCourseTypeId;
+  final String name;
+  final String time;
+  final String isTrial;
+  final String documentFilesActive;
+  final String type;
+  final String document;
+  LessonVideoModel({
+    required this.lessonsId,
+    required this.lessonType,
+    required this.settingCourseTypeId,
+    required this.name,
+    required this.time,
+    required this.isTrial,
+    required this.documentFilesActive,
+    required this.type,
+    required this.document,
+  });
 }

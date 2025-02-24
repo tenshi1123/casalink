@@ -32,7 +32,10 @@ class PersonalScreen extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 24.r,
-                backgroundImage: NetworkImage(infoModel.avatar),
+                backgroundImage: const NetworkImage(
+                  'https://i.imgur.com/SGlyNxJ.png',
+                  scale: 1.5,
+                ),
               ),
               SizedBox(
                 width: 16.w,

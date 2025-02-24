@@ -75,14 +75,11 @@ class ListVideoCourse extends StatelessWidget {
                   )
                 : GridView.count(
                     crossAxisCount: 2,
+                    childAspectRatio: (188 / 230),
                     children: List.generate(listLichHoc.length, (index) {
-                      return SizedBox(
-                        width: 164.w,
-                        height: 300.h,
-                        child: _VideoCourseItem(
-                          index: index,
-                          model: listLichHoc[index],
-                        ),
+                      return _VideoCourseItem(
+                        index: index,
+                        model: listLichHoc[index],
                       );
                     }));
           } else {

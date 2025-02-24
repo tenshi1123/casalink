@@ -1,5 +1,6 @@
 // ignore_for_file: constant_identifier_names
 
+import 'package:casalink/models/checkin_model.dart';
 import 'package:casalink/modules/bottomnavbar/bottom_nav_bar.dart';
 
 import '../models/info_model.dart';
@@ -43,7 +44,7 @@ extension AppPagesExtension on AppPages {
         return PageConfig()..pageBuilder = () => const ForgotPassScreen();
       case AppPages.BottomNavBarPage:
         final InfoModel infoModel = arguments!['infoModel'];
-        final InfoHomeModel infoClassModel = arguments['infoClassModel'];
+        final CheckinModel infoClassModel = arguments['infoClassModel'];
         return PageConfig()
           ..pageBuilder = () => BottomNavBar(
                 infoModel: infoModel,

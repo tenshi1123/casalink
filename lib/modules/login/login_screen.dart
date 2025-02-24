@@ -4,7 +4,9 @@ import 'package:casalink/utils/constants/styles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../models/checkin_model.dart';
 import '../../models/info_model.dart';
+import '../../repo/follow_class_repo.dart';
 import '../../repo/info_repo.dart';
 import '../../repo/login_repo.dart';
 import '../../router/app_pages.dart';
@@ -270,8 +272,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         );
                         if (loged == true) {
                           InfoModel infoModel = await InfoRepo().getInfo();
-                          InfoHomeModel infoClassModel =
-                              await InfoRepo().getInfoClass();
+                          CheckinModel infoClassModel =
+                              await FollowClassRepo().getListCheckin();
                           AppRouter.toPage(context, AppPages.BottomNavBarPage,
                               // blocValue: _authBloc,
                               arguments: {

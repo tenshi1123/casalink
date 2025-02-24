@@ -126,10 +126,11 @@ class VideoCourse extends StatelessWidget {
             ListView.builder(
                 shrinkWrap: true,
                 physics: const ClampingScrollPhysics(),
-                itemCount: 4,
+                itemCount: courseVideoModel.listTopical.length,
                 itemBuilder: (BuildContext context, int index) {
                   return LessonItem(
                     index: index,
+                    topicModel: courseVideoModel.listTopical[index],
                   );
                 }),
             SizedBox(
@@ -143,21 +144,16 @@ class VideoCourse extends StatelessWidget {
 }
 
 class LessonItem extends StatefulWidget {
-  const LessonItem({super.key, required this.index});
+  const LessonItem({super.key, required this.index, required this.topicModel});
   final int index;
-  //final listTopical lis
+  final TopicalModel topicModel;
   @override
   State<LessonItem> createState() => _LessonItemState();
 }
 
 class _LessonItemState extends State<LessonItem> {
   bool isExpanded = false;
-  List<String> title = [
-    'Bài 1: Cấu trúc câu',
-    'Bài 2: Tính từ và trạng từ',
-    'Bài 3: Câu bị động',
-    'Bài 4: Câu điều kiện',
-  ];
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -204,14 +200,17 @@ class _LessonItemState extends State<LessonItem> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    title[widget.index],
-                    style: defaultText16M.copyWith(
-                      fontWeight: FontWeight.w600,
+                  SizedBox(
+                    width: 260.w,
+                    child: Text(
+                      widget.topicModel.nameTopical,
+                      style: defaultText16M.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                   Text(
-                    '5 bài giảng / 6 bài tập',
+                    '${widget.topicModel.numLLessson} bài',
                     style: defaultText12M.copyWith(
                       fontWeight: FontWeight.w500,
                       color: const Color(0xff3C3C3C).withValues(alpha: 0.6),
@@ -228,15 +227,15 @@ class _LessonItemState extends State<LessonItem> {
           ),
         ),
         const Divider(),
-        if (isExpanded)
-          Column(
-            children: title
-                .map((e) => DetailItem(
-                      title: e,
-                      index: title.indexOf(e),
-                    ))
-                .toList(),
-          ),
+        // if (isExpanded)
+        //   Column(
+        //     children: title
+        //         .map((e) => DetailItem(
+        //               title: e,
+        //               index: title.indexOf(e),
+        //             ))
+        //         .toList(),
+        //   ),
       ],
     );
   }

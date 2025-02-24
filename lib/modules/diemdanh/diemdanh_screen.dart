@@ -146,7 +146,7 @@ Widget _item({
 
 class ListOffClass extends StatelessWidget {
   const ListOffClass({super.key, required this.model});
-  final CheckInOffModel model;
+  final CheckInModel model;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -346,7 +346,7 @@ class ListOffClass extends StatelessWidget {
 
 class ListZoomClass extends StatelessWidget {
   const ListZoomClass({super.key, required this.model});
-  final CheckinZoomModel model;
+  final CheckInModel model;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -364,11 +364,11 @@ class ListZoomClass extends StatelessWidget {
               children: [
                 RichText(
                   text: TextSpan(
-                    text: '${model.className} ${model.classNote}',
+                    text: '${model.className} ',
                     style: defaultText20B.copyWith(color: Colors.white),
                     children: <TextSpan>[
                       TextSpan(
-                        text: '\n${model.courseName}',
+                        text: '\n${model.coureName}',
                         style: defaultText16M.copyWith(color: Colors.white),
                       ),
                     ],
@@ -455,7 +455,7 @@ class ListZoomClass extends StatelessWidget {
                   });
                 },
                 child: _item(
-                  numLesson: model.chuaThamGia,
+                  numLesson: model.chuaHoc,
                   image: 'assets/images/not_learn.png',
                   title: 'chưa học',
                 )),
