@@ -41,8 +41,8 @@ class _SplshscreenState extends State<Splshscreen> {
       checked = (token != null && token != '');
       if (checked) {
         InfoModel infoModel = await InfoRepo().getInfo();
-        CheckinModel infoClassModel = await FollowClassRepo().getListCheckin();
-
+        //CheckinModel infoClassModel = await FollowClassRepo().getListCheckin();
+        InfoHomeModel infoClassModel = await InfoRepo().getInfoClass();
         AppRouter.toPage(context, AppPages.BottomNavBarPage,
             // blocValue: _authBloc,
             arguments: {

@@ -29,7 +29,8 @@ class HomeScreen extends StatefulWidget {
   const HomeScreen(
       {super.key, required this.infoModel, required this.infoClassModel});
   final InfoModel infoModel;
-  final CheckinModel infoClassModel;
+  //final CheckinModel infoClassModel;
+  final InfoHomeModel infoClassModel;
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -42,12 +43,14 @@ class _HomeScreenState extends State<HomeScreen> {
   final controller3 = PageController(viewportFraction: 0.75, keepPage: true);
   bool _isLoading = false;
   bool _isLoading1 = false;
-  final List<CheckInModel> listClass = [];
+  //final List<CheckInModel> listClass = [];
+  final List<InfoHomeModel> listClass = [];
   @override
   void initState() {
     super.initState();
-    listClass.addAll(widget.infoClassModel.checkInOffModel);
-    listClass.addAll(widget.infoClassModel.checkinZoomModel);
+    listClass.add(widget.infoClassModel);
+    //listClass.addAll(widget.infoClassModel.checkInOffModel);
+    //listClass.addAll(widget.infoClassModel.checkinZoomModel);
   }
 
   @override
@@ -225,7 +228,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 Positioned(
-                  top: 200.h,
+                  top: 210.h,
                   left: 32.w,
                   child: SizedBox(
                     height: listClass.isEmpty
@@ -1128,7 +1131,7 @@ class UpcomingSchedule extends StatelessWidget {
 
 class _ItemClass extends StatelessWidget {
   const _ItemClass({required this.model});
-  final CheckInModel model;
+  final InfoHomeModel model;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -1141,7 +1144,7 @@ class _ItemClass extends StatelessWidget {
               constraints: BoxConstraints(minHeight: 40.h),
               width: 100.w,
               child: Text(
-                model.className,
+                model.lopHoc,
                 style: defaultText16M,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
@@ -1151,7 +1154,7 @@ class _ItemClass extends StatelessWidget {
               constraints: BoxConstraints(minHeight: 40.h),
               width: 110.w,
               child: Text(
-                model.cosoName,
+                model.coso,
                 style: defaultText16M,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
@@ -1161,7 +1164,7 @@ class _ItemClass extends StatelessWidget {
               width: 80.w,
               constraints: BoxConstraints(minHeight: 40.h),
               child: Text(
-                model.chuaHoc,
+                model.numberLessons,
                 style: defaultText16M,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,

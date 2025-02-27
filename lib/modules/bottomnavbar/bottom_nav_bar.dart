@@ -21,7 +21,8 @@ class BottomNavBar extends StatefulWidget {
     required this.infoClassModel,
   });
   final InfoModel infoModel;
-  final CheckinModel infoClassModel;
+  //final CheckinModel infoClassModel;
+  final InfoHomeModel infoClassModel;
   @override
   State<BottomNavBar> createState() => _BottomNavBarState();
 }
