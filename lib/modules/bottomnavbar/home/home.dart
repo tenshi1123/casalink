@@ -909,7 +909,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 spacing: 6.0,
                                               ),
                                               onDotClicked: (index) {
-                                                controller2.animateToPage(index,
+                                                controller3.animateToPage(index,
                                                     duration: const Duration(
                                                         milliseconds: 300),
                                                     curve: Curves.easeInOut);
