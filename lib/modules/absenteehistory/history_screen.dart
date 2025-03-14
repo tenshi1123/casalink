@@ -1,3 +1,4 @@
+import 'package:casalink/models/checkin_model.dart';
 import 'package:casalink/utils/constants/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,7 +8,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class HistoryScreen extends StatefulWidget {
   const HistoryScreen({
     super.key,
+    required this.model,
   });
+  final List<LeaveModel> model;
   @override
   State<HistoryScreen> createState() => _HistoryScreenState();
 }
@@ -30,7 +33,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
       appBar: AppBar(
         backgroundColor: const Color(0xff273D8C),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: Colors.black),
+          icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white),
           onPressed: () {
             Navigator.of(context).pop(false);
           },
@@ -56,7 +59,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
               SizedBox(
                 height: 700.h,
                 width: 343.w,
-                child: const NestedTabBar(),
+                child: NestedTabBar(
+                  model: widget.model,
+                ),
               ),
             ],
           ),
@@ -69,8 +74,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
 class NestedTabBar extends StatefulWidget {
   const NestedTabBar({
     super.key,
+    required this.model,
   });
-
+  final List<LeaveModel> model;
   @override
   State<NestedTabBar> createState() => _NestedTabBarState();
 }
@@ -175,10 +181,12 @@ class _NestedTabBarState extends State<NestedTabBar>
               ListView.builder(
                 shrinkWrap: true,
                 physics: const ScrollPhysics(),
-                itemCount: 1,
+                itemCount: widget.model.length,
                 itemBuilder: (context, index) {
                   return Container(
-                    height: 110.h,
+                    //height: 110.h,
+                    constraints:
+                        BoxConstraints(minHeight: 120.h, maxHeight: 200.h),
                     width: 343.w,
                     margin: EdgeInsets.symmetric(
                       horizontal: 16.w,
@@ -204,15 +212,32 @@ class _NestedTabBarState extends State<NestedTabBar>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Ngày xin nghỉ : 12/3/2024',
-                          style: defaultText14B,
+                          'Buổi học : ${widget.model[index].buoiHoc}',
+                          style: defaultText14M,
+                          overflow: TextOverflow.ellipsis,
                         ),
                         SizedBox(
-                          height: 10.h,
+                          height: 5.h,
+                        ),
+                        Text(
+                          'Lớp học : ${widget.model[index].lopHoc}',
+                          style: defaultText14M,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        SizedBox(
+                          height: 5.h,
+                        ),
+                        Text(
+                          'Thời gian nộp đơn : ${widget.model[index].createdAt}',
+                          style: defaultText14M,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        SizedBox(
+                          height: 5.h,
                         ),
                         Expanded(
                           child: Text(
-                            'Lý do : Cháu bị ốm',
+                            'Lý do : ${widget.model[index].reason}',
                             style: defaultText14M,
                             overflow: TextOverflow.ellipsis,
                             maxLines: 20,

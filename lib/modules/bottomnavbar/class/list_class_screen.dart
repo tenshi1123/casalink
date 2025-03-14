@@ -1,4 +1,4 @@
-import 'package:casalink/modules/bottomnavbar/screen/class_screen.dart';
+import 'package:casalink/modules/bottomnavbar/class/class_screen.dart';
 import 'package:casalink/repo/follow_class_repo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -113,7 +113,7 @@ class __ClassItemState extends State<_ClassItem> {
               builder: (BuildContext context) {
                 return CupertinoAlertDialog(
                   title: const Text(
-                      'Đã có lỗi xảy ra, lớp học đã bị xóa lỗi mạng'),
+                      'Đã có lỗi xảy ra, lớp học đã bị xóa hoặc lỗi mạng'),
                   actions: <Widget>[
                     CupertinoDialogAction(
                       isDefaultAction: true,
@@ -130,6 +130,9 @@ class __ClassItemState extends State<_ClassItem> {
               },
             );
           } else {
+            List<RefeeModel> listModel = await FollowClassRepo().getRefee(
+              id: widget.model.customerScheduleId,
+            );
             ClassDetailModel detailClassModel =
                 await FollowClassRepo().getListLesson(
               typeId: widget.model.typeId,
@@ -140,6 +143,7 @@ class __ClassItemState extends State<_ClassItem> {
               MaterialPageRoute(
                 builder: ((context) => ClassScreen(
                       detailClassModel: detailClassModel,
+                      listOfRefeeModels: listModel,
                     )),
               ),
             );
@@ -148,7 +152,7 @@ class __ClassItemState extends State<_ClassItem> {
         child: Container(
           margin: EdgeInsets.only(top: 16.h, left: 16.w),
           width: 164.w,
-          height: 310.h,
+          //height: 310.h,
           child: Column(
             children: [
               Container(

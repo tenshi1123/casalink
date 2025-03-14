@@ -1,8 +1,6 @@
 // ignore_for_file: constant_identifier_names
 
-import 'package:casalink/models/checkin_model.dart';
 import 'package:casalink/modules/bottomnavbar/bottom_nav_bar.dart';
-
 import '../models/info_model.dart';
 import '../modules/login/forgot_password_screen.dart';
 import '../modules/login/login_screen.dart';

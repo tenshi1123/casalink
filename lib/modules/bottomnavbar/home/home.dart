@@ -1,6 +1,7 @@
 import 'package:casalink/models/notification_model.dart';
 import 'package:casalink/modules/chat/screen/list_conversation_screen.dart';
 import 'package:casalink/modules/diemdanh/diemdanh_screen.dart';
+import 'package:casalink/repo/info_repo.dart';
 import 'package:casalink/repo/notification_repo.dart';
 import 'package:casalink/utils/constants/styles.dart';
 import 'package:casalink/utils/widget/custom_widget.dart';
@@ -109,19 +110,19 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                             const Spacer(),
-                            // GestureDetector(
-                            //   onTap: () {
-                            //     pushWithoutNavBar(
-                            //       context,
-                            //       MaterialPageRoute(
-                            //         builder: ((context) =>
-                            //             const ListConversationScreen()),
-                            //       ),
-                            //     );
-                            //   },
-                            //   child: const Image(
-                            //       image: AssetImage('assets/images/mess.png')),
-                            // ),
+                            GestureDetector(
+                              onTap: () {
+                                pushWithoutNavBar(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: ((context) =>
+                                        const ListConversationScreen()),
+                                  ),
+                                );
+                              },
+                              child: const Image(
+                                  image: AssetImage('assets/images/mess.png')),
+                            ),
                             SizedBox(
                               width: 16.w,
                             ),
@@ -533,11 +534,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () {
+                    onTap: () async {
+                      List<LeaveModel> listHistory =
+                          await InfoRepo().getLeaveList();
                       pushWithoutNavBar(
                         context,
                         MaterialPageRoute(
-                          builder: ((context) => const HistoryScreen()),
+                          builder: ((context) => HistoryScreen(
+                                model: listHistory,
+                              )),
                         ),
                       );
                     },

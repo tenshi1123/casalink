@@ -7,11 +7,10 @@ import "package:onesignal_flutter/onesignal_flutter.dart";
 import "package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart";
 import 'package:flutter_svg/flutter_svg.dart';
 import "package:upgrader/upgrader.dart";
-import "../../models/checkin_model.dart";
 import "../../models/info_model.dart";
 import "../../utils/onesignal.dart";
 import "info/personal_screen.dart";
-import "screen/list_class_screen.dart";
+import "class/list_class_screen.dart";
 import "screen/list_video_course.dart";
 
 class BottomNavBar extends StatefulWidget {

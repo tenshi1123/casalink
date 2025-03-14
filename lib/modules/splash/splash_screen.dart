@@ -8,10 +8,8 @@ import 'package:upgrader/upgrader.dart';
 
 //import '../bottomnavbar/bottom_nav_bar.dart';
 import '../../main.dart';
-import '../../models/checkin_model.dart';
 import '../../models/info_model.dart';
 import '../../repo/category_repo.dart';
-import '../../repo/follow_class_repo.dart';
 import '../../repo/info_repo.dart';
 import '../../router/app_pages.dart';
 import '../../router/app_router.dart';
@@ -73,7 +71,7 @@ class _SplshscreenState extends State<Splshscreen> {
       try {
         // Perform the update
         await updater.update();
-      } on UpdateException catch (error) {
+      } on UpdateException {
         // Handle any errors that occur while updating.
       }
     }

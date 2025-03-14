@@ -1,3 +1,4 @@
+import 'package:casalink/models/checkin_model.dart';
 import 'package:casalink/repo/login_repo.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -84,13 +85,26 @@ class InfoRepo {
     final String? token = prefs.getString('token');
     dio.options.headers['Authorization'] = 'Bearer $token';
     await dio.post(
-      type == '1' ? ApiPath.requestLeave : ApiPath.requestLater,
+      typeRequest == '1' ? ApiPath.requestLeave : ApiPath.requestLater,
       data: {
         'type': type,
         'buoi_hoc_id': id,
         'reason': reason,
       },
     );
+  }
+
+  Future<List<LeaveModel>> getLeaveList() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? token = prefs.getString('token');
+    dio.options.headers['Authorization'] = 'Bearer $token';
+    Response response;
+    response = await dio.post(ApiPath.leaveList);
+    List<LeaveModel> list = [];
+    for (var item in response.data['data']) {
+      list.add(LeaveModel.fromJson(item));
+    }
+    return list;
   }
 
   Future deleteInfo() async {

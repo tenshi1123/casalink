@@ -6,7 +6,6 @@ import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 
 import '../../../models/schedule_model.dart';
 import '../../../utils/constants/color.dart';
-import '../../../utils/widget/download_test.dart';
 
 class ExcerciseScreen extends StatefulWidget {
   const ExcerciseScreen({super.key, required this.listExcercise});

@@ -2,11 +2,9 @@ import 'package:casalink/repo/video_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../models/info_class_model.dart';
 import '../../../utils/constants/styles.dart';
-import '../../videoplayer/animation_player.dart';
 
 class VideoCourse extends StatelessWidget {
   const VideoCourse({super.key, required this.courseVideoModel});

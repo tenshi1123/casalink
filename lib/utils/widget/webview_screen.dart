@@ -171,7 +171,7 @@ Page resource error:
                   foregroundColor: Theme.of(context).colorScheme.onPrimary,
                 ),
                 onPressed: () async {
-                  if (!await launchUrl(Uri.parse(widget.link ?? ''))) {
+                  if (!await launchUrl(Uri.parse(widget.link))) {
                     throw Exception('Could not launch ');
                   }
                 },

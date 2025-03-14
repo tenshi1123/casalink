@@ -1,3 +1,4 @@
+import 'package:casalink/modules/bottomnavbar/class/detail_class.dart';
 import 'package:casalink/utils/constants/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,9 +11,12 @@ import '../../../repo/schedule_repo.dart';
 import '../../diemdanh/detail_screen.dart';
 
 class ClassScreen extends StatefulWidget {
-  const ClassScreen({super.key, required this.detailClassModel});
+  const ClassScreen(
+      {super.key,
+      required this.detailClassModel,
+      required this.listOfRefeeModels});
   final ClassDetailModel detailClassModel;
-
+  final List<RefeeModel> listOfRefeeModels;
   @override
   State<ClassScreen> createState() => _ClassScreenState();
 }
@@ -84,10 +88,41 @@ class _ClassScreenState extends State<ClassScreen> {
             //     fit: BoxFit.fitWidth,
             //   ),
             // ),
+            widget.listOfRefeeModels.isNotEmpty
+                ? InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: ((context) => DetailClass(
+                                infoModel: widget.listOfRefeeModels,
+                              )),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      //height: 32.h,
+                      //width: 180.w,
+                      margin: EdgeInsets.only(top: 8.h, left: 16.w),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 6.w, vertical: 5.h),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8.r),
+                        color: const Color(0xff28B4E9),
+                      ),
+                      child: Text(
+                        'Chi tiết khoá học > ',
+                        style: defaultText16M.copyWith(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  )
+                : const SizedBox(),
             Container(
               height: 32.h,
               width: 226.w,
-              margin: EdgeInsets.only(top: 16.h, left: 16.w),
+              margin: EdgeInsets.only(top: 8.h, left: 16.w),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8.r),
                 color: const Color(0xff28B4E9),
@@ -149,6 +184,7 @@ class _ClassScreenState extends State<ClassScreen> {
                 ),
               ],
             ),
+
             listLesson.isEmpty
                 ? Center(
                     child: Column(
@@ -182,6 +218,7 @@ class _ClassScreenState extends State<ClassScreen> {
                             typeLearn: listLesson[index].typeLearn,
                             meetingId: listLesson[index].meetingId,
                           );
+
                           pushWithoutNavBar(
                             context,
                             MaterialPageRoute(

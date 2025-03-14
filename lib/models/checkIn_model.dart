@@ -101,3 +101,36 @@ class DetailCheckinModel {
     );
   }
 }
+
+class LeaveModel {
+  final String id;
+  final String customerId;
+  final String reason;
+  final String createdAt;
+  final String updatedAt;
+  final String buoiHoc;
+  final String lopHoc;
+  final String lopHocAlias;
+  LeaveModel({
+    required this.id,
+    required this.customerId,
+    required this.reason,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.buoiHoc,
+    required this.lopHoc,
+    required this.lopHocAlias,
+  });
+  factory LeaveModel.fromJson(Map<String, dynamic> json) {
+    return LeaveModel(
+      id: json['id'] ?? '',
+      customerId: json['customer_id'] ?? '',
+      reason: json['reason'] ?? '',
+      createdAt: json['created_at'] ?? '',
+      updatedAt: json['update_at'] ?? '',
+      buoiHoc: json['buoi_hoc'] ?? '',
+      lopHoc: json['lop_hoc'] ?? '',
+      lopHocAlias: json['lop_hoc_alias'] ?? '',
+    );
+  }
+}

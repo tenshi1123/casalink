@@ -37,6 +37,7 @@ class ApiPath {
   static const String classLearned = '$baseUrl/student/class';
   static const String lessonLearned = '$baseUrl/student/class/lesson';
   static const String requestLeave = '$baseUrl/student/leave';
+  static const String leaveList = '$baseUrl/student/leave/list';
   //dm cứ nhìn nhìn khó chịu vl
 
   // về việc xin đi muộn
@@ -80,6 +81,8 @@ class ApiPath {
   static const String listClass = '$baseUrl/class';
   // Chi tiết lớp học
   static const String detailClass = '$baseUrl/class/detail';
+  //Danh sách tái phí của một lớp
+  static const String refee = '$baseUrl/class/refee';
 
   //Danh sách khóa học video
   static const String listLessonVideo = '$baseUrl/lesson';
@@ -95,4 +98,9 @@ class ApiPath {
   //Check có thông báo mới hay không
   //Chi tiết thông báo
   //Cập nhật trạng thái khi ấn vào
+
+  //Chat
+  static const String lecture = '$baseUrl/chat/lecture';
+  static const String message = '$baseUrl/chat/lecture/message';
+  static const String sendMessage = '$baseUrl/chat/lecture/message/send';
 }

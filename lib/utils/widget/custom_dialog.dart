@@ -14,7 +14,6 @@ class LeaveAbsencePopUp extends StatefulWidget {
 
 class _LeaveAbsencePopUpState extends State<LeaveAbsencePopUp> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _dateController = TextEditingController();
   var className;
   var lessonName;
   String reason = '';
@@ -278,7 +277,9 @@ class _LeaveAbsencePopUpState extends State<LeaveAbsencePopUp> {
                         filled: true,
                         fillColor: Colors.grey[200],
                       ),
-                      onChanged: (value) {},
+                      onChanged: (value) {
+                        reason = value;
+                      },
                       validator: (value) => value!.isEmpty
                           ? 'Vui lòng nhập lý do xin đi muộn'
                           : null,
@@ -335,18 +336,6 @@ class _LeaveAbsencePopUpState extends State<LeaveAbsencePopUp> {
         ),
       ),
     );
-  }
-
-  Future<void> _selectDate() async {
-    DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2024),
-      lastDate: DateTime(2026),
-    );
-    if (picked != null) {
-      _dateController.text = picked.toString().split(" ")[0];
-    }
   }
 }
 

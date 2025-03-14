@@ -59,6 +59,36 @@ class ClassDetailModel {
   }
 }
 
+class RefeeModel {
+  final String moneyTaiPhi;
+  final String soBuoiHoc;
+  final String note;
+  final String expiryDate;
+  final String createdDate;
+  final String niemYet;
+  final String thucThu;
+  RefeeModel({
+    required this.moneyTaiPhi,
+    required this.soBuoiHoc,
+    required this.note,
+    required this.expiryDate,
+    required this.createdDate,
+    required this.niemYet,
+    required this.thucThu,
+  });
+  factory RefeeModel.fromJson(Map<String, dynamic> json) {
+    return RefeeModel(
+      moneyTaiPhi: json['money_tai_phi'] ?? '',
+      soBuoiHoc: json['so_buoi_hoc'] ?? '',
+      note: json['note'] ?? '',
+      expiryDate: json['expiry_date'] ?? '',
+      createdDate: json['created_at'] ?? '',
+      niemYet: json['niem_yet'] ?? '',
+      thucThu: json['thuc_thu'] ?? '',
+    );
+  }
+}
+
 class InfoLessonModel {
   final String typeLearn;
   final DateTime createdDate;

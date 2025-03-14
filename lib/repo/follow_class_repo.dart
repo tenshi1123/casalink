@@ -118,4 +118,21 @@ class FollowClassRepo {
     );
     return ClassDetailModel.fromJson(response.data['data']);
   }
+
+  Future<List<RefeeModel>> getRefee({required String id}) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? token = prefs.getString('token');
+    dio.options.headers['Authorization'] = 'Bearer $token';
+    Response response;
+    response = await dio.get(
+      ApiPath.refee,
+      queryParameters: {
+        'customer_course_schedule_id': id,
+      },
+    );
+    List<RefeeModel> result = ((response.data)['data'] as List)
+        .map((e) => RefeeModel.fromJson(e))
+        .toList();
+    return result;
+  }
 }

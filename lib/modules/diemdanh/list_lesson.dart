@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../models/checkin_model.dart';
-import '../bottomnavbar/screen/class_screen.dart';
 import 'detail_screen.dart';
 
 class ListLessonScreen extends StatefulWidget {
