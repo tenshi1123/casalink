@@ -1,0 +1,2 @@
+D:/flutter project/casalink/android/app/.cxx/RelWithDebInfo/154q3i4x/armeabi-v7a/CMakeFiles/edit_cache.dir
+D:/flutter project/casalink/android/app/.cxx/RelWithDebInfo/154q3i4x/armeabi-v7a/CMakeFiles/rebuild_cache.dir
