@@ -176,8 +176,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     padding:
                         EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
                     width: 343.w,
-                    height: 82.h + (listClass.length - 1) * 60.h,
-                    constraints: BoxConstraints(minHeight: 82.h),
+                    height: 82.h,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(
                         Radius.circular(16.r),
@@ -224,30 +223,16 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ],
                         ),
+                        SizedBox(
+                          height: 6.h,
+                        ),
+                        _ItemClass(
+                          model: widget.infoClassModel,
+                        ),
                       ],
                     ),
                   ),
                 ),
-                Positioned(
-                  top: 210.h,
-                  left: 32.w,
-                  child: SizedBox(
-                    height: listClass.isEmpty
-                        ? 60.h
-                        : 60.h + (listClass.length - 1) * 60.h,
-                    width: 310.w,
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: listClass.length,
-                      itemBuilder: (context, index) {
-                        return _ItemClass(
-                          model: listClass[index],
-                        );
-                      },
-                    ),
-                  ),
-                )
               ]),
             ),
             Padding(
@@ -1139,45 +1124,39 @@ class _ItemClass extends StatelessWidget {
   final InfoHomeModel model;
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Container(
-              constraints: BoxConstraints(minHeight: 40.h),
-              width: 100.w,
-              child: Text(
-                model.lopHoc,
-                style: defaultText16M,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-            Container(
-              constraints: BoxConstraints(minHeight: 40.h),
-              width: 110.w,
-              child: Text(
-                model.coso,
-                style: defaultText16M,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-            Container(
-              width: 80.w,
-              constraints: BoxConstraints(minHeight: 40.h),
-              child: Text(
-                model.numberLessons,
-                style: defaultText16M,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-          ],
+        Container(
+          constraints: BoxConstraints(minHeight: 40.h),
+          width: 100.w,
+          child: Text(
+            model.lopHoc,
+            style: defaultText16M,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
         ),
-        const Divider(),
+        Container(
+          constraints: BoxConstraints(minHeight: 40.h),
+          width: 110.w,
+          child: Text(
+            model.coso,
+            style: defaultText16M,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+        Container(
+          width: 80.w,
+          constraints: BoxConstraints(minHeight: 40.h),
+          child: Text(
+            model.numberLessons,
+            style: defaultText16M,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
       ],
     );
   }
