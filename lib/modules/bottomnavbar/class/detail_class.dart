@@ -17,17 +17,19 @@ class _DetailClassState extends State<DetailClass> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: const Color(0xff273D8C),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: Color(0xff3C3C3C)),
+          icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white),
           onPressed: () {
             Navigator.of(context).pop(false);
           },
         ),
         title: Center(
           child: Text(
-            'Chi tiết khoá học',
-            style: defaultText18B,
+            'Danh sách tái phí       ',
+            style: defaultText18B.copyWith(
+              color: Colors.white,
+            ),
           ),
         ),
       ),
@@ -66,12 +68,13 @@ class _DetailClassState extends State<DetailClass> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
+                          //chuong trinh hoc
                           Row(
                             children: [
                               SizedBox(
-                                width: 100.w,
+                                width: 120.w,
                                 child: Text(
-                                  'Số tiền tái phí',
+                                  'Chương trình học',
                                   style: defaultText14M.copyWith(
                                       color: const Color(0xff273D8C)),
                                 ),
@@ -82,9 +85,9 @@ class _DetailClassState extends State<DetailClass> {
                                     color: const Color(0xff273D8C)),
                               ),
                               SizedBox(
-                                width: 200.w,
+                                width: 180.w,
                                 child: Text(
-                                  '${NumberFormat("#,###", "vi_VN").format(int.parse(widget.infoModel[index].moneyTaiPhi))} VND',
+                                  widget.infoModel[index].nameCourse,
                                   style: defaultText14M.copyWith(
                                       color: const Color(0xff273D8C)),
                                   //textAlign: TextAlign.right,
@@ -93,12 +96,105 @@ class _DetailClassState extends State<DetailClass> {
                             ],
                           ),
                           SizedBox(
-                            height: 6.h,
+                            height: 10.h,
                           ),
+                          //lop hoc
                           Row(
                             children: [
                               SizedBox(
-                                width: 100.w,
+                                width: 120.w,
+                                child: Text(
+                                  'Lớp học',
+                                  style: defaultText14M.copyWith(
+                                      color: const Color(0xff273D8C)),
+                                ),
+                              ),
+                              Text(
+                                ': ',
+                                style: defaultText14M.copyWith(
+                                    color: const Color(0xff273D8C)),
+                              ),
+                              SizedBox(
+                                width: 180.w,
+                                child: Text(
+                                  '${widget.infoModel[index].courseScheduleName}( ${widget.infoModel[index].courseScheduleAlias})',
+                                  style: defaultText14M.copyWith(
+                                      color: const Color(0xff273D8C)),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10.h,
+                          ),
+                          //hoc phi goc
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                width: 120.w,
+                                child: Text(
+                                  'Học phí gốc',
+                                  style: defaultText14M.copyWith(
+                                      color: const Color(0xff273D8C)),
+                                ),
+                              ),
+                              Text(
+                                ': ',
+                                style: defaultText14M.copyWith(
+                                    color: const Color(0xff273D8C)),
+                              ),
+                              SizedBox(
+                                width: 180.w,
+                                child: Text(
+                                  widget.infoModel[index].feeOriginal == 0
+                                      ? ''
+                                      : '${NumberFormat("#,###", "vi_VN").format((widget.infoModel[index].feeOriginal))} VND',
+                                  style: defaultText14M.copyWith(
+                                      color: const Color(0xff273D8C)),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10.h,
+                          ),
+                          //hoc phi sau uu dai
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: 120.w,
+                                child: Text(
+                                  'Học phí sau  ưu đãi',
+                                  style: defaultText14M.copyWith(
+                                      color: const Color(0xff273D8C)),
+                                ),
+                              ),
+                              Text(
+                                ': ',
+                                style: defaultText14M.copyWith(
+                                    color: const Color(0xff273D8C)),
+                              ),
+                              SizedBox(
+                                width: 180.w,
+                                child: Text(
+                                  widget.infoModel[index].feeAfterDiscount == 0
+                                      ? ''
+                                      : '${NumberFormat("#,###", "vi_VN").format(widget.infoModel[index].feeAfterDiscount)} VND',
+                                  style: defaultText14M.copyWith(
+                                      color: const Color(0xff273D8C)),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10.h,
+                          ),
+                          //so buoi hoc
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: 120.w,
                                 child: Text(
                                   'Số buổi học',
                                   style: defaultText14M.copyWith(
@@ -110,21 +206,24 @@ class _DetailClassState extends State<DetailClass> {
                                 style: defaultText14M.copyWith(
                                     color: const Color(0xff273D8C)),
                               ),
-                              Text(
-                                widget.infoModel[index].soBuoiHoc,
-                                style: defaultText14M.copyWith(
-                                    color: const Color(0xff273D8C)),
+                              SizedBox(
+                                width: 180.w,
+                                child: Text(
+                                  widget.infoModel[index].soBuoiHoc.toString(),
+                                  style: defaultText14M.copyWith(
+                                      color: const Color(0xff273D8C)),
+                                ),
                               ),
                             ],
                           ),
                           SizedBox(
-                            height: 6.h,
+                            height: 10.h,
                           ),
+                          //ghi chu
                           Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               SizedBox(
-                                width: 100.w,
+                                width: 120.w,
                                 child: Text(
                                   'Ghi chú',
                                   style: defaultText14M.copyWith(
@@ -137,7 +236,7 @@ class _DetailClassState extends State<DetailClass> {
                                     color: const Color(0xff273D8C)),
                               ),
                               SizedBox(
-                                width: 200.w,
+                                width: 180.w,
                                 child: Text(
                                   widget.infoModel[index].note,
                                   style: defaultText14M.copyWith(
@@ -147,12 +246,13 @@ class _DetailClassState extends State<DetailClass> {
                             ],
                           ),
                           SizedBox(
-                            height: 6.h,
+                            height: 10.h,
                           ),
+                          //ngay tao
                           Row(
                             children: [
                               SizedBox(
-                                width: 100.w,
+                                width: 120.w,
                                 child: Text(
                                   'Ngày tạo',
                                   style: defaultText14M.copyWith(
@@ -164,22 +264,26 @@ class _DetailClassState extends State<DetailClass> {
                                 style: defaultText14M.copyWith(
                                     color: const Color(0xff273D8C)),
                               ),
-                              Text(
-                                widget.infoModel[index].createdDate,
-                                style: defaultText14M.copyWith(
-                                    color: const Color(0xff273D8C)),
+                              SizedBox(
+                                width: 180.w,
+                                child: Text(
+                                  widget.infoModel[index].createdAt,
+                                  style: defaultText14M.copyWith(
+                                      color: const Color(0xff273D8C)),
+                                ),
                               ),
                             ],
                           ),
                           SizedBox(
-                            height: 6.h,
+                            height: 10.h,
                           ),
+                          //ngay het han
                           Row(
                             children: [
                               SizedBox(
-                                width: 100.w,
+                                width: 120.w,
                                 child: Text(
-                                  'Hạn',
+                                  'Ngày hết hạn',
                                   style: defaultText14M.copyWith(
                                       color: const Color(0xff273D8C)),
                                 ),
@@ -189,19 +293,140 @@ class _DetailClassState extends State<DetailClass> {
                                 style: defaultText14M.copyWith(
                                     color: const Color(0xff273D8C)),
                               ),
-                              Text(
-                                widget.infoModel[index].expiryDate,
-                                style: defaultText14M.copyWith(
-                                    color: const Color(0xff273D8C)),
+                              SizedBox(
+                                width: 180.w,
+                                child: Text(
+                                  widget.infoModel[index].expiryDate,
+                                  style: defaultText14M.copyWith(
+                                      color: const Color(0xff273D8C)),
+                                ),
                               ),
                             ],
-                          ),
-                          SizedBox(
-                            height: 6.h,
                           ),
                         ],
                       ));
                 }),
+            SizedBox(
+              height: 20.h,
+            ),
+            Row(
+              children: [
+                SizedBox(
+                  width: 16.w,
+                ),
+                Container(
+                  padding:
+                      EdgeInsets.symmetric(vertical: 4.h, horizontal: 16.w),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16.r),
+                    color: const Color(0xff6A4C93),
+                  ),
+                  child: Text(
+                    'Tổng học phí gốc : ',
+                    style: defaultText14M.copyWith(color: Colors.white),
+                  ),
+                ),
+                const Spacer(),
+                Container(
+                  padding:
+                      EdgeInsets.symmetric(vertical: 4.h, horizontal: 16.w),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16.r),
+                    color: const Color(0xff6A4C93),
+                  ),
+                  child: Text(
+                    '${NumberFormat("#,###", "vi_VN").format((widget.infoModel.fold(0, (sum, p) => sum + p.feeOriginal)))} VND',
+                    style:
+                        defaultText14M.copyWith(color: const Color(0xffffffff)),
+                    //textAlign: TextAlign.right,
+                  ),
+                ),
+                SizedBox(
+                  width: 16.w,
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 10.h,
+            ),
+            Row(
+              children: [
+                SizedBox(
+                  width: 16.w,
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16.r),
+                    color: const Color(0xff8AC926),
+                  ),
+                  padding: EdgeInsets.symmetric(vertical: 4.h, horizontal: 8.w),
+                  child: Text(
+                    'Tổng học phí sau ưu đãi : ',
+                    style:
+                        defaultText14M.copyWith(color: const Color(0xffffffff)),
+                  ),
+                ),
+                const Spacer(),
+                Container(
+                  padding:
+                      EdgeInsets.symmetric(vertical: 4.h, horizontal: 16.w),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16.r),
+                    color: const Color(0xff8AC926),
+                  ),
+                  child: Text(
+                    '${NumberFormat("#,###", "vi_VN").format(widget.infoModel.fold(0, (sum, p) => sum + p.feeAfterDiscount))} VND',
+                    style:
+                        defaultText14M.copyWith(color: const Color(0xffffffff)),
+                    //textAlign: TextAlign.right,
+                  ),
+                ),
+                SizedBox(
+                  width: 16.w,
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 10.h,
+            ),
+            Row(
+              children: [
+                SizedBox(
+                  width: 16.w,
+                ),
+                Container(
+                  padding:
+                      EdgeInsets.symmetric(vertical: 4.h, horizontal: 16.w),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16.r),
+                    color: const Color(0xff1982C4),
+                  ),
+                  child: Text(
+                    'Tổng số buổi học : ',
+                    style:
+                        defaultText14M.copyWith(color: const Color(0xffffffff)),
+                  ),
+                ),
+                const Spacer(),
+                Container(
+                  padding:
+                      EdgeInsets.symmetric(vertical: 4.h, horizontal: 16.w),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16.r),
+                    color: const Color(0xff1982C4),
+                  ),
+                  child: Text(
+                    '${widget.infoModel.fold(0, (sum, p) => sum + p.soBuoiHoc)} buổi',
+                    style:
+                        defaultText14M.copyWith(color: const Color(0xffffffff)),
+                    //textAlign: TextAlign.right,
+                  ),
+                ),
+                SizedBox(
+                  width: 16.w,
+                ),
+              ],
+            ),
           ],
         ),
       ),

@@ -4,7 +4,7 @@ description: "Casalink App"
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 0.1.8+1
+version: 0.1.8+18
 
 environment:
   sdk: '>=3.4.0 <4.0.0'
@@ -41,6 +41,7 @@ dependencies:
   permission_handler: ^11.3.1
   upgrader: ^11.3.1
   shorebird_code_push: ^2.0.3
+  path_provider: ^2.1.5
 dev_dependencies:
   flutter_test:
     sdk: flutter

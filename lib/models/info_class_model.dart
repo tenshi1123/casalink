@@ -60,31 +60,40 @@ class ClassDetailModel {
 }
 
 class RefeeModel {
-  final String moneyTaiPhi;
-  final String soBuoiHoc;
+  final String nameCourse;
+  final String courseScheduleName;
+  final String courseScheduleAlias;
+  final String goiPhi;
+  final int feeAfterDiscount;
+  final int feeOriginal;
+  final int soBuoiHoc;
   final String note;
   final String expiryDate;
-  final String createdDate;
-  final String niemYet;
-  final String thucThu;
+  final String createdAt;
   RefeeModel({
-    required this.moneyTaiPhi,
+    required this.nameCourse,
+    required this.courseScheduleName,
+    required this.courseScheduleAlias,
+    required this.goiPhi,
+    required this.feeAfterDiscount,
+    required this.feeOriginal,
     required this.soBuoiHoc,
     required this.note,
     required this.expiryDate,
-    required this.createdDate,
-    required this.niemYet,
-    required this.thucThu,
+    required this.createdAt,
   });
   factory RefeeModel.fromJson(Map<String, dynamic> json) {
     return RefeeModel(
-      moneyTaiPhi: json['money_tai_phi'] ?? '',
-      soBuoiHoc: json['so_buoi_hoc'] ?? '',
+      nameCourse: json['name_course'] ?? '',
+      courseScheduleName: json['course_schedule_name'] ?? '',
+      courseScheduleAlias: json['course_schedule_alias'] ?? '',
+      goiPhi: json['goi_phi'] ?? '',
+      feeAfterDiscount: int.tryParse(json['fee_after_discount'] ?? '') ?? 0,
+      feeOriginal: int.tryParse(json['fee_oringal'] ?? '') ?? 0,
+      soBuoiHoc: int.tryParse(json['so_buoi_hoc'] ?? '') ?? 0,
       note: json['note'] ?? '',
       expiryDate: json['expiry_date'] ?? '',
-      createdDate: json['created_at'] ?? '',
-      niemYet: json['niem_yet'] ?? '',
-      thucThu: json['thuc_thu'] ?? '',
+      createdAt: json['created_at'] ?? '',
     );
   }
 }
