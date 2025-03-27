@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:casalink/models/notification_model.dart';
 import 'package:casalink/modules/chat/screen/list_conversation_screen.dart';
 import 'package:casalink/modules/diemdanh/diemdanh_screen.dart';
@@ -277,21 +279,56 @@ class _HomeScreenState extends State<HomeScreen> {
                         GestureDetector(
                           onTap: () async {
                             setState(() {
+                              _isLoading1 = true;
+                            });
+
+                            try {
+                              // Gọi API với timeout để tránh loading mãi mãi
+                              List<DataHomeWorkModel> listExcercise =
+                                  await Future.any([
+                                FollowClassRepo().getExcercises(),
+                                Future.delayed(
+                                    const Duration(seconds: 5),
+                                    () => throw TimeoutException(
+                                        "Quá thời gian chờ!"))
+                              ]);
+                              if (mounted) {
+                                setState(() {
+                                  _isLoading1 = false;
+                                });
+
+                                // Chuyển màn hình nếu API thành công
+                                pushWithoutNavBar(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: ((context) => ExcerciseScreen(
+                                          listExcercise: listExcercise,
+                                        )),
+                                  ),
+                                );
+                              }
+                            } catch (e) {
+                              if (mounted) {
+                                setState(() {
+                                  _isLoading1 = false;
+                                });
+
+                                // Hiển thị lỗi nếu API quá chậm hoặc có lỗi khác
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      content: Text(e is TimeoutException
+                                          ? "Hết thời gian chờ!"
+                                          : "Lỗi: ${e.toString()}")),
+                                );
+                              }
+                            }
+                            setState(() {
                               _isLoading = true;
                             });
-                            List<DataHomeWorkModel> listExcercise =
-                                await FollowClassRepo().getExcercises();
+
                             setState(() {
                               _isLoading = false;
                             });
-                            pushWithoutNavBar(
-                              context,
-                              MaterialPageRoute(
-                                builder: ((context) => ExcerciseScreen(
-                                      listExcercise: listExcercise,
-                                    )),
-                              ),
-                            );
                           },
                           child: _isLoading
                               ? SizedBox(
@@ -322,19 +359,63 @@ class _HomeScreenState extends State<HomeScreen> {
                             setState(() {
                               _isLoading1 = true;
                             });
-                            ListFeedBackModel listFeedBack =
-                                await FollowClassRepo().getListFeedback();
-                            setState(() {
-                              _isLoading1 = false;
-                            });
-                            pushWithoutNavBar(
-                              context,
-                              MaterialPageRoute(
-                                builder: ((context) => FeedBackScreen(
-                                      listFeedBack: listFeedBack,
-                                    )),
-                              ),
-                            );
+
+                            try {
+                              // Gọi API với timeout để tránh loading mãi mãi
+                              ListFeedBackModel listFeedBack =
+                                  await Future.any([
+                                FollowClassRepo().getListFeedback(),
+                                Future.delayed(
+                                    const Duration(seconds: 5),
+                                    () => throw TimeoutException(
+                                        "Quá thời gian chờ!"))
+                              ]);
+
+                              if (mounted) {
+                                setState(() {
+                                  _isLoading1 = false;
+                                });
+
+                                // Chuyển màn hình nếu API thành công
+                                pushWithoutNavBar(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => FeedBackScreen(
+                                        listFeedBack: listFeedBack),
+                                  ),
+                                );
+                              }
+                            } catch (e) {
+                              if (mounted) {
+                                setState(() {
+                                  _isLoading1 = false;
+                                });
+
+                                // Hiển thị lỗi nếu API quá chậm hoặc có lỗi khác
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      content: Text(e is TimeoutException
+                                          ? "Hết thời gian chờ!"
+                                          : "Lỗi: ${e.toString()}")),
+                                );
+                              }
+                            }
+                            // setState(() {
+                            //   _isLoading1 = true;
+                            // });
+                            // ListFeedBackModel listFeedBack =
+                            //     await FollowClassRepo().getListFeedback();
+                            // setState(() {
+                            //   _isLoading1 = false;
+                            // });
+                            // pushWithoutNavBar(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //     builder: ((context) => FeedBackScreen(
+                            //           listFeedBack: listFeedBack,
+                            //         )),
+                            //   ),
+                            // );
                           },
                           child: _isLoading1
                               ? SizedBox(

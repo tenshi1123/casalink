@@ -345,7 +345,7 @@ class _ItemTableCalenderState extends State<ItemTableCalender> {
               margin: EdgeInsets.only(top: 16.h, bottom: 10.h),
               padding: EdgeInsets.symmetric(
                 horizontal: 16.w,
-                vertical: 16.h,
+                vertical: 10.h,
               ),
               width: 343.w,
               height: 136.h,
@@ -405,13 +405,22 @@ class _ItemTableCalenderState extends State<ItemTableCalender> {
                           SizedBox(
                             height: 8.h,
                           ),
-                          Text(
-                            widget.model.timeStart,
-                            style: defaultText14M,
-                          ),
+                          (widget.model.typeLearn == 'off')
+                              ? Text(
+                                  '${DateFormat('EEEE').format(widget.model.createdDate)}  (${widget.model.timeStart.replaceRange(5, null, '')} - ${widget.model.timeEnd.replaceRange(5, null, '')})',
+                                  style: defaultText14M,
+                                )
+                              : Text(
+                                  DateFormat('EEEE')
+                                      .format(widget.model.createdDate),
+                                  style: defaultText14M,
+                                ),
                         ],
                       )
                     ],
+                  ),
+                  SizedBox(
+                    height: 8.h,
                   ),
                   (widget.model.typeLearn == 'off')
                       ? Row(
