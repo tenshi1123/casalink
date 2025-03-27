@@ -171,7 +171,7 @@ class _FeedBackScreenState extends State<FeedBackScreen>
                         : ListView.builder(
                             shrinkWrap: true,
                             physics: const ClampingScrollPhysics(),
-                            itemCount: widget.listFeedBack.listFbDaily.length,
+                            itemCount: widget.listFeedBack.listFbDinhKy.length,
                             itemBuilder: (BuildContext context, int index) {
                               return ListFbDinhKy(
                                 model: widget.listFeedBack.listFbDinhKy[index],
