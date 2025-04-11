@@ -124,6 +124,31 @@ class _DetailClassState extends State<DetailClass> {
                               ),
                             ],
                           ),
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: 120.w,
+                                child: Text(
+                                  'Gói phí',
+                                  style: defaultText14M.copyWith(
+                                      color: const Color(0xff273D8C)),
+                                ),
+                              ),
+                              Text(
+                                ': ',
+                                style: defaultText14M.copyWith(
+                                    color: const Color(0xff273D8C)),
+                              ),
+                              SizedBox(
+                                width: 180.w,
+                                child: Text(
+                                  widget.infoModel[index].goiPhi,
+                                  style: defaultText14M.copyWith(
+                                      color: const Color(0xff273D8C)),
+                                ),
+                              ),
+                            ],
+                          ),
                           SizedBox(
                             height: 10.h,
                           ),

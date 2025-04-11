@@ -40,9 +40,9 @@ class InfoHomeModel {
   });
   factory InfoHomeModel.fromJson(Map<String, dynamic> json) {
     return InfoHomeModel(
-      lopHoc: json['class'] ?? '',
-      coso: json['coso'] ?? '',
-      numberLessons: json['so_buoi_hoc'] ?? '',
+      lopHoc: json['class'] ?? '--',
+      coso: json['coso'] ?? '--',
+      numberLessons: json['so_buoi_hoc'] ?? '--',
     );
   }
 }

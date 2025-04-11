@@ -10,9 +10,12 @@ import 'landscape_control.dart';
 import 'portrait_video_controls.dart';
 
 class AnimationPlayer extends StatefulWidget {
-  final Map? link;
-  final int index;
-  const AnimationPlayer({super.key, this.link, required this.index});
+  final String link;
+
+  const AnimationPlayer({
+    super.key,
+    required this.link,
+  });
 
   @override
   _AnimationPlayerState createState() => _AnimationPlayerState();
@@ -21,19 +24,23 @@ class AnimationPlayer extends StatefulWidget {
 class _AnimationPlayerState extends State<AnimationPlayer> {
   late FlickManager flickManager;
   late AnimationPlayerDataManager dataManager;
-  List items = mockData['items'];
+
   final bool _pauseOnTap = true;
   double playBackSpeed = 1.0;
   @override
   void initState() {
     super.initState();
     // String url = items[0]['trailer_url'];
+    List items = [
+      {
+        "title": "Bài 1",
+        "image": "assets/images/loading.gif",
+        "trailer_url": widget.link,
+      },
+    ];
     flickManager = FlickManager(
-      videoPlayerController: VideoPlayerController.networkUrl(
-          Uri.parse(items[widget.index]['trailer_url'])),
-      onVideoEnd: () => dataManager.playNextVideo(
-        const Duration(seconds: 5),
-      ),
+      videoPlayerController:
+          VideoPlayerController.networkUrl(Uri.parse(widget.link)),
     );
 
     dataManager = AnimationPlayerDataManager(flickManager, items);
