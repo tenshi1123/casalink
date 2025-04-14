@@ -138,6 +138,7 @@ class _MyTextFormFieldState extends State<MyTextFormField> {
                   },
                   controller: widget.controller,
                   keyboardType: widget.keyboardType,
+                  readOnly: true,
                   style: defaultText16M,
                   focusNode: _focusNode,
                   //initialValue: initialValue,

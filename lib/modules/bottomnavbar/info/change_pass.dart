@@ -145,7 +145,9 @@ class _ChangePassScreenState extends State<ChangePassScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: ((context) => const ChangePass2Screen()),
+                            builder: ((context) => ChangePass2Screen(
+                                  oldPassword: passController.text,
+                                )),
                           ),
                         );
                       }

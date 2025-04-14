@@ -1,3 +1,4 @@
+import 'package:casalink/repo/info_repo.dart';
 import 'package:casalink/utils/constants/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,8 +6,8 @@ import 'package:flutter_svg/svg.dart';
 import '../../../utils/constants/color.dart';
 
 class ChangePass2Screen extends StatefulWidget {
-  const ChangePass2Screen({super.key});
-
+  const ChangePass2Screen({super.key, required this.oldPassword});
+  final String oldPassword;
   @override
   State<ChangePass2Screen> createState() => _ChangePass2ScreenState();
 }
@@ -217,6 +218,11 @@ class _ChangePass2ScreenState extends State<ChangePass2Screen> {
                     minimumSize: Size(343.w, 52.w)),
                 onPressed: (_submit1 && _submit2)
                     ? () {
+                        InfoRepo().changePassword(
+                          oldPass: widget.oldPassword,
+                          password: newPassController.text,
+                          newPass: newPassController.text,
+                        );
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
@@ -242,6 +248,8 @@ class _ChangePass2ScreenState extends State<ChangePass2Screen> {
                                     'ok',
                                   ),
                                   onPressed: () {
+                                    Navigator.of(context).pop();
+                                    Navigator.of(context).pop();
                                     Navigator.of(context).pop();
                                   },
                                 ),

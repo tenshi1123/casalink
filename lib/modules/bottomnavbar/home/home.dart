@@ -46,14 +46,27 @@ class _HomeScreenState extends State<HomeScreen> {
   final controller3 = PageController(viewportFraction: 0.75, keepPage: true);
   bool _isLoading = false;
   bool _isLoading1 = false;
+  List<ScheduleModel> listLichHoc = [];
   //final List<CheckInModel> listClass = [];
   final List<InfoHomeModel> listClass = [];
   @override
   void initState() {
     super.initState();
     listClass.add(widget.infoClassModel);
+
     //listClass.addAll(widget.infoClassModel.checkInOffModel);
     //listClass.addAll(widget.infoClassModel.checkinZoomModel);
+  }
+
+  Future<void> _fetchData() async {
+    listLichHoc = await ScheduleRepo().getScheduleList(
+      DateFormat('dd-MM-yyyy').format(DateTime.now()),
+      DateFormat('dd-MM-yyyy').format(
+        DateTime.now().add(
+          const Duration(days: 15),
+        ),
+      ),
+    );
   }
 
   @override
@@ -279,7 +292,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         GestureDetector(
                           onTap: () async {
                             setState(() {
-                              _isLoading1 = true;
+                              _isLoading = true;
                             });
 
                             try {
@@ -294,7 +307,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ]);
                               if (mounted) {
                                 setState(() {
-                                  _isLoading1 = false;
+                                  _isLoading = false;
                                 });
 
                                 // Chuyển màn hình nếu API thành công
@@ -310,7 +323,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             } catch (e) {
                               if (mounted) {
                                 setState(() {
-                                  _isLoading1 = false;
+                                  _isLoading = false;
                                 });
 
                                 // Hiển thị lỗi nếu API quá chậm hoặc có lỗi khác
@@ -322,13 +335,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                 );
                               }
                             }
-                            setState(() {
-                              _isLoading = true;
-                            });
-
-                            setState(() {
-                              _isLoading = false;
-                            });
                           },
                           child: _isLoading
                               ? SizedBox(
@@ -519,7 +525,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             child: Center(
                                 child: Text(
-                              'xin nghỉ',
+                              'Xin nghỉ',
                               style: defaultText14B.copyWith(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w600),
@@ -555,7 +561,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             child: Center(
                                 child: Text(
-                              'xin đi muộn',
+                              'Xin đi muộn',
                               style: defaultText14B.copyWith(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w600),
@@ -589,7 +595,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             child: Center(
                                 child: Text(
-                              'feedback',
+                              'Feedback',
                               style: defaultText14B.copyWith(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w600),
@@ -627,23 +633,29 @@ class _HomeScreenState extends State<HomeScreen> {
                       style: defaultText16B,
                     ),
                   ),
-                  FutureBuilder(
-                    future: ScheduleRepo().getScheduleList(
-                        DateFormat('dd-MM-yyyy').format(DateTime.now()),
-                        DateFormat('dd-MM-yyyy').format(DateTime.now()
-                            .add(const Duration(days: 15)))), // Hàm gọi API
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const CircularProgressIndicator();
-                      } else if (snapshot.hasError) {
-                        return Text(
-                          'Vui lòng kiểm tra lại kết nối internet',
-                          style: defaultText14M,
-                        );
-                      } else if (snapshot.hasData) {
-                        final listLichHoc =
-                            snapshot.data as List<ScheduleModel>;
-                        return SizedBox(
+                  listLichHoc.isEmpty
+                      ? Center(
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 10.h,
+                              ),
+                              Image.asset(
+                                'assets/images/empty.png',
+                                height: 200.h,
+                                width: 200.w,
+                              ),
+                              Text(
+                                'Học sinh chưa có lớp học',
+                                style: defaultText16B,
+                              ),
+                              SizedBox(
+                                height: 20.h,
+                              ),
+                            ],
+                          ),
+                        )
+                      : SizedBox(
                           height: 188.h,
                           width: 375.w,
                           child: Column(
@@ -707,15 +719,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ],
                           ),
-                        );
-                      } else {
-                        return Text(
-                          'Vui lòng kiểm tra lại kết nối internet2',
-                          style: defaultText14M,
-                        );
-                      }
-                    },
-                  ),
+                        ),
                   Padding(
                     padding: EdgeInsets.only(bottom: 16.h),
                     child: Text(
@@ -790,62 +794,83 @@ class _HomeScreenState extends State<HomeScreen> {
                                       return SizedBox(
                                         width: 375.w,
                                         height: 166.h,
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: <Widget>[
-                                            ClipRRect(
-                                              borderRadius: BorderRadius.all(
-                                                Radius.circular(16.r),
-                                              ),
-                                              child: SizedBox(
-                                                height: 208.h,
-                                                width: 375.w,
-                                                child: PageView.builder(
-                                                  padEnds: false,
-                                                  controller: controller2,
-                                                  itemCount: listlibra.length,
-                                                  itemBuilder: (_, index) {
-                                                    return DocumentItem(
-                                                      model: listlibra[index],
-                                                    );
-                                                  },
+                                        child: listlibra.isEmpty
+                                            ? Center(
+                                                child: Center(
+                                                  child: Image.asset(
+                                                    'assets/images/empty.png',
+                                                    height: 200.h,
+                                                    width: 200.w,
+                                                  ),
                                                 ),
+                                              )
+                                            : Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: <Widget>[
+                                                  ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                      Radius.circular(16.r),
+                                                    ),
+                                                    child: SizedBox(
+                                                      height: 208.h,
+                                                      width: 375.w,
+                                                      child: PageView.builder(
+                                                        padEnds: false,
+                                                        controller: controller2,
+                                                        itemCount:
+                                                            listlibra.length,
+                                                        itemBuilder:
+                                                            (_, index) {
+                                                          return DocumentItem(
+                                                            model: listlibra[
+                                                                index],
+                                                          );
+                                                        },
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  SmoothPageIndicator(
+                                                    controller: controller2,
+                                                    count: listlibra.isEmpty
+                                                        ? 1
+                                                        : listlibra.length,
+                                                    effect: CustomizableEffect(
+                                                      activeDotDecoration:
+                                                          DotDecoration(
+                                                        width: 20.w,
+                                                        height: 8.h,
+                                                        color: Colors.indigo,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(24),
+                                                      ),
+                                                      dotDecoration:
+                                                          DotDecoration(
+                                                        width: 8.w,
+                                                        height: 8.h,
+                                                        color: Colors.grey,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(16),
+                                                        verticalOffset: 0,
+                                                      ),
+                                                      spacing: 6.0,
+                                                    ),
+                                                    onDotClicked: (index) {
+                                                      controller2.animateToPage(
+                                                          index,
+                                                          duration:
+                                                              const Duration(
+                                                                  milliseconds:
+                                                                      300),
+                                                          curve:
+                                                              Curves.easeInOut);
+                                                    },
+                                                  ),
+                                                ],
                                               ),
-                                            ),
-                                            SmoothPageIndicator(
-                                              controller: controller2,
-                                              count: listlibra.isEmpty
-                                                  ? 1
-                                                  : listlibra.length,
-                                              effect: CustomizableEffect(
-                                                activeDotDecoration:
-                                                    DotDecoration(
-                                                  width: 20.w,
-                                                  height: 8.h,
-                                                  color: Colors.indigo,
-                                                  borderRadius:
-                                                      BorderRadius.circular(24),
-                                                ),
-                                                dotDecoration: DotDecoration(
-                                                  width: 8.w,
-                                                  height: 8.h,
-                                                  color: Colors.grey,
-                                                  borderRadius:
-                                                      BorderRadius.circular(16),
-                                                  verticalOffset: 0,
-                                                ),
-                                                spacing: 6.0,
-                                              ),
-                                              onDotClicked: (index) {
-                                                controller2.animateToPage(index,
-                                                    duration: const Duration(
-                                                        milliseconds: 300),
-                                                    curve: Curves.easeInOut);
-                                              },
-                                            ),
-                                          ],
-                                        ),
                                       );
                                     } else {
                                       return Text(

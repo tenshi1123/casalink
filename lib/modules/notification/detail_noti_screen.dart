@@ -59,6 +59,9 @@ class _DetailNotiScreenState extends State<DetailNotiScreen>
               width: 343.w,
               fit: BoxFit.fill,
             ),
+            SizedBox(
+              height: 8.h,
+            ),
             Text(
               'Ra mắt khóa học tiếng anh nâng cao ',
               style: defaultText16B,
