@@ -484,12 +484,51 @@ class _HomeScreenState extends State<HomeScreen> {
                     topRight: Radius.circular(16.r),
                   ),
                   color: Colors.white),
-              padding: EdgeInsets.only(left: 16.w, right: 16.w),
+              padding: EdgeInsets.only(left: 10.w, right: 10.w),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    height: 20.h,
+                  GestureDetector(
+                    onTap: () async {
+                      List<LeaveModel> listHistory =
+                          await InfoRepo().getLeaveList();
+                      pushWithoutNavBar(
+                        context,
+                        MaterialPageRoute(
+                          builder: ((context) => HistoryScreen(
+                                model: listHistory,
+                              )),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      height: 40.h,
+                      width: 150.w,
+                      margin: EdgeInsets.only(top: 16.h, bottom: 10.h),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.white,
+                          width: 2.w,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withAlpha(12),
+                            blurRadius: 12,
+                            offset: const Offset(0, 4), // Shadow position
+                          ),
+                        ],
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(12.r),
+                        ),
+                        color: const Color(0xff273D8C),
+                      ),
+                      child: Center(
+                        child: Text(
+                          'Lịch sử xin nghỉ',
+                          style: defaultText16B.copyWith(color: Colors.white),
+                        ),
+                      ),
+                    ),
                   ),
                   Padding(
                     padding: EdgeInsets.only(right: 16.w),
@@ -532,6 +571,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             )),
                           ),
                         ),
+                        SizedBox(
+                          width: 16.w,
+                        ),
                         GestureDetector(
                           onTap: () => showDialog<String>(
                               context: context,
@@ -568,63 +610,46 @@ class _HomeScreenState extends State<HomeScreen> {
                             )),
                           ),
                         ),
-                        GestureDetector(
-                          onTap: () => showDialog<String>(
-                              context: context,
-                              builder: (BuildContext context) =>
-                                  const FeedbackPopUp()),
-                          child: Container(
-                            height: 40.h,
-                            width: 106.w,
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Colors.white,
-                                width: 2.w,
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withAlpha(12),
-                                  blurRadius: 12,
-                                  offset: const Offset(0, 4), // Shadow position
-                                ),
-                              ],
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(12.r),
-                              ),
-                              color: const Color(0xff273D8C),
-                            ),
-                            child: Center(
-                                child: Text(
-                              'Feedback',
-                              style: defaultText14B.copyWith(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w600),
-                            )),
-                          ),
-                        ),
+                        // GestureDetector(
+                        //   onTap: () => showDialog<String>(
+                        //       context: context,
+                        //       builder: (BuildContext context) =>
+                        //           const FeedbackPopUp()),
+                        //   child: Container(
+                        //     height: 40.h,
+                        //     width: 106.w,
+                        //     decoration: BoxDecoration(
+                        //       border: Border.all(
+                        //         color: Colors.white,
+                        //         width: 2.w,
+                        //       ),
+                        //       boxShadow: [
+                        //         BoxShadow(
+                        //           color: Colors.black.withAlpha(12),
+                        //           blurRadius: 12,
+                        //           offset: const Offset(0, 4), // Shadow position
+                        //         ),
+                        //       ],
+                        //       borderRadius: BorderRadius.all(
+                        //         Radius.circular(12.r),
+                        //       ),
+                        //       color: const Color(0xff273D8C),
+                        //     ),
+                        //     child: Center(
+                        //         child: Text(
+                        //       'Feedback',
+                        //       style: defaultText14B.copyWith(
+                        //           color: Colors.white,
+                        //           fontWeight: FontWeight.w600),
+                        //     )),
+                        //   ),
+                        // ),
+                        const Spacer(),
                       ],
                     ),
                   ),
-                  GestureDetector(
-                    onTap: () async {
-                      List<LeaveModel> listHistory =
-                          await InfoRepo().getLeaveList();
-                      pushWithoutNavBar(
-                        context,
-                        MaterialPageRoute(
-                          builder: ((context) => HistoryScreen(
-                                model: listHistory,
-                              )),
-                        ),
-                      );
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.only(top: 20.h, bottom: 20.h),
-                      child: Text(
-                        'Lịch sử',
-                        style: defaultText16B,
-                      ),
-                    ),
+                  SizedBox(
+                    height: 10.h,
                   ),
                   Padding(
                     padding: EdgeInsets.only(bottom: 20.h),
@@ -646,7 +671,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 width: 200.w,
                               ),
                               Text(
-                                'Học sinh chưa có lớp học',
+                                'Không có lịch học sắp tới',
                                 style: defaultText16B,
                               ),
                               SizedBox(
