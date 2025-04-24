@@ -28,9 +28,6 @@ class _SplshscreenState extends State<Splshscreen> {
   @override
   void initState() {
     super.initState();
-
-    // Get the current patch number and print it to the console.
-    // It will be `null` if no patches are installed.
     _checkForUpdates();
     databaseInitialized();
     Timer(const Duration(seconds: 0), () async {
@@ -38,22 +35,27 @@ class _SplshscreenState extends State<Splshscreen> {
       final String? token = prefs.getString('token');
       checked = (token != null && token != '');
       if (checked) {
-        InfoModel infoModel = await InfoRepo().getInfo();
-        //CheckinModel infoClassModel = await FollowClassRepo().getListCheckin();
-        InfoHomeModel infoClassModel = await InfoRepo().getInfoClass();
-        AppRouter.toPage(context, AppPages.BottomNavBarPage,
-            // blocValue: _authBloc,
-            arguments: {
-              'infoModel': infoModel,
-              'infoClassModel': infoClassModel
-            });
+        InfoModel? infoModel = await InfoRepo().getInfo();
+        // troi oi buon ngu qua
+        if (infoModel == null) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const Onbonding(),
+            ),
+          );
+        } else {
+          InfoHomeModel infoClassModel = await InfoRepo().getInfoClass();
+          AppRouter.toPage(context, AppPages.BottomNavBarPage, arguments: {
+            'infoModel': infoModel,
+            'infoClassModel': infoClassModel
+          });
+        }
       } else {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
             builder: (context) => const Onbonding(),
-            // quá mệt mỏi rồi, ngày hôm nay cô ấy chẳng quan tâm gì mấy chỉ một người để yêu thương lúc này ngày hôm ấy cố muốn đi để mua một đóa hoa trang trí nơi đẹp nhất trong nhà cô ấy hay buồn lúc mưa thích nghe câu ca ngày xưa, Những lúc khi trời đông nhớ vòng tay ấm nồng và ôm cô ấy thật lâu người ấy vì thương tôi chờ đợi tôi cũng lâu rồi
-            //builder: (context) => const BottomNavBar(),
           ),
         );
       }

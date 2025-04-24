@@ -7,7 +7,7 @@ import '../models/info_model.dart';
 
 class InfoRepo {
   Dio dio = Dio();
-  Future<InfoModel> getInfo() async {
+  Future<InfoModel?> getInfo() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? token = prefs.getString('token');
     dio.options.headers['Authorization'] = 'Bearer $token';
@@ -16,17 +16,23 @@ class InfoRepo {
       response = await dio.get(
         ApiPath.user,
       );
+      return InfoModel.fromJson(response.data['data']);
+      //break;
     } on DioException {
       String newToken = await LoginRepo().refreshToken();
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      if (newToken == '') {
+        return null;
+      }
       await prefs.setString('token', newToken);
       dio.options.headers['Authorization'] = 'Bearer $newToken';
       response = await dio.get(
         ApiPath.user,
       );
       return InfoModel.fromJson(response.data['data']);
+    } catch (e) {
+      await prefs.remove('token');
     }
-    return InfoModel.fromJson(response.data['data']);
+    return null;
   }
 
   Future<InfoHomeModel> getInfoClass() async {

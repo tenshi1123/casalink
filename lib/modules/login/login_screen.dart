@@ -269,17 +269,26 @@ class _LoginScreenState extends State<LoginScreen> {
                           passController?.text ?? '',
                         );
                         if (loged == true) {
-                          InfoModel infoModel = await InfoRepo().getInfo();
-                          InfoHomeModel infoClassModel =
-                              await InfoRepo().getInfoClass();
-                          // CheckinModel infoClassModel =
-                          //     await FollowClassRepo().getListCheckin();
-                          AppRouter.toPage(context, AppPages.BottomNavBarPage,
-                              // blocValue: _authBloc,
-                              arguments: {
-                                'infoModel': infoModel,
-                                'infoClassModel': infoClassModel
-                              });
+                          InfoModel? infoModel = await InfoRepo().getInfo();
+                          if (infoModel == null) {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const Onbonding(),
+                              ),
+                            );
+                          } else {
+                            InfoHomeModel infoClassModel =
+                                await InfoRepo().getInfoClass();
+                            // CheckinModel infoClassModel =
+                            //     await FollowClassRepo().getListCheckin();
+                            AppRouter.toPage(context, AppPages.BottomNavBarPage,
+                                // blocValue: _authBloc,
+                                arguments: {
+                                  'infoModel': infoModel,
+                                  'infoClassModel': infoClassModel
+                                });
+                          }
                         } else {
                           showDialog(
                             context: context,

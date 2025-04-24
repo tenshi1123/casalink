@@ -53,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     listClass.add(widget.infoClassModel);
-
+    _fetchData();
     //listClass.addAll(widget.infoClassModel.checkInOffModel);
     //listClass.addAll(widget.infoClassModel.checkinZoomModel);
   }

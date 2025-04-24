@@ -22,8 +22,8 @@ class LoginRepo {
       return false;
     }
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('token', response.data['data']["refresh_token"]);
-    return response.data['data']["refresh_token"] != null;
+    await prefs.setString('token', response.data['data']["token"]);
+    return response.data['data']["token"] != null;
   }
 
   Future<String> refreshToken() async {
@@ -34,10 +34,14 @@ class LoginRepo {
     try {
       response = await dio.get(ApiPath.refreshToken);
     } on DioException {
+      await prefs.remove('token');
+      return '';
+    } catch (e) {
+      await prefs.remove('token');
       return '';
     }
-    await prefs.setString('token', response.data['data']["refresh_token"]);
-    return response.data['data']["refresh_token"];
+    await prefs.setString('token', response.data['data']["token"]);
+    return response.data['data']["token"];
   }
 
   Future<String> getToken() async {

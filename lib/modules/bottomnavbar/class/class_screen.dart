@@ -218,7 +218,6 @@ class _ClassScreenState extends State<ClassScreen> {
                             typeLearn: listLesson[index].typeLearn,
                             meetingId: listLesson[index].meetingId,
                           );
-
                           pushWithoutNavBar(
                             context,
                             MaterialPageRoute(
