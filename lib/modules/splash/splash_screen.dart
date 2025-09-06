@@ -68,7 +68,6 @@ class _SplshscreenState extends State<Splshscreen> {
     });
     // Check whether a new update is available.
     final status = await updater.checkForUpdate();
-
     if (status == UpdateStatus.outdated) {
       try {
         // Perform the update

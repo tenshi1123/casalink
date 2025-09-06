@@ -1,5 +1,4 @@
 import 'package:casalink/modules/videoplayer/data_manager.dart';
-import 'package:casalink/utils/constants/mock_data.dart';
 import 'package:flick_video_player/flick_video_player.dart';
 import 'package:flutter/material.dart';
 

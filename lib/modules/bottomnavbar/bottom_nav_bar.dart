@@ -1,5 +1,4 @@
 import "dart:io";
-
 import "package:casalink/modules/bottomnavbar/home/home.dart";
 import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
@@ -41,7 +40,6 @@ class _BottomNavBarState extends State<BottomNavBar> {
       //do nothing :v tự báo chính mình
       OneSignal.Notifications.addClickListener((event) {});
     }
-
     promptPolicyPrivacy();
   }
 
@@ -171,7 +169,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
           ),
         ),
         backgroundColor: Colors.white,
-        navBarHeight: 50.h,
+        //navBarHeight: 50.h,
       ),
     );
   }

@@ -169,29 +169,34 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                         );
                       } else {
                         //Lưu ý nhớ copy verificationId
-                        FirebaseAuth.instance.verifyPhoneNumber(
-                            // phoneNumber: '+84974225054',
-                            phoneNumber:
-                                '+84${phoneController.text.replaceFirst(RegExp(r'0'), '')}',
-                            verificationCompleted: (PhoneAuthCredential) {},
-                            verificationFailed: (error) {
-                              log(error.toString());
-                            },
-                            codeSent: (verificationId, forceResendingToken) {
-                              //Lưu ý nhớ copy verificationId
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: ((context) => OtpScreen(
-                                        contact: phoneController.text,
-                                        verificationId: verificationId,
-                                      )),
-                                ),
-                              );
-                            },
-                            codeAutoRetrievalTimeout: (verificationId) {
-                              log("Auto Retiveral timeout");
-                            });
+                        try {
+                          FirebaseAuth.instance.verifyPhoneNumber(
+                              // phoneNumber: '+84974225054',
+                              phoneNumber:
+                                  '+84${phoneController.text.replaceFirst(RegExp(r'0'), '')}',
+                              verificationCompleted: (PhoneAuthCredential) {},
+                              verificationFailed: (error) {
+                                log(error.toString());
+                              },
+                              codeSent: (verificationId, forceResendingToken) {
+                                //Lưu ý nhớ copy verificationId
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: ((context) => OtpScreen(
+                                          contact: phoneController.text,
+                                          verificationId: verificationId,
+                                        )),
+                                  ),
+                                );
+                              },
+                              codeAutoRetrievalTimeout: (verificationId) {
+                                log("Auto Retiveral timeout");
+                              });
+                        } on FirebaseAuthException catch (e) {
+                          print('FirebaseAuth error code: ${e.code}');
+                          print('FirebaseAuth error message: ${e.message}');
+                        }
                       }
                     },
                     child: Container(

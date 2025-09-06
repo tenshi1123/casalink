@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:casalink/models/notification_model.dart';
-import 'package:casalink/modules/chat/screen/list_conversation_screen.dart';
 import 'package:casalink/modules/diemdanh/diemdanh_screen.dart';
 import 'package:casalink/repo/info_repo.dart';
 import 'package:casalink/repo/notification_repo.dart';

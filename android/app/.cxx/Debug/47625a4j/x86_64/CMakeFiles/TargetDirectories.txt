@@ -1,0 +1,2 @@
+E:/project/casalink/android/app/.cxx/Debug/47625a4j/x86_64/CMakeFiles/edit_cache.dir
+E:/project/casalink/android/app/.cxx/Debug/47625a4j/x86_64/CMakeFiles/rebuild_cache.dir

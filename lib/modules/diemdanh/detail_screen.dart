@@ -56,7 +56,8 @@ class _DetailScreenState extends State<DetailScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              widget.detailLesson.infoLesson.linkZoom == ''
+              widget.detailLesson.infoLesson.linkZoom == '' ||
+                      widget.detailLesson.infoLesson.linkZoom == null
                   ? const SizedBox()
                   : GestureDetector(
                       onTap: () async {
@@ -225,30 +226,6 @@ class _NestedTabBarState extends State<NestedTabBar>
             ),
           ],
         ),
-        // TabBar.secondary(
-        //   tabAlignment: TabAlignment.start,
-        //   padding: EdgeInsets.zero,
-        //   indicatorPadding: EdgeInsets.zero,
-        //   labelPadding: EdgeInsets.symmetric(horizontal: 10.w),
-        //   isScrollable: true,
-        //   indicatorColor: keyBlack,
-        //   indicatorSize: TabBarIndicatorSize.label,
-        //   indicator: UnderlineTabIndicator(
-        //     borderSide: BorderSide(width: 2.w), //hight of indicator
-        //     insets: EdgeInsets.symmetric(
-        //         horizontal:
-        //             20.w), //give some padding to reduce the size of indicator
-        //   ),
-        //   unselectedLabelColor: keyBlack.withOpacity(0.3),
-        //   labelStyle: defaultText14M,
-        //   labelColor: keyBlack,
-        //   controller: _tabController,
-        //   tabs: <Widget>[
-        //     homeTab(title: 'Toàn bộ', isSeprator: false),
-        //     homeTab(title: 'Chưa làm'),
-        //     homeTab(title: 'Hoàn thành'),
-        //   ],
-        // ),
         Expanded(
           child: TabBarView(
             controller: _tabController,
@@ -455,30 +432,11 @@ class _NestedTabBarState extends State<NestedTabBar>
                                 maxLines: 3,
                               ),
                             ),
-                            // Text(
-                            //   'chọn bài tập bạn muốn xem',
-                            //   style: defaultText14Re.copyWith(
-                            //     color: Colors.black.withAlpha(60),
-                            //   ),
-                            // ),
                           ],
                         ),
                       ),
                     );
                   }),
-              // Column(
-              //   children: [
-              //     SizedBox(
-              //       width: 343.w,
-              //       height: 80.h,
-              //       child: Row(
-              //         children: [
-              //           Text('Không có tài liệu', style: defaultText16M)
-              //         ],
-              //       ),
-              //     )
-              //   ],
-              // ),
               Column(
                 children: [
                   SizedBox(
@@ -490,19 +448,6 @@ class _NestedTabBarState extends State<NestedTabBar>
                   ),
                 ],
               ),
-              // Column(
-              //   children: [
-              //     SizedBox(
-              //       width: 343.w,
-              //       height: 80.h,
-              //       child: Row(
-              //         children: [
-              //           Text('Không có đánh giá', style: defaultText16M)
-              //         ],
-              //       ),
-              //     )
-              //   ],
-              // ),
             ],
           ),
         ),

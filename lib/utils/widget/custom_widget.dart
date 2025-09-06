@@ -160,6 +160,7 @@ class DocumentItem extends StatelessWidget {
             builder: ((context) => WebViewScreen(
                   link: model.linkDetail,
                   title: 'Thư viện tài liệu',
+                  type: 1,
                 )),
           ),
         );
@@ -202,6 +203,7 @@ class PostItem extends StatelessWidget {
             builder: ((context) => WebViewScreen(
                   link: model.link,
                   title: model.postTitle,
+                  type: 0,
                 )),
           ),
         );

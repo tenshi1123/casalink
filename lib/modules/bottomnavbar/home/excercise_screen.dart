@@ -166,6 +166,7 @@ class ExcerciseItem extends StatelessWidget {
                       WebViewScreen(
                         link: excercise.linkExercise,
                         title: 'Chi tiết bài tập',
+                        type: 1,
                       )),
                 ),
               );
