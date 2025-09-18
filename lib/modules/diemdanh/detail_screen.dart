@@ -442,9 +442,14 @@ class _NestedTabBarState extends State<NestedTabBar>
                   SizedBox(
                     height: 10.h,
                   ),
-                  HtmlWidget(
-                    _detailLesson.feedback,
-                    textStyle: defaultText14B,
+                  SizedBox(
+                    height: 500.h,
+                    child: SingleChildScrollView(
+                      child: HtmlWidget(
+                        _detailLesson.feedback,
+                        textStyle: defaultText14B,
+                      ),
+                    ),
                   ),
                 ],
               ),
