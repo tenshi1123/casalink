@@ -174,7 +174,7 @@ class DocumentItem extends StatelessWidget {
               model.img,
               width: 240.w,
               height: 160.h,
-              fit: BoxFit.fill,
+              fit: BoxFit.fitWidth,
             ),
           ),
           // Text(

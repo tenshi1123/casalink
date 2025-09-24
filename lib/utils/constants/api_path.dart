@@ -38,7 +38,6 @@ class ApiPath {
   static const String lessonLearned = '$baseUrl/student/class/lesson';
   static const String requestLeave = '$baseUrl/student/leave';
   static const String leaveList = '$baseUrl/student/leave/list';
-  //dm cứ nhìn nhìn khó chịu vl
 
   // về việc xin đi muộn
   static const String classLater = '$baseUrl/student/class/later';

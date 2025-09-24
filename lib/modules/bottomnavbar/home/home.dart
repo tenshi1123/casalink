@@ -487,53 +487,55 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  GestureDetector(
-                    onTap: () async {
-                      List<LeaveModel> listHistory =
-                          await InfoRepo().getLeaveList();
-                      pushWithoutNavBar(
-                        context,
-                        MaterialPageRoute(
-                          builder: ((context) => HistoryScreen(
-                                model: listHistory,
-                              )),
-                        ),
-                      );
-                    },
-                    child: Container(
-                      height: 40.h,
-                      width: 150.w,
-                      margin: EdgeInsets.only(top: 16.h, bottom: 10.h),
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Colors.white,
-                          width: 2.w,
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withAlpha(12),
-                            blurRadius: 12,
-                            offset: const Offset(0, 4), // Shadow position
-                          ),
-                        ],
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(12.r),
-                        ),
-                        color: const Color(0xff273D8C),
-                      ),
-                      child: Center(
-                        child: Text(
-                          'Lịch sử xin nghỉ',
-                          style: defaultText16B.copyWith(color: Colors.white),
-                        ),
-                      ),
-                    ),
-                  ),
                   Padding(
                     padding: EdgeInsets.only(right: 16.w),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
+                        GestureDetector(
+                          onTap: () async {
+                            List<LeaveModel> listHistory =
+                                await InfoRepo().getLeaveList();
+                            pushWithoutNavBar(
+                              context,
+                              MaterialPageRoute(
+                                builder: ((context) => HistoryScreen(
+                                      model: listHistory,
+                                    )),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            height: 40.h,
+                            width: 90.w,
+                            //margin: EdgeInsets.only(top: 16.h, bottom: 10.h),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Colors.white,
+                                width: 2.w,
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withAlpha(12),
+                                  blurRadius: 12,
+                                  offset: const Offset(0, 4), // Shadow position
+                                ),
+                              ],
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(12.r),
+                              ),
+                              color: const Color(0xff273D8C),
+                            ),
+                            child: Center(
+                              child: Text(
+                                'Lịch sử',
+                                style: defaultText16B.copyWith(
+                                    color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 16.w),
                         GestureDetector(
                           onTap: () => showDialog<String>(
                               context: context,
@@ -543,7 +545,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   )),
                           child: Container(
                             height: 40.h,
-                            width: 106.w,
+                            width: 90.w,
                             decoration: BoxDecoration(
                               border: Border.all(
                                 color: Colors.white,
@@ -570,9 +572,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             )),
                           ),
                         ),
-                        SizedBox(
-                          width: 16.w,
-                        ),
+                        SizedBox(width: 16.w),
                         GestureDetector(
                           onTap: () => showDialog<String>(
                               context: context,
@@ -582,7 +582,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   )),
                           child: Container(
                             height: 40.h,
-                            width: 106.w,
+                            width: 90.w,
                             decoration: BoxDecoration(
                               border: Border.all(
                                 color: Colors.white,
@@ -858,7 +858,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   SmoothPageIndicator(
                                                     controller: controller2,
                                                     count: listlibra.isEmpty
-                                                        ? 1
+                                                        ? 0
                                                         : listlibra.length,
                                                     effect: CustomizableEffect(
                                                       activeDotDecoration:
@@ -983,60 +983,83 @@ class _HomeScreenState extends State<HomeScreen> {
                                       return SizedBox(
                                         width: 375.w,
                                         height: 166.h,
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: <Widget>[
-                                            ClipRRect(
-                                              borderRadius: BorderRadius.all(
-                                                Radius.circular(16.r),
-                                              ),
-                                              child: SizedBox(
-                                                height: 208.h,
-                                                width: 375.w,
-                                                child: PageView.builder(
-                                                  padEnds: false,
-                                                  controller: controller3,
-                                                  itemCount: listPost.length,
-                                                  itemBuilder: (_, index) {
-                                                    return PostItem(
-                                                      model: listPost[index],
-                                                    );
-                                                  },
+                                        child: listPost.isEmpty
+                                            ? Center(
+                                                child: Center(
+                                                  child: Image.asset(
+                                                    'assets/images/empty.png',
+                                                    height: 200.h,
+                                                    width: 200.w,
+                                                  ),
                                                 ),
+                                              )
+                                            : Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: <Widget>[
+                                                  ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                      Radius.circular(16.r),
+                                                    ),
+                                                    child: SizedBox(
+                                                      height: 208.h,
+                                                      width: 375.w,
+                                                      child: PageView.builder(
+                                                        padEnds: false,
+                                                        controller: controller3,
+                                                        itemCount:
+                                                            listPost.length,
+                                                        itemBuilder:
+                                                            (_, index) {
+                                                          return PostItem(
+                                                            model:
+                                                                listPost[index],
+                                                          );
+                                                        },
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  SmoothPageIndicator(
+                                                    controller: controller3,
+                                                    count: listPost.isEmpty
+                                                        ? 0
+                                                        : listPost.length,
+                                                    effect: CustomizableEffect(
+                                                      activeDotDecoration:
+                                                          DotDecoration(
+                                                        width: 20.w,
+                                                        height: 8.h,
+                                                        color: Colors.indigo,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(24),
+                                                      ),
+                                                      dotDecoration:
+                                                          DotDecoration(
+                                                        width: 8.w,
+                                                        height: 8.h,
+                                                        color: Colors.grey,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(16),
+                                                        verticalOffset: 0,
+                                                      ),
+                                                      spacing: 6.0,
+                                                    ),
+                                                    onDotClicked: (index) {
+                                                      controller3.animateToPage(
+                                                          index,
+                                                          duration:
+                                                              const Duration(
+                                                                  milliseconds:
+                                                                      300),
+                                                          curve:
+                                                              Curves.easeInOut);
+                                                    },
+                                                  ),
+                                                ],
                                               ),
-                                            ),
-                                            SmoothPageIndicator(
-                                              controller: controller3,
-                                              count: listPost.isEmpty ? 1 : 3,
-                                              effect: CustomizableEffect(
-                                                activeDotDecoration:
-                                                    DotDecoration(
-                                                  width: 20.w,
-                                                  height: 8.h,
-                                                  color: Colors.indigo,
-                                                  borderRadius:
-                                                      BorderRadius.circular(24),
-                                                ),
-                                                dotDecoration: DotDecoration(
-                                                  width: 8.w,
-                                                  height: 8.h,
-                                                  color: Colors.grey,
-                                                  borderRadius:
-                                                      BorderRadius.circular(16),
-                                                  verticalOffset: 0,
-                                                ),
-                                                spacing: 6.0,
-                                              ),
-                                              onDotClicked: (index) {
-                                                controller3.animateToPage(index,
-                                                    duration: const Duration(
-                                                        milliseconds: 300),
-                                                    curve: Curves.easeInOut);
-                                              },
-                                            ),
-                                          ],
-                                        ),
                                       );
                                     } else {
                                       return Text(

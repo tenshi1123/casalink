@@ -2,6 +2,7 @@ import 'package:casalink/utils/constants/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 import '../../models/schedule_model.dart';
 import '../../repo/follow_class_repo.dart';
 import 'detail_daily_feedback.dart';
@@ -22,7 +23,7 @@ class _FeedBackScreenState extends State<FeedBackScreen>
   void initState() {
     super.initState();
     _tabController = TabController(
-      length: 2,
+      length: 3,
       vsync: this,
       initialIndex: 0,
     );
@@ -94,12 +95,15 @@ class _FeedBackScreenState extends State<FeedBackScreen>
                     color: Colors.white),
                 labelColor: Colors.black,
                 unselectedLabelColor: const Color(0xff292929).withAlpha(84),
-                tabs: const [
+                tabs: [
                   Tab(
                     text: "Hằng ngày",
                   ),
                   Tab(
-                    text: "Định kì",
+                    text: "Giữa tháng",
+                  ),
+                  Tab(
+                    text: "Cuối tháng",
                   ),
                 ],
               ),
@@ -108,11 +112,12 @@ class _FeedBackScreenState extends State<FeedBackScreen>
               child: TabBarView(
                 controller: _tabController,
                 children: <Widget>[
-                  //Hang ngay
                   Container(
                     width: 343.w,
-                    margin: EdgeInsets.symmetric(
-                      horizontal: 16.w,
+                    margin: EdgeInsets.only(
+                      left: 16.w,
+                      right: 16.w,
+                      bottom: 16.h,
                     ),
                     padding: EdgeInsets.symmetric(
                       horizontal: 16.w,
@@ -143,11 +148,12 @@ class _FeedBackScreenState extends State<FeedBackScreen>
                               );
                             }),
                   ),
-                  //Dinh ki
                   Container(
                     width: 343.w,
-                    margin: EdgeInsets.symmetric(
-                      horizontal: 16.w,
+                    margin: EdgeInsets.only(
+                      left: 16.w,
+                      right: 16.w,
+                      bottom: 16.h,
                     ),
                     padding: EdgeInsets.symmetric(
                       horizontal: 16.w,
@@ -166,15 +172,53 @@ class _FeedBackScreenState extends State<FeedBackScreen>
                       ],
                       color: Colors.white,
                     ),
-                    child: widget.listFeedBack.listFbDinhKy.isEmpty
+                    child: widget.listFeedBack.listMidMonth.isEmpty
                         ? Image.asset('assets/images/empty2.png')
                         : ListView.builder(
                             shrinkWrap: true,
                             physics: const ClampingScrollPhysics(),
-                            itemCount: widget.listFeedBack.listFbDinhKy.length,
+                            itemCount: widget.listFeedBack.listMidMonth.length,
                             itemBuilder: (BuildContext context, int index) {
                               return ListFbDinhKy(
-                                model: widget.listFeedBack.listFbDinhKy[index],
+                                model: widget.listFeedBack.listMidMonth[index],
+                                type: 1,
+                              );
+                            }),
+                  ),
+                  Container(
+                    width: 343.w,
+                    margin: EdgeInsets.only(
+                      left: 16.w,
+                      right: 16.w,
+                      bottom: 16.h,
+                    ),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 16.w,
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.only(
+                          bottomLeft: Radius.circular(20),
+                          bottomRight: Radius.circular(20)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withAlpha(50),
+                          spreadRadius: 0,
+                          blurRadius: 4,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                      color: Colors.white,
+                    ),
+                    child: widget.listFeedBack.listEndMonth.isEmpty
+                        ? Image.asset('assets/images/empty2.png')
+                        : ListView.builder(
+                            shrinkWrap: true,
+                            physics: const ClampingScrollPhysics(),
+                            itemCount: widget.listFeedBack.listEndMonth.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return ListFbDinhKy(
+                                model: widget.listFeedBack.listEndMonth[index],
+                                type: 2,
                               );
                             }),
                   ),
@@ -215,26 +259,28 @@ class ListFbDaily extends StatelessWidget {
             physics: const ClampingScrollPhysics(),
             itemCount: model.listFeedback.length,
             itemBuilder: (BuildContext context, int index) {
+              final reversedIndex = model.listFeedback.length - 1 - index;
               return InkWell(
                 onTap: () async {
                   String detailFeedBack =
                       await FollowClassRepo().getDetailFeedback(
-                    model.listFeedback[index].id,
-                    model.listFeedback[index].typelearn,
-                    model.listFeedback[index].meetingId,
+                    model.listFeedback[reversedIndex].id,
+                    model.listFeedback[reversedIndex].typelearn,
+                    model.listFeedback[reversedIndex].meetingId,
                   );
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: ((context) => DailyFeedback(
                             feedback: detailFeedBack,
-                            feedbackModel: model.listFeedback[index],
+                            feedbackModel: model.listFeedback[reversedIndex],
                           )),
                     ),
                   );
                 },
                 child: LessonItem(
-                  model: model.listFeedback[index],
+                  model: model.listFeedback[reversedIndex],
+                  type: 0,
                 ),
               );
             }),
@@ -244,8 +290,9 @@ class ListFbDaily extends StatelessWidget {
 }
 
 class ListFbDinhKy extends StatelessWidget {
-  const ListFbDinhKy({super.key, required this.model});
+  const ListFbDinhKy({super.key, required this.model, required this.type});
   final FeedbackDinhKyModel model;
+  final int type;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -270,26 +317,28 @@ class ListFbDinhKy extends StatelessWidget {
             physics: const ClampingScrollPhysics(),
             itemCount: model.listFeedback.length,
             itemBuilder: (BuildContext context, int index) {
+              final reversedIndex = model.listFeedback.length - 1 - index;
               return InkWell(
                 onTap: () async {
                   String detailFeedBack =
                       await FollowClassRepo().getDetailFeedback(
-                    model.listFeedback[index].id,
-                    model.listFeedback[index].typelearn,
-                    model.listFeedback[index].meetingId,
+                    model.listFeedback[reversedIndex].id,
+                    model.listFeedback[reversedIndex].typelearn,
+                    model.listFeedback[reversedIndex].meetingId,
                   );
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: ((context) => PeriodicFeedback(
                             feedback: detailFeedBack,
-                            feedbackModel: model.listFeedback[index],
+                            feedbackModel: model.listFeedback[reversedIndex],
                           )),
                     ),
                   );
                 },
                 child: LessonItem(
-                  model: model.listFeedback[index],
+                  model: model.listFeedback[reversedIndex],
+                  type: type,
                 ),
               );
             }),
@@ -299,8 +348,9 @@ class ListFbDinhKy extends StatelessWidget {
 }
 
 class LessonItem extends StatefulWidget {
-  const LessonItem({super.key, required this.model});
+  const LessonItem({super.key, required this.model, required this.type});
   final FeedbackModel model;
+  final int type;
   @override
   State<LessonItem> createState() => _LessonItemState();
 }
@@ -328,7 +378,11 @@ class _LessonItemState extends State<LessonItem> {
                   ),
                 ),
                 Text(
-                  widget.model.tenBuoi,
+                  widget.type == 0
+                      ? widget.model.tenBuoi
+                      : widget.type == 1
+                          ? 'Đánh giá giữa tháng ${DateFormat("dd-MM-yyyy").parse(widget.model.createdAt).month}'
+                          : 'Đánh giá cuối tháng ${DateFormat("dd-MM-yyyy").parse(widget.model.createdAt).month}',
                   style: defaultText16M.copyWith(
                     fontWeight: FontWeight.w600,
                   ),

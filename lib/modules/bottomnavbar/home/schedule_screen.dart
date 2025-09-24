@@ -28,20 +28,48 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   DateTime? _rangeStart;
   DateTime? _rangeEnd;
   late List<ScheduleModel> _listLichHoc;
-
+  final Map<DateTime, List<ScheduleModel>> _events = {};
+  final Set<String> _loadedMonths = {};
   @override
   void initState() {
     super.initState();
     _selectedDay = _focusedDay;
     _listLichHoc = [];
-
-    _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!));
+    _selectedEvents = ValueNotifier(_getEventsForRange(
+        DateTime(_focusedDay.year, _focusedDay.month, 1),
+        DateTime(_focusedDay.year, _focusedDay.month + 1, 0)));
+    _fetchEventsForMonth(_focusedDay);
   }
 
   @override
   void dispose() {
     _selectedEvents.dispose();
     super.dispose();
+  }
+
+  Future<void> _fetchEventsForMonth(DateTime date) async {
+    final key = '${date.year}-${date.month.toString().padLeft(2, '0')}';
+    if (_loadedMonths.contains(key)) return;
+
+    final start = DateTime(date.year, date.month, 1);
+    final end = DateTime(date.year, date.month + 1, 0);
+
+    final fetchedEvents = await ScheduleRepo().getScheduleList(
+      DateFormat('dd-MM-yyyy').format(start),
+      DateFormat('dd-MM-yyyy').format(end),
+    );
+    if (fetchedEvents.isEmpty) return;
+    setState(() {
+      for (final e in fetchedEvents) {
+        final day = DateTime(
+            e.createdDate.year, e.createdDate.month, e.createdDate.day);
+        _events.putIfAbsent(day, () => []).add(e);
+      }
+      _loadedMonths.add(key);
+      if (_selectedDay != null) {
+        _selectedEvents.value = _events[_selectedDay!] ?? [];
+      }
+    });
   }
 
   Future<void> getSchedule(
@@ -135,9 +163,12 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  height: 403.h,
+                  //height: 403.h,
                   width: 343.w,
                   margin: EdgeInsets.only(top: 16.h),
+                  padding: EdgeInsets.only(
+                    bottom: 16.h,
+                  ),
                   decoration: BoxDecoration(
                       //color: main2Color.withAlpha(24),
                       color: Colors.white,
@@ -166,12 +197,17 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                     headerStyle: HeaderStyle(titleTextStyle: defaultText16M),
                     daysOfWeekStyle: DaysOfWeekStyle(
                       weekdayStyle: defaultText14M,
-                      weekendStyle: defaultText14M,
+                      weekendStyle: defaultText14M.copyWith(
+                        color: Colors.red,
+                      ),
                     ),
                     daysOfWeekHeight: 36.h,
                     calendarFormat: _calendarFormat,
                     rangeSelectionMode: _rangeSelectionMode,
-                    // eventLoader: _getEventLoad,
+                    eventLoader: (day) {
+                      final d = DateTime(day.year, day.month, day.day);
+                      return _events[d] ?? [];
+                    },
                     startingDayOfWeek: StartingDayOfWeek.monday,
                     calendarBuilders: CalendarBuilders(
                       markerBuilder: (context, date, events) {
@@ -184,7 +220,8 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                       // Use `CalendarStyle` to customize the UI
                       outsideDaysVisible: true,
                       defaultTextStyle: defaultText14M,
-                      weekendTextStyle: defaultText14M,
+                      weekendTextStyle:
+                          defaultText14M.copyWith(color: Colors.red),
                       todayTextStyle:
                           defaultText14M.copyWith(color: Colors.white),
                     ),
@@ -199,6 +236,10 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                     },
                     onPageChanged: (focusedDay) {
                       _focusedDay = focusedDay;
+                      _fetchEventsForMonth(focusedDay);
+                      _selectedEvents.value = _getEventsForRange(
+                          DateTime(_focusedDay.year, _focusedDay.month, 1),
+                          DateTime(_focusedDay.year, _focusedDay.month + 1, 0));
                     },
                   ),
                 ),
@@ -289,8 +330,8 @@ AnimatedContainer buildCalendarDayMarker({
       shape: BoxShape.circle,
       color: backColor,
     ),
-    width: 5.w,
-    height: 5.h,
+    width: 6.w,
+    height: 6.h,
   );
 }
 

@@ -214,9 +214,13 @@ class DocumentModel {
 class ListFeedBackModel {
   final List<FeedbackHangNgayModel> listFbDaily;
   final List<FeedbackDinhKyModel> listFbDinhKy;
+  final List<FeedbackDinhKyModel> listMidMonth;
+  final List<FeedbackDinhKyModel> listEndMonth;
   ListFeedBackModel({
     required this.listFbDaily,
     required this.listFbDinhKy,
+    required this.listMidMonth,
+    required this.listEndMonth,
   });
   factory ListFeedBackModel.fromJson(Map<String, dynamic> json) {
     return ListFeedBackModel(
@@ -224,6 +228,12 @@ class ListFeedBackModel {
           .map((e) => FeedbackHangNgayModel.fromJson(e))
           .toList(),
       listFbDinhKy: (json['dinh_ky'] as List)
+          .map((e) => FeedbackDinhKyModel.fromJson(e))
+          .toList(),
+      listMidMonth: (json['giua_thang'] as List)
+          .map((e) => FeedbackDinhKyModel.fromJson(e))
+          .toList(),
+      listEndMonth: (json['cuoi_thang'] as List)
           .map((e) => FeedbackDinhKyModel.fromJson(e))
           .toList(),
     );
