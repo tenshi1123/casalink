@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:casalink/models/checkin_model.dart';
+import 'package:casalink/repo/follow_class_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -45,7 +47,10 @@ class _SplshscreenState extends State<Splshscreen> {
             ),
           );
         } else {
+          // CheckinModel infoClassModel =
+          //     await FollowClassRepo().getListCheckin();
           InfoHomeModel infoClassModel = await InfoRepo().getInfoClass();
+
           AppRouter.toPage(context, AppPages.BottomNavBarPage, arguments: {
             'infoModel': infoModel,
             'infoClassModel': infoClassModel

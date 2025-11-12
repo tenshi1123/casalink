@@ -382,7 +382,7 @@ class _LessonItemState extends State<LessonItem> {
                       ? widget.model.tenBuoi
                       : widget.type == 1
                           ? 'Đánh giá giữa tháng ${DateFormat("dd-MM-yyyy").parse(widget.model.createdAt).month}'
-                          : 'Đánh giá cuối tháng ${DateFormat("dd-MM-yyyy").parse(widget.model.createdAt).month}',
+                          : getEvaluationMonth(widget.model.createdAt),
                   style: defaultText16M.copyWith(
                     fontWeight: FontWeight.w600,
                   ),
@@ -404,4 +404,27 @@ class _LessonItemState extends State<LessonItem> {
       ],
     );
   }
+}
+
+String getEvaluationMonth(String createdAtString) {
+  DateTime createdAtDate;
+  try {
+    createdAtDate = DateFormat("dd-MM-yyyy").parse(createdAtString);
+  } catch (e) {
+    return 'Lỗi định dạng ngày tháng';
+  }
+
+  int day = createdAtDate.day;
+  int monthToDisplay;
+
+  if (day >= 15) {
+    monthToDisplay = createdAtDate.month;
+  } else {
+    monthToDisplay = createdAtDate.month - 1;
+
+    if (monthToDisplay == 0) {
+      monthToDisplay = 12;
+    }
+  }
+  return 'Đánh giá cuối tháng $monthToDisplay';
 }

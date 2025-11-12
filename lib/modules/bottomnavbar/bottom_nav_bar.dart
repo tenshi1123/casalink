@@ -1,4 +1,5 @@
 import "dart:io";
+import "package:casalink/models/checkin_model.dart";
 import "package:casalink/modules/bottomnavbar/home/home.dart";
 import "package:flutter/material.dart";
 import "package:flutter_screenutil/flutter_screenutil.dart";
@@ -19,7 +20,9 @@ class BottomNavBar extends StatefulWidget {
     required this.infoClassModel,
   });
   final InfoModel infoModel;
+  //final CheckinModel infoClassModel;
   final InfoHomeModel infoClassModel;
+
   @override
   State<BottomNavBar> createState() => _BottomNavBarState();
 }
