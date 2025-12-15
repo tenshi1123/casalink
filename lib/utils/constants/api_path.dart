@@ -1,6 +1,6 @@
 class ApiPath {
   //baseurl
-  static const String baseUrl = 'https://casalink.edu.vn/api';
+  static const String baseUrl = 'https://crm.casalink.edu.vn/api';
   //api về đăng nhập, các thông tin của học sinh
   static const String login = '$baseUrl/login';
 

@@ -37,7 +37,7 @@ class WellcomeScreen extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.w),
             child: Text(
-              'LUYỆN THI 3S là trung tâm dạy và luyện thi được xây dựng với sứ mệnh giúp học sinh đạt được những mục tiêu và kêt quả cao trên con đường học tập.',
+              'Casalink',
               textAlign: TextAlign.center,
               style: defaultText16Re.copyWith(
                 color: subBlack,
