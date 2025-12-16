@@ -1,105 +1,131 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+
 class ApiPath {
   //baseurl
-  static const String baseUrl = 'https://crm.casalink.edu.vn/api';
+  static String baseUrl = '';
   //api về đăng nhập, các thông tin của học sinh
-  static const String login = '$baseUrl/login';
+  static String login = '$baseUrl/login';
 
-  static const String register = '$baseUrl/register';
-  static const String forgotPassword = '$baseUrl/forgot-password';
-  static const String checkPhone = '$baseUrl/check-phone';
-  static const String saveOtp = '$baseUrl/save-opt';
-  static const String refreshToken = '$baseUrl/refresh-token';
+  static String register = '$baseUrl/register';
+  static String forgotPassword = '$baseUrl/forgot-password';
+  static String checkPhone = '$baseUrl/check-phone';
+  static String saveOtp = '$baseUrl/save-opt';
+  static String refreshToken = '$baseUrl/refresh-token';
 
   // lịch học
-  static const String listSchedule = '$baseUrl/schedule';
+  static String listSchedule = '$baseUrl/schedule';
 
   // chi tiết lớp học
-  static const String detailSchedule = '$baseUrl/homework';
+  static String detailSchedule = '$baseUrl/homework';
 
   // danh sách bài tập về nhà
-  static const String listExercise = '$baseUrl/exercise';
+  static String listExercise = '$baseUrl/exercise';
 
   // danh sách feedback
-  static const String listFeedback = '$baseUrl/feedback';
+  static String listFeedback = '$baseUrl/feedback';
 
   // Chi tiết feedback
-  static const String detailFeedback = '$baseUrl/feedback/detail';
+  static String detailFeedback = '$baseUrl/feedback/detail';
 
   //điểm danh
-  static const String listCheckin = '$baseUrl/checkin';
-  static const String detailCheckin = '$baseUrl/checkin/detail';
+  static String listCheckin = '$baseUrl/checkin';
+  static String detailCheckin = '$baseUrl/checkin/detail';
 
   // thông tin tài khoản
-  static const String user = '$baseUrl/user/info';
-  static const String infoclass = '$baseUrl/info/class';
+  static String user = '$baseUrl/user/info';
+  static String infoclass = '$baseUrl/info/class';
 
   // về việc xin nghỉ
-  static const String classLearned = '$baseUrl/student/class';
-  static const String lessonLearned = '$baseUrl/student/class/lesson';
-  static const String requestLeave = '$baseUrl/student/leave';
-  static const String leaveList = '$baseUrl/student/leave/list';
+  static String classLearned = '$baseUrl/student/class';
+  static String lessonLearned = '$baseUrl/student/class/lesson';
+  static String requestLeave = '$baseUrl/student/leave';
+  static String leaveList = '$baseUrl/student/leave/list';
 
   // về việc xin đi muộn
-  static const String classLater = '$baseUrl/student/class/later';
-  static const String lessonLater = '$baseUrl/student/class/lesson/later';
-  static const String requestLater = '$baseUrl/student/later';
+  static String classLater = '$baseUrl/student/class/later';
+  static String lessonLater = '$baseUrl/student/class/lesson/later';
+  static String requestLater = '$baseUrl/student/later';
   // xóa tài khoản
-  static const String deleteUser = '$baseUrl/user/delete';
+  static String deleteUser = '$baseUrl/user/delete';
 
   // check password
-  static const String checkPassword = '$baseUrl/user/password/check';
+  static String checkPassword = '$baseUrl/user/password/check';
 
   // Đổi mật khẩu
-  static const String changePassword = '$baseUrl/user/password/update';
+  static String changePassword = '$baseUrl/user/password/update';
 
   //Gửi thông tin onesignal id
-  static const String pushOnsignalId = '$baseUrl/notify/onesignal_id';
+  static String pushOnsignalId = '$baseUrl/notify/onesignal_id';
 
   //Xóa thông tin onesignal id
-  static const String deleteOnsignalId = '$baseUrl/notify/remove/onesignal_id';
+  static String deleteOnsignalId = '$baseUrl/notify/remove/onesignal_id';
 
   //Gửi bài tập
-  static const String uploadHomeWork = '$baseUrl/detail/homework/upload';
+  static String uploadHomeWork = '$baseUrl/detail/homework/upload';
 
   //Hiển thị bài tập đã nộp
-  static const String showHomeWork = '$baseUrl/homework/submit';
+  static String showHomeWork = '$baseUrl/homework/submit';
 
   //Lấy danh sách banner
-  static const String getBanner = '$baseUrl/banner';
+  static String getBanner = '$baseUrl/banner';
 
   //Lấy danh sách danh mục
-  static const String category = '$baseUrl/category';
+  static String category = '$baseUrl/category';
 
-  static const String library = '$baseUrl/library';
+  static String library = '$baseUrl/library';
 
-  static const String postCategory = '$baseUrl/post/category';
+  static String postCategory = '$baseUrl/post/category';
 
-  static const String detailPost = '$baseUrl/post';
+  static String detailPost = '$baseUrl/post';
 
   //Danh sách lớp học
-  static const String listClass = '$baseUrl/class';
+  static String listClass = '$baseUrl/class';
   // Chi tiết lớp học
-  static const String detailClass = '$baseUrl/class/detail';
+  static String detailClass = '$baseUrl/class/detail';
   //Danh sách tái phí của một lớp
-  static const String refee = '$baseUrl/class/refee';
+  static String refee = '$baseUrl/class/refee';
 
   //Danh sách khóa học video
-  static const String listLessonVideo = '$baseUrl/lesson';
+  static String listLessonVideo = '$baseUrl/lesson';
   //Danh sách Topical
-  static const String listTopical = '$baseUrl/lesson/topical';
+  static String listTopical = '$baseUrl/lesson/topical';
   //Danh sách bài giảng
-  static const String listLecture = '$baseUrl/lesson/topical/video';
+  static String listLecture = '$baseUrl/lesson/topical/video';
   //Chi tiết 1 video
-  static const String detailLesson = '$baseUrl/lesson/topical/video/detail';
+  static String detailLesson = '$baseUrl/lesson/topical/video/detail';
 
   //Danh sách thông báo
-  static const String listNotify = '$baseUrl/notification';
+  static String listNotify = '$baseUrl/notification';
   //Check có thông báo mới hay không
   //Chi tiết thông báo
   //Cập nhật trạng thái khi ấn vào
 
   //Chat
-  static const String lecture = '$baseUrl/chat/lecture';
-  static const String message = '$baseUrl/chat/lecture/message';
-  static const String sendMessage = '$baseUrl/chat/lecture/message/send';
+  static String lecture = '$baseUrl/chat/lecture';
+  static String message = '$baseUrl/chat/lecture/message';
+  static String sendMessage = '$baseUrl/chat/lecture/message/send';
+
+  static String getDomain =
+      'https://612ced09ab461c00178b5fbb.mockapi.io/api/users/test';
+}
+
+Future<void> initApiConfig() async {
+  //final prefs = await SharedPreferences.getInstance();
+
+  //final cached = prefs.getString('base_url');
+  // if (cached != null) {
+  //   ApiPath.baseUrl = cached;
+  //   return;
+  // }
+
+  final res = await http.get(
+    Uri.parse('https://612ced09ab461c00178b5fbb.mockapi.io/api/users/test'),
+  );
+
+  final data = jsonDecode(res.body);
+  ApiPath.baseUrl = data[0]['domain'];
+
+  //await prefs.setString('base_url', ApiPath.baseUrl);
 }
