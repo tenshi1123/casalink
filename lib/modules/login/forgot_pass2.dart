@@ -1,3 +1,4 @@
+import 'package:casalink/repo/info_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../router/app_pages.dart';
@@ -169,37 +170,51 @@ class _ForgotPass2State extends State<ForgotPass2> {
               ),
               GestureDetector(
                 onTap: () async {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: Text(
-                          'Đổi mật khẩu thành công',
-                          style: defaultText16M.copyWith(
-                            color: const Color.fromARGB(255, 29, 29, 29),
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        actionsPadding:
-                            const EdgeInsets.symmetric(horizontal: 10.0),
-                        actions: <Widget>[
-                          TextButton(
-                            child: Text(
-                              'ok',
-                              style: defaultText16M.copyWith(
-                                  color: const Color(0xff3C3C3C)),
+                  try {
+                    // Gọi API đổi mật khẩu
+                    await InfoRepo().forgotPassword(widget.contact,
+                        passController2!.text, passController3!.text);
+
+                    // Nếu thành công thì show dialog
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text(
+                            'Đổi mật khẩu thành công',
+                            style: defaultText16M.copyWith(
+                              color: const Color.fromARGB(255, 29, 29, 29),
+                              fontWeight: FontWeight.w700,
                             ),
-                            onPressed: () {
-                              AppRouter.toPage(
-                                context,
-                                AppPages.LoginPage,
-                              );
-                            },
                           ),
-                        ],
-                      );
-                    },
-                  );
+                          actionsPadding:
+                              const EdgeInsets.symmetric(horizontal: 10.0),
+                          actions: <Widget>[
+                            TextButton(
+                              child: Text(
+                                'OK',
+                                style: defaultText16M.copyWith(
+                                  color: const Color(0xff3C3C3C),
+                                ),
+                              ),
+                              onPressed: () {
+                                Navigator.pop(context); // đóng dialog
+                                AppRouter.toPage(context, AppPages.LoginPage);
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  } catch (e) {
+                    // Nếu API lỗi
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content:
+                            Text('Đổi mật khẩu thất bại, vui lòng thử lại'),
+                      ),
+                    );
+                  }
                 },
                 child: Container(
                   height: 48.h,

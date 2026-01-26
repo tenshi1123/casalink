@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:casalink/modules/login/forgot_pass2.dart';
 import 'package:casalink/utils/constants/styles.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -113,6 +114,9 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                       child: TextField(
                         keyboardType: const TextInputType.numberWithOptions(),
                         controller: phoneController,
+                        style: defaultText16M.copyWith(
+                          color: Colors.white,
+                        ),
                         focusNode: _focusNode,
                         scrollPadding: EdgeInsets.symmetric(
                             vertical: MediaQuery.of(context).viewInsets.bottom),
@@ -157,7 +161,7 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                               actions: <Widget>[
                                 TextButton(
                                   child: const Text(
-                                    'ok',
+                                    'OK',
                                   ),
                                   onPressed: () {
                                     Navigator.of(context).pop();
@@ -168,35 +172,43 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                           },
                         );
                       } else {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: ((context) => ForgotPass2(
+                                  contact: phoneController.text,
+                                )),
+                          ),
+                        );
                         //Lưu ý nhớ copy verificationId
-                        try {
-                          FirebaseAuth.instance.verifyPhoneNumber(
-                              // phoneNumber: '+84974225054',
-                              phoneNumber:
-                                  '+84${phoneController.text.replaceFirst(RegExp(r'0'), '')}',
-                              verificationCompleted: (PhoneAuthCredential) {},
-                              verificationFailed: (error) {
-                                log(error.toString());
-                              },
-                              codeSent: (verificationId, forceResendingToken) {
-                                //Lưu ý nhớ copy verificationId
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: ((context) => OtpScreen(
-                                          contact: phoneController.text,
-                                          verificationId: verificationId,
-                                        )),
-                                  ),
-                                );
-                              },
-                              codeAutoRetrievalTimeout: (verificationId) {
-                                log("Auto Retiveral timeout");
-                              });
-                        } on FirebaseAuthException catch (e) {
-                          print('FirebaseAuth error code: ${e.code}');
-                          print('FirebaseAuth error message: ${e.message}');
-                        }
+                        // try {
+                        //   FirebaseAuth.instance.verifyPhoneNumber(
+                        //       // phoneNumber: '+84974225054',
+                        //       phoneNumber:
+                        //           '+84${phoneController.text.replaceFirst(RegExp(r'0'), '')}',
+                        //       verificationCompleted: (PhoneAuthCredential) {},
+                        //       verificationFailed: (error) {
+                        //         log(error.toString());
+                        //       },
+                        //       codeSent: (verificationId, forceResendingToken) {
+                        //         //Lưu ý nhớ copy verificationId
+                        //         Navigator.push(
+                        //           context,
+                        //           MaterialPageRoute(
+                        //             builder: ((context) => OtpScreen(
+                        //                   contact: phoneController.text,
+                        //                   verificationId: verificationId,
+                        //                 )),
+                        //           ),
+                        //         );
+                        //       },
+                        //       codeAutoRetrievalTimeout: (verificationId) {
+                        //         log("Auto Retiveral timeout");
+                        //       });
+                        // } on FirebaseAuthException catch (e) {
+                        //   print('FirebaseAuth error code: ${e.code}');
+                        //   print('FirebaseAuth error message: ${e.message}');
+                        // }
                       }
                     },
                     child: Container(

@@ -1,7 +1,4 @@
 import 'dart:async';
-
-import 'package:casalink/models/checkin_model.dart';
-import 'package:casalink/repo/follow_class_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';

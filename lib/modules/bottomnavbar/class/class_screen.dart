@@ -255,7 +255,7 @@ class _ClassScreenState extends State<ClassScreen> {
                                       color: const Color(0xff273D8C)),
                                 ),
                                 SizedBox(
-                                  height: 10.h,
+                                  height: 6.h,
                                 ),
                                 Text(
                                   listLesson[index].name,
@@ -263,7 +263,7 @@ class _ClassScreenState extends State<ClassScreen> {
                                       color: const Color(0xff273D8C)),
                                 ),
                                 SizedBox(
-                                  height: 10.h,
+                                  height: 6.h,
                                 ),
                                 Text(
                                   'Nội dung buổi học: ${listLesson[index].topic}',
@@ -271,7 +271,7 @@ class _ClassScreenState extends State<ClassScreen> {
                                       color: const Color(0xff273D8C)),
                                 ),
                                 SizedBox(
-                                  height: 10.h,
+                                  height: 6.h,
                                 ),
                                 listLesson[index].leaveReason == ''
                                     ? const SizedBox()
