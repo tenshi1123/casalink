@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 import '../../../models/info_class_model.dart';
 import '../../../utils/constants/styles.dart';
+import '../../../utils/widget/app_image.dart';
 import 'video_course.dart';
 
 class ListVideoCourse extends StatelessWidget {
@@ -136,11 +137,12 @@ class __VideoCourseItemState extends State<_VideoCourseItem> {
                 borderRadius: BorderRadius.all(Radius.circular(16.r)),
                 color: Colors.white,
               ),
-              child: Image.network(
-                widget.model.courseImg,
+              child: AppImage(
+                imageUrl: widget.model.courseImg,
                 width: 164.w,
                 height: 104.h,
                 fit: BoxFit.fitWidth,
+                borderRadius: BorderRadius.all(Radius.circular(16.r)),
               ),
             ),
             SizedBox(

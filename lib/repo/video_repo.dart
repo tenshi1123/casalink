@@ -1,14 +1,11 @@
 import 'package:dio/dio.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../../utils/constants/api_path.dart';
 import '../models/info_class_model.dart';
+import '../core/network/network_client.dart';
 
 class VideoRepository {
-  Dio dio = Dio();
+  Dio dio = NetworkClient().dio;
   Future<List<InfoClassModel>> getListClass() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
     Response response;
     response = await dio.get(
       ApiPath.listLessonVideo,
@@ -24,9 +21,6 @@ class VideoRepository {
     required String scheduleId,
     required String courseId,
   }) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
     final response = await dio.post(
       ApiPath.listTopical,
       data: {
@@ -42,9 +36,6 @@ class VideoRepository {
     required String topicalId,
     required String settingCoureTypeId,
   }) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
     final response = await dio.post(
       ApiPath.listLecture,
       data: {
@@ -63,9 +54,6 @@ class VideoRepository {
     required String settingCoureTypeId,
     required String lessonType,
   }) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
     final response = await dio.post(
       ApiPath.detailLesson,
       data: {

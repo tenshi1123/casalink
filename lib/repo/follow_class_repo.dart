@@ -1,17 +1,14 @@
 import 'package:casalink/models/checkin_model.dart';
 import 'package:casalink/models/info_class_model.dart';
 import 'package:dio/dio.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/schedule_model.dart';
 import '../utils/constants/api_path.dart';
+import '../core/network/network_client.dart';
 
 class FollowClassRepo {
-  Dio dio = Dio();
+  Dio dio = NetworkClient().dio;
   Future<List<DataHomeWorkModel>> getExcercises() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
     Response response;
     response = await dio.get(
       ApiPath.listExercise,
@@ -23,9 +20,6 @@ class FollowClassRepo {
   }
 
   Future<ListFeedBackModel> getListFeedback() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
     Response response;
     response = await dio.get(
       ApiPath.listFeedback,
@@ -37,9 +31,6 @@ class FollowClassRepo {
 
   Future<String> getDetailFeedback(
       String? checkinOffId, String typeLearn, String? meetingId) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
     Response response;
     response = await dio.get(
       ApiPath.detailFeedback,
@@ -54,9 +45,6 @@ class FollowClassRepo {
 
   //Danh sách điểm danh
   Future<CheckinModel> getListCheckin() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
     Response response;
     response = await dio.get(
       ApiPath.listCheckin,
@@ -72,9 +60,6 @@ class FollowClassRepo {
     required String status,
     required String id,
   }) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
     Response response;
     response = await dio.get(
       ApiPath.detailCheckin,
@@ -91,9 +76,6 @@ class FollowClassRepo {
   }
 
   Future<List<InfoClassModel>> getListClass() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
     Response response;
     response = await dio.get(
       ApiPath.listClass,
@@ -106,9 +88,6 @@ class FollowClassRepo {
 
   Future<ClassDetailModel> getListLesson(
       {required String typeId, required String scheduleId}) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
     final response = await dio.post(
       ApiPath.detailClass,
       data: {
@@ -120,9 +99,6 @@ class FollowClassRepo {
   }
 
   Future<List<RefeeModel>> getRefee({required String id}) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
     Response response;
     response = await dio.get(
       ApiPath.refee,

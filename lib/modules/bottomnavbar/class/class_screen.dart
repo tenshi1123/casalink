@@ -9,6 +9,7 @@ import '../../../models/info_class_model.dart';
 import '../../../models/schedule_model.dart' as schedule_model;
 import '../../../repo/schedule_repo.dart';
 import '../../diemdanh/detail_screen.dart';
+import '../../../utils/widget/app_image.dart';
 
 class ClassScreen extends StatefulWidget {
   const ClassScreen(
@@ -69,25 +70,13 @@ class _ClassScreenState extends State<ClassScreen> {
                 borderRadius: BorderRadius.all(Radius.circular(16.r)),
                 color: Colors.white,
               ),
-              child: Image.network(
-                widget.detailClassModel.detailClassModel.courseImg,
+              child: AppImage(
+                imageUrl: widget.detailClassModel.detailClassModel.courseImg,
                 width: 343.w,
-                //height: 160.h,
                 fit: BoxFit.fitWidth,
+                borderRadius: BorderRadius.all(Radius.circular(16.r)),
               ),
             ),
-            // Padding(
-            //   padding: EdgeInsets.only(
-            //     top: 16.h,
-            //     left: 16.w,
-            //   ),
-            //   child: Image.network(
-            //     detailClassModel.detailClassModel.courseImg,
-            //     width: 343.w,
-            //     height: 160.h,
-            //     fit: BoxFit.fitWidth,
-            //   ),
-            // ),
             widget.listOfRefeeModels.isNotEmpty
                 ? InkWell(
                     onTap: () {

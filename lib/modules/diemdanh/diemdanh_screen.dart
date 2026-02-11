@@ -63,31 +63,29 @@ class _RollCallScreenState extends State<RollCallScreen> {
                 ],
               ),
             )
-          : SingleChildScrollView(
-              child: Column(
-                children: [
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: const ScrollPhysics(),
-                    itemCount: widget.model.checkInOffModel.length,
-                    itemBuilder: (context, index) {
+          : CustomScrollView(
+              slivers: [
+                SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) {
                       return ListOffClass(
                         model: widget.model.checkInOffModel[index],
                       );
                     },
+                    childCount: widget.model.checkInOffModel.length,
                   ),
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: const ScrollPhysics(),
-                    itemCount: widget.model.checkinZoomModel.length,
-                    itemBuilder: (context, index) {
+                ),
+                SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) {
                       return ListZoomClass(
                         model: widget.model.checkinZoomModel[index],
                       );
                     },
+                    childCount: widget.model.checkinZoomModel.length,
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
     );
   }

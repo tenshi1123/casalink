@@ -52,18 +52,19 @@ class _NotificationScreenState extends State<NotificationScreen>
             SizedBox(
               height: 12.h,
             ),
-            ListView.builder(
-              shrinkWrap: true,
-              physics: const ScrollPhysics(),
-              itemCount: widget.listNoti.length,
-              itemBuilder: (context, index) {
-                return _NotificationItem(
-                  title1: '',
-                  title2: widget.listNoti[0].title,
-                  title3: widget.listNoti[0].content,
-                  title4: widget.listNoti[0].createdAt,
-                );
-              },
+            Expanded(
+              child: ListView.builder(
+                physics: const BouncingScrollPhysics(),
+                itemCount: widget.listNoti.length,
+                itemBuilder: (context, index) {
+                  return _NotificationItem(
+                    title1: '',
+                    title2: widget.listNoti[index].title,
+                    title3: widget.listNoti[index].content,
+                    title4: widget.listNoti[index].createdAt,
+                  );
+                },
+              ),
             ),
           ],
         ),

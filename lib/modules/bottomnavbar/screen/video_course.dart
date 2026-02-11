@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../models/info_class_model.dart';
 import '../../../utils/constants/styles.dart';
+import '../../../utils/widget/app_image.dart';
 
 class VideoCourse extends StatelessWidget {
   const VideoCourse({super.key, required this.courseVideoModel});
@@ -30,114 +31,120 @@ class VideoCourse extends StatelessWidget {
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              margin: EdgeInsets.only(top: 16.h, left: 16.w, right: 16.w),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(16.r)),
-                color: Colors.white,
-              ),
-              child: Image.network(
-                courseVideoModel.detailClassModel.courseImg,
-                width: 343.w,
-                //height: 160.h,
-                fit: BoxFit.fitWidth,
-              ),
-            ),
-            Container(
-              height: 32.h,
-              //width: 142.w,
-              margin: EdgeInsets.only(top: 16.h, left: 16.w),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8.r),
-                color: const Color(0xff28B4E9),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  courseVideoModel.detailClassModel.settingCourseTypeName,
-                  style: defaultText16M.copyWith(
+      body: CustomScrollView(
+        slivers: [
+          SliverToBoxAdapter(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  margin: EdgeInsets.only(top: 16.h, left: 16.w, right: 16.w),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(16.r)),
                     color: Colors.white,
                   ),
+                  child: AppImage(
+                    imageUrl: courseVideoModel.detailClassModel.courseImg,
+                    width: 343.w,
+                    fit: BoxFit.fitWidth,
+                    borderRadius: BorderRadius.all(Radius.circular(16.r)),
+                  ),
                 ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 10.h, left: 16.w),
-              child: Text(
-                courseVideoModel.detailClassModel.name,
-                style: defaultText20B.copyWith(
-                  color: const Color(0xff273D8C),
-                ),
-              ),
-            ),
-            Row(
-              children: [
-                Stack(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.symmetric(
-                          vertical: 10.h, horizontal: 16.w),
-                      height: 8.h,
-                      width: 296.w,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(24.r),
-                        color: const Color(0xffEDEDED),
+                Container(
+                  height: 32.h,
+                  margin: EdgeInsets.only(top: 16.h, left: 16.w),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8.r),
+                    color: const Color(0xff28B4E9),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      courseVideoModel.detailClassModel.settingCourseTypeName,
+                      style: defaultText16M.copyWith(
+                        color: Colors.white,
                       ),
                     ),
-                    Container(
-                      margin: EdgeInsets.symmetric(
-                          vertical: 10.h, horizontal: 16.w),
-                      height: 8.h,
-                      width: (296 *
-                              courseVideoModel
-                                  .detailClassModel.percentLearning /
-                              100)
-                          .w,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(24.r),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 10.h, left: 16.w),
+                  child: Text(
+                    courseVideoModel.detailClassModel.name,
+                    style: defaultText20B.copyWith(
+                      color: const Color(0xff273D8C),
+                    ),
+                  ),
+                ),
+                Row(
+                  children: [
+                    Stack(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.symmetric(
+                              vertical: 10.h, horizontal: 16.w),
+                          height: 8.h,
+                          width: 296.w,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(24.r),
+                            color: const Color(0xffEDEDED),
+                          ),
+                        ),
+                        Container(
+                          margin: EdgeInsets.symmetric(
+                              vertical: 10.h, horizontal: 16.w),
+                          height: 8.h,
+                          width: (296 *
+                                  courseVideoModel
+                                      .detailClassModel.percentLearning /
+                                  100)
+                              .w,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(24.r),
+                            color: const Color(0xff28B4E9),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Text(
+                      '${courseVideoModel.detailClassModel.percentLearning}%',
+                      style: defaultText16B.copyWith(
                         color: const Color(0xff28B4E9),
                       ),
                     ),
                   ],
                 ),
-                Text(
-                  '${courseVideoModel.detailClassModel.percentLearning}%',
-                  style: defaultText16B.copyWith(
-                    color: const Color(0xff28B4E9),
+                Divider(
+                  color: const Color(0xffEDEDED),
+                  thickness: 8.h,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 10.h, left: 16.w),
+                  child: Text(
+                    'Nội dung',
+                    style: defaultText16B,
                   ),
                 ),
               ],
             ),
-            Divider(
-              color: const Color(0xffEDEDED),
-              thickness: 8.h,
+          ),
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                return LessonItem(
+                  index: index,
+                  topicModel: courseVideoModel.listTopical[index],
+                );
+              },
+              childCount: courseVideoModel.listTopical.length,
             ),
-            Padding(
-              padding: EdgeInsets.only(top: 10.h, left: 16.w),
-              child: Text(
-                'Nội dung',
-                style: defaultText16B,
-              ),
-            ),
-            ListView.builder(
-                shrinkWrap: true,
-                physics: const ClampingScrollPhysics(),
-                itemCount: courseVideoModel.listTopical.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return LessonItem(
-                    index: index,
-                    topicModel: courseVideoModel.listTopical[index],
-                  );
-                }),
-            SizedBox(
+          ),
+          SliverToBoxAdapter(
+            child: SizedBox(
               height: 80.h,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

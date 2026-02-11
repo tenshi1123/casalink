@@ -139,7 +139,6 @@ class _FeedBackScreenState extends State<FeedBackScreen>
                     child: widget.listFeedBack.listFbDaily.isEmpty
                         ? Image.asset('assets/images/empty2.png')
                         : ListView.builder(
-                            shrinkWrap: true,
                             physics: const ClampingScrollPhysics(),
                             itemCount: widget.listFeedBack.listFbDaily.length,
                             itemBuilder: (BuildContext context, int index) {
@@ -175,7 +174,6 @@ class _FeedBackScreenState extends State<FeedBackScreen>
                     child: widget.listFeedBack.listMidMonth.isEmpty
                         ? Image.asset('assets/images/empty2.png')
                         : ListView.builder(
-                            shrinkWrap: true,
                             physics: const ClampingScrollPhysics(),
                             itemCount: widget.listFeedBack.listMidMonth.length,
                             itemBuilder: (BuildContext context, int index) {
@@ -212,7 +210,6 @@ class _FeedBackScreenState extends State<FeedBackScreen>
                     child: widget.listFeedBack.listEndMonth.isEmpty
                         ? Image.asset('assets/images/empty2.png')
                         : ListView.builder(
-                            shrinkWrap: true,
                             physics: const ClampingScrollPhysics(),
                             itemCount: widget.listFeedBack.listEndMonth.length,
                             itemBuilder: (BuildContext context, int index) {
@@ -256,7 +253,7 @@ class ListFbDaily extends StatelessWidget {
         ),
         ListView.builder(
             shrinkWrap: true,
-            physics: const ClampingScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             itemCount: model.listFeedback.length,
             itemBuilder: (BuildContext context, int index) {
               final reversedIndex = model.listFeedback.length - 1 - index;
@@ -268,15 +265,17 @@ class ListFbDaily extends StatelessWidget {
                     model.listFeedback[reversedIndex].typelearn,
                     model.listFeedback[reversedIndex].meetingId,
                   );
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: ((context) => DailyFeedback(
-                            feedback: detailFeedBack,
-                            feedbackModel: model.listFeedback[reversedIndex],
-                          )),
-                    ),
-                  );
+                  if (context.mounted) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: ((context) => DailyFeedback(
+                              feedback: detailFeedBack,
+                              feedbackModel: model.listFeedback[reversedIndex],
+                            )),
+                      ),
+                    );
+                  }
                 },
                 child: LessonItem(
                   model: model.listFeedback[reversedIndex],
@@ -314,7 +313,7 @@ class ListFbDinhKy extends StatelessWidget {
         ),
         ListView.builder(
             shrinkWrap: true,
-            physics: const ClampingScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             itemCount: model.listFeedback.length,
             itemBuilder: (BuildContext context, int index) {
               final reversedIndex = model.listFeedback.length - 1 - index;
@@ -326,15 +325,17 @@ class ListFbDinhKy extends StatelessWidget {
                     model.listFeedback[reversedIndex].typelearn,
                     model.listFeedback[reversedIndex].meetingId,
                   );
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: ((context) => PeriodicFeedback(
-                            feedback: detailFeedBack,
-                            feedbackModel: model.listFeedback[reversedIndex],
-                          )),
-                    ),
-                  );
+                  if (context.mounted) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: ((context) => PeriodicFeedback(
+                              feedback: detailFeedBack,
+                              feedbackModel: model.listFeedback[reversedIndex],
+                            )),
+                      ),
+                    );
+                  }
                 },
                 child: LessonItem(
                   model: model.listFeedback[reversedIndex],

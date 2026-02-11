@@ -144,14 +144,16 @@ class _HomeScreenState extends State<HomeScreen> {
                               onTap: () async {
                                 List<NotificationModel> listNoti =
                                     await NotiRepo().getNotifications();
-                                pushWithoutNavBar(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: ((context) => NotificationScreen(
-                                          listNoti: listNoti,
-                                        )),
-                                  ),
-                                );
+                                if (context.mounted) {
+                                  pushWithoutNavBar(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: ((context) => NotificationScreen(
+                                            listNoti: listNoti,
+                                          )),
+                                    ),
+                                  );
+                                }
                               },
                               child: Image(
                                 image:
@@ -444,14 +446,16 @@ class _HomeScreenState extends State<HomeScreen> {
                         GestureDetector(
                           onTap: () {
                             FollowClassRepo().getListCheckin().then((value) {
-                              pushWithoutNavBar(
-                                context,
-                                MaterialPageRoute(
-                                  builder: ((context) => RollCallScreen(
-                                        model: value,
-                                      )),
-                                ),
-                              );
+                              if (context.mounted) {
+                                pushWithoutNavBar(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: ((context) => RollCallScreen(
+                                          model: value,
+                                        )),
+                                  ),
+                                );
+                              }
                             });
                             // pushWithoutNavBar(
                             //   context,
@@ -496,14 +500,16 @@ class _HomeScreenState extends State<HomeScreen> {
                           onTap: () async {
                             List<LeaveModel> listHistory =
                                 await InfoRepo().getLeaveList();
-                            pushWithoutNavBar(
-                              context,
-                              MaterialPageRoute(
-                                builder: ((context) => HistoryScreen(
-                                      model: listHistory,
-                                    )),
-                              ),
-                            );
+                            if (context.mounted) {
+                              pushWithoutNavBar(
+                                context,
+                                MaterialPageRoute(
+                                  builder: ((context) => HistoryScreen(
+                                        model: listHistory,
+                                      )),
+                                ),
+                              );
+                            }
                           },
                           child: Container(
                             height: 40.h,
@@ -764,8 +770,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               height: 55.h,
                               width: 375.w,
                               child: ListView.builder(
-                                shrinkWrap: true,
-                                physics: const ScrollPhysics(),
+                                physics: const BouncingScrollPhysics(),
                                 itemCount: listCategori.length,
                                 scrollDirection: Axis.horizontal,
                                 itemBuilder: (context, index) {

@@ -349,18 +349,22 @@ class _ItemTableCalenderState extends State<ItemTableCalender> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        setState(() {
-          _isLoading = true;
-        });
+        if (mounted) {
+          setState(() {
+            _isLoading = true;
+          });
+        }
         DetaiLessonModel detailLesson = await ScheduleRepo().getDetailSchedule(
           checkinOffId: widget.model.checkinOffId,
           typeLearn: widget.model.typeLearn,
           meetingId: widget.model.meetingId,
         );
 
-        setState(() {
-          _isLoading = false;
-        });
+        if (mounted) {
+          setState(() {
+            _isLoading = false;
+          });
+        }
         Navigator.push(
           context,
           MaterialPageRoute(

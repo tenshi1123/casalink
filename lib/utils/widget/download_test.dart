@@ -74,12 +74,17 @@ class _DownloadTestState extends State<DownloadTest> {
       );
 
       if (_tasks != null && _tasks!.isNotEmpty) {
-        final task = _tasks!.firstWhere((task) => task.taskId == taskId);
-        setState(() {
-          task
-            ..status = status
-            ..progress = progress;
-        });
+        final task = _tasks!.cast<TaskInfo?>().firstWhere(
+              (task) => task?.taskId == taskId,
+              orElse: () => null,
+            );
+        if (task != null && mounted) {
+          setState(() {
+            task
+              ..status = status
+              ..progress = progress;
+          });
+        }
       }
     });
   }
@@ -126,7 +131,7 @@ class _DownloadTestState extends State<DownloadTest> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: Text(
-                  item.name!,
+                  item.name ?? '',
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Colors.blue,
@@ -209,14 +214,16 @@ class _DownloadTestState extends State<DownloadTest> {
       await _prepareSaveDir();
     }
 
-    setState(() {
-      _permissionReady = hasGranted;
-    });
+    if (mounted) {
+      setState(() {
+        _permissionReady = hasGranted;
+      });
+    }
   }
 
   Future<void> _requestDownload(TaskInfo task) async {
     task.taskId = await FlutterDownloader.enqueue(
-      url: task.link!,
+      url: task.link ?? '',
       headers: {'auth': 'test_for_sql_encoding'},
       savedDir: _localPath,
       saveInPublicStorage: _saveInPublicStorage,
@@ -224,17 +231,23 @@ class _DownloadTestState extends State<DownloadTest> {
   }
 
   Future<void> _pauseDownload(TaskInfo task) async {
-    await FlutterDownloader.pause(taskId: task.taskId!);
+    if (task.taskId != null) {
+      await FlutterDownloader.pause(taskId: task.taskId!);
+    }
   }
 
   Future<void> _resumeDownload(TaskInfo task) async {
-    final newTaskId = await FlutterDownloader.resume(taskId: task.taskId!);
-    task.taskId = newTaskId;
+    if (task.taskId != null) {
+      final newTaskId = await FlutterDownloader.resume(taskId: task.taskId!);
+      task.taskId = newTaskId;
+    }
   }
 
   Future<void> _retryDownload(TaskInfo task) async {
-    final newTaskId = await FlutterDownloader.retry(taskId: task.taskId!);
-    task.taskId = newTaskId;
+    if (task.taskId != null) {
+      final newTaskId = await FlutterDownloader.retry(taskId: task.taskId!);
+      task.taskId = newTaskId;
+    }
   }
 
   Future<bool> _openDownloadedFile(TaskInfo? task) async {
@@ -247,12 +260,16 @@ class _DownloadTestState extends State<DownloadTest> {
   }
 
   Future<void> _delete(TaskInfo task) async {
-    await FlutterDownloader.remove(
-      taskId: task.taskId!,
-      shouldDeleteContent: true,
-    );
-    await _prepare();
-    setState(() {});
+    if (task.taskId != null) {
+      await FlutterDownloader.remove(
+        taskId: task.taskId!,
+        shouldDeleteContent: true,
+      );
+      await _prepare();
+      if (mounted) {
+        setState(() {});
+      }
+    }
   }
 
   Future<bool> _checkPermission() async {
@@ -351,9 +368,11 @@ class _DownloadTestState extends State<DownloadTest> {
       await _prepareSaveDir();
     }
 
-    setState(() {
-      _showContent = true;
-    });
+    if (mounted) {
+      setState(() {
+        _showContent = true;
+      });
+    }
   }
 
   Future<void> _prepareSaveDir() async {

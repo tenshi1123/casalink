@@ -1,14 +1,11 @@
 import 'package:casalink/models/notification_model.dart';
 import 'package:casalink/utils/constants/api_path.dart';
 import 'package:dio/dio.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import '../core/network/network_client.dart';
 
 class NotiRepo {
-  Dio dio = Dio();
+  Dio dio = NetworkClient().dio;
   Future<List<NotificationModel>> getNotifications() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
     Response response;
     response = await dio.get(
       ApiPath.listNotify,

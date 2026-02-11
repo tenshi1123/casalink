@@ -5,6 +5,7 @@ import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../models/schedule_model.dart';
 import '../../utils/widget/fullscreen_image.dart';
+import '../../utils/widget/app_image.dart';
 
 //import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -148,9 +149,11 @@ class _NestedTabBarState extends State<NestedTabBar>
       initialIndex: 0,
     );
     _tabController.addListener(() {
-      setState(() {
-        activeTabIndex = _tabController.index;
-      });
+      if (mounted) {
+        setState(() {
+          activeTabIndex = _tabController.index;
+        });
+      }
     });
   }
 
@@ -231,8 +234,6 @@ class _NestedTabBarState extends State<NestedTabBar>
             controller: _tabController,
             children: <Widget>[
               ListView.builder(
-                shrinkWrap: true,
-                physics: const ScrollPhysics(),
                 itemCount: _detailLesson.listHomeWorks.length,
                 itemBuilder: (context, index) {
                   return Container(
@@ -335,8 +336,9 @@ class _NestedTabBarState extends State<NestedTabBar>
                                         1.0,
                                       ]),
                                 ),
-                                child: Image.network(
-                                    _detailLesson.listHomeWorks[index].image),
+                                child: AppImage(
+                                    imageUrl: _detailLesson
+                                        .listHomeWorks[index].image),
                               ),
                               Container(
                                 width: 120.w,
@@ -385,8 +387,6 @@ class _NestedTabBarState extends State<NestedTabBar>
 
               //Tai lieu
               ListView.builder(
-                  shrinkWrap: true,
-                  physics: const ScrollPhysics(),
                   itemCount: _detailLesson.listDocument.length,
                   itemBuilder: (context, index) {
                     return GestureDetector(

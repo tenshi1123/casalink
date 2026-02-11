@@ -4,41 +4,29 @@ import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../utils/constants/api_path.dart';
 import '../models/info_model.dart';
+import '../core/network/network_client.dart';
 
 class InfoRepo {
-  Dio dio = Dio();
+  Dio dio = NetworkClient().dio;
   Future<InfoModel?> getInfo() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
     Response response;
     try {
       response = await dio.get(
         ApiPath.user,
       );
       return InfoModel.fromJson(response.data['data']);
-      //break;
     } on DioException {
-      String newToken = await LoginRepo().refreshToken();
-      if (newToken == '') {
-        return null;
-      }
-      await prefs.setString('token', newToken);
-      dio.options.headers['Authorization'] = 'Bearer $newToken';
-      response = await dio.get(
-        ApiPath.user,
-      );
-      return InfoModel.fromJson(response.data['data']);
+      // The interceptor already tries to refresh token and retry. 
+      // If we are still here, it means even after retry it failed.
+      return null;
     } catch (e) {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.remove('token');
     }
     return null;
   }
 
   Future<InfoHomeModel> getInfoClass() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
     Response response;
     response = await dio.get(
       ApiPath.infoclass,
@@ -47,9 +35,6 @@ class InfoRepo {
   }
 
   Future<List<DropClassModel>> getDropClass({required String type}) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
     Response response;
     response = await dio.get(
       type == '1' ? ApiPath.classLearned : ApiPath.classLater,
@@ -63,9 +48,6 @@ class InfoRepo {
 
   Future<List<DropLessonModel>> getDropLesson(
       DropClassModel model, String type) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
     Response response;
     response = await dio.post(
       type == '1' ? ApiPath.lessonLearned : ApiPath.lessonLater,
@@ -87,9 +69,6 @@ class InfoRepo {
     required String id,
     required String typeRequest,
   }) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
     await dio.post(
       typeRequest == '1' ? ApiPath.requestLeave : ApiPath.requestLater,
       data: {
@@ -101,9 +80,6 @@ class InfoRepo {
   }
 
   Future<List<LeaveModel>> getLeaveList() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
     Response response;
     response = await dio.post(ApiPath.leaveList);
     List<LeaveModel> list = [];
@@ -114,9 +90,6 @@ class InfoRepo {
   }
 
   Future deleteInfo() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
     await dio.post(
       ApiPath.deleteUser,
     );
@@ -126,9 +99,6 @@ class InfoRepo {
       {required String oldPass,
       required String password,
       required String newPass}) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
     Response response;
     Response response2;
     response = await dio.get(
@@ -152,9 +122,6 @@ class InfoRepo {
       {required String oldPass,
       required String password,
       required String newPass}) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
     Response response;
     response = await dio.get(
       ApiPath.checkPassword,

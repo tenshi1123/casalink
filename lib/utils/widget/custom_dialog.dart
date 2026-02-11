@@ -17,8 +17,8 @@ class _LeaveAbsencePopUpState extends State<LeaveAbsencePopUp> {
   var className;
   var lessonName;
   String reason = '';
-  late DropClassModel newModel;
-  late DropLessonModel newLesson;
+  DropClassModel? newModel;
+  DropLessonModel? newLesson;
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -165,7 +165,7 @@ class _LeaveAbsencePopUpState extends State<LeaveAbsencePopUp> {
                         ),
                         child: FutureBuilder<List<DropLessonModel>>(
                           future:
-                              InfoRepo().getDropLesson(newModel, widget.type),
+                              InfoRepo().getDropLesson(newModel!, widget.type),
                           builder: (context, snapshot) {
                             if (snapshot.hasData) {
                               return DropdownButton(
@@ -294,7 +294,8 @@ class _LeaveAbsencePopUpState extends State<LeaveAbsencePopUp> {
                     height: 40.h,
                     child: ElevatedButton(
                       onPressed: () {
-                        if (_formKey.currentState!.validate()) {
+                        if (_formKey.currentState!.validate() &&
+                            newLesson != null) {
                           // if (_category == 'Other' &&
                           //     _newCategory != null &&
                           //     _newCategory!.isNotEmpty) {
@@ -303,8 +304,8 @@ class _LeaveAbsencePopUpState extends State<LeaveAbsencePopUp> {
                           // }
                           InfoRepo().requestLeave(
                               reason: reason,
-                              type: newLesson.typeLearn,
-                              id: newLesson.id,
+                              type: newLesson!.typeLearn,
+                              id: newLesson!.id,
                               typeRequest: widget.type);
                           Navigator.of(context).pop();
                         }

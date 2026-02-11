@@ -2,9 +2,10 @@ import 'package:dio/dio.dart';
 
 import '../models/category_model.dart';
 import '../utils/constants/api_path.dart';
+import '../core/network/network_client.dart';
 
 class CategoryRepo {
-  Dio dio = Dio();
+  Dio dio = NetworkClient().dio;
 
   //danh sách danh mục
   Future<List<CategoryModel>> getCategories() async {

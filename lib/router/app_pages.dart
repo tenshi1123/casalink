@@ -41,8 +41,11 @@ extension AppPagesExtension on AppPages {
       case AppPages.ForgotPassScreen:
         return PageConfig()..pageBuilder = () => const ForgotPassScreen();
       case AppPages.BottomNavBarPage:
-        final InfoModel infoModel = arguments!['infoModel'];
-        final InfoHomeModel infoClassModel = arguments['infoClassModel'];
+        final InfoModel? infoModel = arguments?['infoModel'];
+        final InfoHomeModel? infoClassModel = arguments?['infoClassModel'];
+        if (infoModel == null || infoClassModel == null) {
+          return PageConfig()..pageBuilder = () => const LoginScreen();
+        }
         return PageConfig()
           ..pageBuilder = () => BottomNavBar(
                 infoModel: infoModel,
@@ -60,7 +63,7 @@ extension AppPagesExtension on AppPages {
         name == AppPages.Initial.name || name?.isEmpty == true
             ? AppPages.Initial
             : AppPages.values.firstWhere(
-                (e) => e.name.contains(name!),
+                (e) => name != null && e.name.contains(name),
                 orElse: () => AppPages.Initial,
               ),
         {},

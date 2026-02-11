@@ -1,5 +1,6 @@
 import 'package:casalink/utils/constants/styles.dart';
 import 'package:casalink/utils/widget/webview_screen.dart';
+import 'package:casalink/utils/widget/app_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -168,14 +169,12 @@ class DocumentItem extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ClipRRect(
+          AppImage(
+            imageUrl: model.img,
+            width: 240.w,
+            height: 160.h,
+            fit: BoxFit.fitWidth,
             borderRadius: BorderRadius.all(Radius.circular(16.r)),
-            child: Image.network(
-              model.img,
-              width: 240.w,
-              height: 160.h,
-              fit: BoxFit.fitWidth,
-            ),
           ),
           // Text(
           //   model.id,
@@ -211,14 +210,12 @@ class PostItem extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ClipRRect(
+          AppImage(
+            imageUrl: model.thumbnailUrl,
+            width: 240.w,
+            height: 160.h,
+            fit: BoxFit.fill,
             borderRadius: BorderRadius.all(Radius.circular(16.r)),
-            child: Image.network(
-              model.thumbnailUrl,
-              width: 240.w,
-              height: 160.h,
-              fit: BoxFit.fill,
-            ),
           ),
           Expanded(
             child: Text(

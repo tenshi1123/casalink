@@ -1,9 +1,11 @@
 import 'package:dio/dio.dart';
 import '../utils/constants/api_path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../core/network/network_client.dart';
 
 class LoginRepo {
-  Dio dio = Dio();
+  Dio dio = NetworkClient().dio;
+
   Future<bool> login(String phone, String password) async {
     Response response;
     var formData = FormData.fromMap({
@@ -29,7 +31,8 @@ class LoginRepo {
   Future<String> refreshToken() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? token = prefs.getString('token');
-    dio.options.headers['Authorization'] = 'Bearer $token';
+    // Manual header setting removed, interceptor handles base case but refreshToken might need specific handling if it itself fails or needs old token
+    // Actually, keep it simple for now as the interceptor adds token to all requests.
     Response response;
     try {
       response = await dio.get(ApiPath.refreshToken);
@@ -54,36 +57,26 @@ class LoginRepo {
   }
 
   Future pushOnesignalId(String id) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
     var formData = FormData.fromMap({
       'onesignal_id': id,
     });
 
-    if (token != null) {
-      dio.options.headers['Authorization'] = 'Bearer $token';
-      try {
-        await dio.post(ApiPath.pushOnsignalId, data: formData);
-      } on DioException {
-        return false;
-      }
+    try {
+      await dio.post(ApiPath.pushOnsignalId, data: formData);
+    } on DioException {
+      return false;
     }
   }
 
   Future deleteOnesignalId(String id) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final String? token = prefs.getString('token');
     var formData = FormData.fromMap({
       'onesignal_id': id,
     });
 
-    if (token != null) {
-      dio.options.headers['Authorization'] = 'Bearer $token';
-      try {
-        await dio.post(ApiPath.deleteOnsignalId, data: formData);
-      } on DioException {
-        return false;
-      }
+    try {
+      await dio.post(ApiPath.deleteOnsignalId, data: formData);
+    } on DioException {
+      return false;
     }
   }
 
