@@ -373,7 +373,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   await Future.any([
                                 FollowClassRepo().getListFeedback(),
                                 Future.delayed(
-                                    const Duration(seconds: 5),
+                                    const Duration(seconds: 25),
                                     () => throw TimeoutException(
                                         "Quá thời gian chờ!"))
                               ]);
